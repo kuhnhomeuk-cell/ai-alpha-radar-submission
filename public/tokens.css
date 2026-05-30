@@ -1,0 +1,97 @@
+/* ─── Shared Design Tokens (Antigravity Minimal System) ─────────────── */
+
+:root {
+  /* Minimal Palette (Light Mode Default) */
+  --bg: #ffffff;
+  --surface: #ffffff;
+  --surface-elevated: #ffffff;
+  --fg: #000000;          /* Deep Black */
+  --fg-2: #4a4a4a;        /* Subdued Gray */
+  --muted: #808080;       /* Quiet Meta */
+  --border: rgba(0, 0, 0, 0.1);
+  --border-soft: rgba(0, 0, 0, 0.05);
+  
+  /* Core Accents */
+  --accent: #00d4ff;       /* Bluish-Green (Cyan) */
+  --accent-on: #000000;
+  --success: #10b981;      
+  --danger: #ef4444;       
+  
+  /* Accent States */
+  --accent-hover: #00b8e6;
+  --accent-active: #0099cc;
+  --accent-soft: rgba(0, 212, 255, 0.15);
+
+  /* Typography Scales - Clean Sans-Serif Focus */
+  --font-display: "Google Sans Flex", "Google Sans", "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  --font-body: "Google Sans Flex", "Google Sans", "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  --font-mono: "Geist Mono", "IBM Plex Mono", ui-monospace, monospace;
+
+  /* Font Sizing Scale */
+  --text-xs: 12px;
+  --text-sm: 14px;
+  --text-base: 16px;
+  --text-lg: 19px;
+  --text-xl: 26px;
+  --text-2xl: 40px;
+  --text-3xl: 60px;
+  --text-4xl: clamp(56px, 8vw, 110px); /* Massive Display Size */
+  
+  --leading-body: 1.6;
+  --leading-tight: 1.05;
+  --tracking-display: -0.04em; /* Tight tracking for massive headers */
+
+  /* Spacing rhythm */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-12: 48px;
+  --container-max: 1000px; /* Narrower for better readability */
+
+  /* Border Radii */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+  --radius-pill: 9999px;
+
+  /* Shadows - Minimal and soft */
+  --elev-ring: 0 0 0 1px var(--border);
+  --elev-raised: 0 12px 32px rgba(0, 0, 0, 0.05);
+  --focus-ring: 0 0 0 3px rgba(0, 0, 0, 0.1);
+  
+  /* Animations */
+  --motion-fast: 150ms;
+  --motion-base: 250ms;
+  --ease-standard: cubic-bezier(0.2, 0, 0, 1);
+  --ease-out-strong: cubic-bezier(0.1, 0.9, 0.2, 1);
+}
+
+:root[data-theme="dark"] {
+  --bg: #07090d;
+  --surface: #0c1118;
+  --surface-elevated: #121923;
+  --fg: #f7fafc;
+  --fg-2: #c6d0dc;
+  --muted: #8b9aad;
+  --border: rgba(255, 255, 255, 0.14);
+  --border-soft: rgba(255, 255, 255, 0.08);
+  --accent: #2ce6ff;
+  --accent-on: #020617;
+  --success: #34d399;
+  --danger: #fb7185;
+  --accent-hover: #67e8f9;
+  --accent-active: #22d3ee;
+  --accent-soft: rgba(44, 230, 255, 0.18);
+  --elev-ring: 0 0 0 1px var(--border);
+  --elev-raised: 0 18px 48px rgba(0, 0, 0, 0.32);
+  --focus-ring: 0 0 0 3px rgba(44, 230, 255, 0.24);
+}
+
+/* Global View Transitions Handoff Activation */
+@view-transition {
+  navigation: auto;
+}

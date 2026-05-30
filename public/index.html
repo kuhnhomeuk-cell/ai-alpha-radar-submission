@@ -1,0 +1,473 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AI Alpha Radar · Trend Intelligence</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%23050709'/><path d='M4 16h5l3-8 5 16 3-8h8' fill='none' stroke='%232ce6ff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/></svg>">
+  
+  <link rel="stylesheet" href="tokens.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:opsz,wght@8..144,400..700&family=Geist+Mono:wght@400..600&display=swap" rel="stylesheet">
+  
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js" defer></script>
+  
+  <style>
+    /* ─── Base Styles ────────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--fg);
+      font-family: var(--font-body);
+      font-size: var(--text-base);
+      line-height: var(--leading-body);
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+    
+    .video-bg {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      pointer-events: none;
+      z-index: 0;
+      /* The Magic Trick: Black becomes white, Blue stays blue */
+      filter: invert(1) hue-rotate(180deg);
+      opacity: 0.95;
+    }
+
+    .content-wrapper {
+      position: relative;
+      z-index: 1;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ─── Premium Chrome ────────────────────────────────────────────── */
+    .topnav {
+      padding: 24px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      view-transition-name: topbar-nav;
+    }
+    .brand {
+      font-weight: 700;
+      font-size: 20px;
+      letter-spacing: -0.02em;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      view-transition-name: brand-logo;
+    }
+    .nav-links {
+      display: flex;
+      gap: 32px;
+    }
+    .nav-links a {
+      color: var(--fg-2);
+      text-decoration: none;
+      font-size: 15px;
+      font-weight: 500;
+      transition: color var(--motion-fast) var(--ease-standard);
+    }
+    .nav-links a:hover { color: var(--fg); }
+    .nav-actions {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+    }
+
+    /* ─── Buttons ────────────────────────────────────────── */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 14px 28px;
+      border-radius: var(--radius-pill);
+      font-size: 15px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all var(--motion-fast) var(--ease-standard);
+      cursor: pointer;
+      border: 1px solid transparent;
+    }
+    .btn-primary {
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(30px) saturate(150%);
+      -webkit-backdrop-filter: blur(30px) saturate(150%);
+      color: #ffffff;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.15), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+    }
+    .btn-primary:hover {
+      background: rgba(0, 0, 0, 0.85);
+      transform: translateY(-2px);
+      box-shadow: 0 12px 32px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    }
+    .btn-outline {
+      background: rgba(255, 255, 255, 0.45);
+      backdrop-filter: blur(30px) saturate(150%);
+      -webkit-backdrop-filter: blur(30px) saturate(150%);
+      color: var(--fg);
+      border: 1px solid rgba(255, 255, 255, 0.8);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05), inset 0 1px 0 rgba(255, 255, 255, 1);
+    }
+    .btn-outline:hover {
+      background: rgba(255, 255, 255, 0.65);
+      transform: translateY(-2px);
+    }
+
+    /* ─── Hero Block ────────────────────────────────────────────────── */
+    .hero {
+      flex: 1;
+      padding: 60px 40px;
+      max-width: 1400px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1.05fr;
+      gap: 64px;
+      align-items: center;
+    }
+    @media (max-width: 1020px) {
+      .hero {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+      .hero-cta {
+        justify-content: center;
+      }
+    }
+    
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 20px;
+      background: rgba(255, 255, 255, 0.45);
+      backdrop-filter: blur(30px) saturate(150%);
+      -webkit-backdrop-filter: blur(30px) saturate(150%);
+      border: 1px solid rgba(255, 255, 255, 0.8);
+      border-radius: var(--radius-pill);
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 32px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.04), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+    }
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--success);
+    }
+
+    h1 {
+      font-size: clamp(48px, 6vw, 72px);
+      line-height: var(--leading-tight);
+      letter-spacing: var(--tracking-display);
+      margin: 0 0 24px 0;
+      font-weight: 600;
+    }
+    h1 em {
+      font-style: italic;
+      font-weight: 500;
+      color: var(--accent);
+    }
+
+    .lead {
+      font-size: 20px;
+      color: var(--fg-2);
+      margin: 0 0 40px 0;
+      line-height: 1.6;
+      max-width: 560px;
+    }
+    @media (max-width: 1020px) {
+      .lead { margin-inline: auto; }
+    }
+
+    .hero-cta {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 32px;
+      flex-wrap: wrap;
+    }
+
+    .hero-meta {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--muted);
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      display: flex;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+    @media (max-width: 1020px) {
+      .hero-meta { justify-content: center; }
+    }
+
+    /* ─── Clean Dashboard Preview Widget ────────────────────── */
+    .device-preview {
+      background: rgba(255, 255, 255, 0.45);
+      backdrop-filter: blur(40px) saturate(150%);
+      -webkit-backdrop-filter: blur(40px) saturate(150%);
+      border: 1px solid rgba(255, 255, 255, 0.6);
+      border-radius: 24px;
+      box-shadow: 0 32px 64px rgba(0,0,0,0.1), inset 0 1px 0 rgba(255, 255, 255, 0.8);
+      overflow: hidden;
+      view-transition-name: main-preview;
+      cursor: pointer;
+      transition: transform var(--motion-base) var(--ease-standard), box-shadow var(--motion-base) var(--ease-standard);
+    }
+    .device-preview:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 32px 64px rgba(0,0,0,0.1);
+    }
+    
+    .device-bar {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 16px 20px;
+      background: rgba(255, 255, 255, 0.2);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    }
+    .device-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+    }
+    .dot-1 { background: #e2e8f0; }
+    .dot-2 { background: #cbd5e1; }
+    .dot-3 { background: #94a3b8; }
+    .device-url {
+      flex: 1;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--muted);
+      margin-left: 12px;
+      text-align: center;
+    }
+    
+    .device-body {
+      padding: 40px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+    
+    .preview-card-title {
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+    .preview-card-meta {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--muted);
+    }
+    
+    /* Interactive Velocity Chart representation */
+    .preview-chart {
+      height: 180px;
+      background: rgba(255, 255, 255, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.5);
+      border-radius: var(--radius-md);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: flex-end;
+      padding: 16px;
+      gap: 6px;
+    }
+    .chart-bar {
+      flex: 1;
+      background: var(--accent);
+      border-radius: 4px 4px 0 0;
+      opacity: 0.8;
+      transform-origin: bottom;
+      animation: bar-grow 4s cubic-bezier(0.25, 1, 0.5, 1) infinite alternate;
+    }
+    .chart-bar:nth-child(2) { animation-delay: 0.1s; background: #33ebff; }
+    .chart-bar:nth-child(3) { animation-delay: 0.2s; background: #66f0ff; }
+    .chart-bar:nth-child(4) { animation-delay: 0.3s; background: var(--accent); }
+    .chart-bar:nth-child(5) { animation-delay: 0.4s; background: #00b8e6; }
+    .chart-bar:nth-child(6) { animation-delay: 0.5s; background: #33ebff; }
+    .chart-bar:nth-child(7) { animation-delay: 0.6s; background: var(--accent); }
+    
+    @keyframes bar-grow {
+      0% { transform: scaleY(0.4); }
+      100% { transform: scaleY(0.95); }
+    }
+
+    /* List of signals */
+    .preview-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .preview-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px;
+      background: rgba(255, 255, 255, 0.4);
+      border: 1px solid rgba(255, 255, 255, 0.5);
+      border-radius: var(--radius-sm);
+      font-size: 14px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+    }
+    .preview-row .title {
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .preview-row .badge {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--accent);
+      background: var(--accent-soft);
+      padding: 3px 8px;
+      border-radius: 6px;
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+    .preview-row .metric {
+      font-family: var(--font-mono);
+      color: var(--success);
+      font-weight: 600;
+    }
+
+  </style>
+</head>
+<body>
+
+  <video class="video-bg" src="bg-pingpong.mp4" autoplay loop muted playsinline aria-hidden="true"></video>
+
+  <div class="content-wrapper">
+    <header class="topnav">
+      <div class="brand">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+        AI Alpha Radar
+      </div>
+      <nav class="nav-links">
+        <a href="#product">Product</a>
+        <a href="#signals">Signals</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#docs">Docs</a>
+      </nav>
+      <div class="nav-actions">
+        <a href="dashboard.html" class="btn btn-outline" style="padding: 8px 16px; font-size: 14px;">Sign in</a>
+        <a href="dashboard.html" class="btn btn-primary" style="padding: 8px 16px; font-size: 14px;">Get Access</a>
+      </div>
+    </header>
+
+    <main class="hero">
+      <div class="hero-content">
+        <div class="status-pill">
+          <span class="status-dot"></span>
+          <strong>2,148</strong> signals tracked in the last 24 hours
+        </div>
+        
+        <h1>
+          By the time it trends on Google, you've <em>already</em> shipped it.
+        </h1>
+        
+        <p class="lead">
+          AI Alpha Radar is the trend dashboard for operators who can't afford to be second. We surface the signal weeks before the headline — across papers, repos, podcasts, search, and discourse.
+        </p>
+        
+        <div class="hero-cta">
+          <a href="dashboard.html" class="btn btn-primary">Start tracking — free for 14 days ↗</a>
+        </div>
+        
+        <div class="hero-meta">
+          <span>No card required</span>
+          <span>|</span>
+          <span>5,200+ analysts</span>
+          <span>|</span>
+          <span>SOC 2 Type II</span>
+        </div>
+      </div>
+
+      <!-- Clean Dashboard Preview -->
+      <div class="device-preview" onclick="location.href='dashboard.html'" role="img" aria-label="AI Alpha Radar live data preview">
+        <div class="device-bar">
+          <span class="device-dot dot-1" aria-hidden="true"></span>
+          <span class="device-dot dot-2" aria-hidden="true"></span>
+          <span class="device-dot dot-3" aria-hidden="true"></span>
+          <span class="device-url">alpha.radar / observatory</span>
+        </div>
+        
+        <div class="device-body">
+          <div>
+            <div class="preview-card-title">Test-time Reasoners</div>
+            <div class="preview-card-meta">Mention velocity · 7 day delta</div>
+          </div>
+          
+          <div class="preview-chart">
+            <div class="chart-bar" style="height: 35%"></div>
+            <div class="chart-bar" style="height: 48%"></div>
+            <div class="chart-bar" style="height: 40%"></div>
+            <div class="chart-bar" style="height: 65%"></div>
+            <div class="chart-bar" style="height: 55%"></div>
+            <div class="chart-bar" style="height: 80%"></div>
+            <div class="chart-bar" style="height: 94%"></div>
+          </div>
+          
+          <div class="preview-list">
+            <div class="preview-row">
+              <span class="title"><span class="badge">Hot</span> State-space Hybrids</span>
+              <span class="metric">▲ 4.2×</span>
+            </div>
+            <div class="preview-row">
+              <span class="title"><span class="badge">New</span> On-device inference</span>
+              <span class="metric">▲ 2.8×</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    (() => {
+      // Basic GSAP entrance
+      if (typeof gsap !== 'undefined') {
+        gsap.from(".status-pill, h1, .lead, .hero-cta, .hero-meta", {
+          y: 20,
+          opacity: 0,
+          duration: 0.8,
+          stagger: 0.1,
+          ease: "power3.out",
+          delay: 0.1
+        });
+        gsap.from(".device-preview", {
+          y: 40,
+          opacity: 0,
+          duration: 1,
+          ease: "power3.out",
+          delay: 0.3
+        });
+        gsap.from(".topnav", {
+          y: -20,
+          opacity: 0,
+          duration: 0.8,
+          ease: "power3.out"
+        });
+      }
+    })();
+  </script>
+</body>
+</html>
