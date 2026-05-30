@@ -18,8 +18,8 @@ The dashboard is powered by a generated static snapshot at `public/data.json`.
 The latest included snapshot was generated on `2026-05-30T20:10:27Z` for the
 Jack Roberts creator profile.
 The YouTube outliers feed in that snapshot was refreshed on
-`2026-05-30T20:37:38Z` and includes Jack-specific content angles plus
-competitor-channel signals.
+`2026-05-30T20:58:06Z` and includes Jack-specific content angles, an All Ideas
+view, and a Competitor Ideas view.
 
 The live backend pipeline is intentionally not included in this judge-facing
 repo so the submission stays small and does not expose operational secrets.

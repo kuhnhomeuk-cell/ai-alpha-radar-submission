@@ -5835,7 +5835,9 @@
       "creator_idea": "Jack angle: borrow the click signal around claude code, then show a practical workflow for build & sell $8k-$10k AI websites/systems with coding agents.",
       "competitor_channel": "Pragati Kunwer | Claude Code",
       "competitor_rationale": "Breakout video from a channel/topic in Jack's AI coding and creator-tools lane.",
-      "is_competitor_channel": true
+      "is_competitor_channel": true,
+      "idea_type": "competitor",
+      "competitor_match": "adjacent"
     },
     {
       "video_id": "LJfUgSpq2PQ",
@@ -5857,29 +5859,9 @@
       "creator_idea": "Jack angle: borrow the click signal around agentic coding, then show a practical workflow for build & sell $8k-$10k AI websites/systems with coding agents.",
       "competitor_channel": "Balaji Chippada",
       "competitor_rationale": "Breakout video from a channel/topic in Jack's AI coding and creator-tools lane.",
-      "is_competitor_channel": true
-    },
-    {
-      "video_id": "qOvc9IUKEIc",
-      "title": "How Anthropic Engineers ACTUALLY Prompt Claude Code",
-      "channel_id": "",
-      "channel_name": "Austin Marchese",
-      "view_count": 396690,
-      "channel_baseline_views": 4157,
-      "outlier_multiple": 95.42,
-      "published_at": "2026-05-15T19:45:01Z",
-      "thumbnail_url": "https://i.ytimg.com/vi/qOvc9IUKEIc/maxresdefault.jpg",
-      "key_topics": [
-        "Knowledge",
-        "claude code",
-        "claude skills"
-      ],
-      "source_keyword": "claude ai anthropic",
-      "creator_relevance_score": 1.0,
-      "creator_idea": "Jack angle: borrow the click signal around claude code, then show a practical workflow for build & sell $8k-$10k AI websites/systems with coding agents.",
-      "competitor_channel": "Austin Marchese",
-      "competitor_rationale": "Breakout video from a channel/topic in Jack's AI coding and creator-tools lane.",
-      "is_competitor_channel": true
+      "is_competitor_channel": true,
+      "idea_type": "competitor",
+      "competitor_match": "adjacent"
     },
     {
       "video_id": "MJdnZK136kg",
@@ -5900,7 +5882,9 @@
       "creator_idea": "Jack angle: borrow the click signal around claude code, then show a practical workflow for build & sell $8k-$10k AI websites/systems with coding agents.",
       "competitor_channel": "Atul @ K21Academy",
       "competitor_rationale": "Breakout video from a channel/topic in Jack's AI coding and creator-tools lane.",
-      "is_competitor_channel": true
+      "is_competitor_channel": true,
+      "idea_type": "competitor",
+      "competitor_match": "adjacent"
     },
     {
       "video_id": "ux_1QXn4tD0",
@@ -5920,31 +5904,9 @@
       "creator_idea": "Jack angle: borrow the click signal around coding agents, then show a practical workflow for build & sell $8k-$10k AI websites/systems with coding agents.",
       "competitor_channel": "Black Horse Repairs",
       "competitor_rationale": "Breakout video from a channel/topic in Jack's AI coding and creator-tools lane.",
-      "is_competitor_channel": true
-    },
-    {
-      "video_id": "UngVdAsQEiU",
-      "title": "The Best Local Agentic Coding Workflow (Complete Guide)",
-      "channel_id": "",
-      "channel_name": "Web Dev Simplified",
-      "view_count": 361629,
-      "channel_baseline_views": 26262,
-      "outlier_multiple": 13.77,
-      "published_at": "2026-05-12T16:00:53Z",
-      "thumbnail_url": "https://i.ytimg.com/vi/UngVdAsQEiU/maxresdefault.jpg",
-      "key_topics": [
-        "Knowledge",
-        "Technology",
-        "webdevsimplified",
-        "local ai",
-        "ai coding"
-      ],
-      "source_keyword": "agentic workflow systems",
-      "creator_relevance_score": 1.0,
-      "creator_idea": "Jack angle: borrow the click signal around agentic coding, then show a practical workflow for build & sell $8k-$10k AI websites/systems with coding agents.",
-      "competitor_channel": "Web Dev Simplified",
-      "competitor_rationale": "Breakout video from a channel/topic in Jack's AI coding and creator-tools lane.",
-      "is_competitor_channel": true
+      "is_competitor_channel": true,
+      "idea_type": "competitor",
+      "competitor_match": "adjacent"
     },
     {
       "video_id": "rjoMZyxncUI",
@@ -5968,7 +5930,9 @@
       "creator_idea": "Jack angle: borrow the click signal around MCP, then show a practical workflow for build & sell $8k-$10k AI websites/systems with coding agents.",
       "competitor_channel": "",
       "competitor_rationale": "",
-      "is_competitor_channel": false
+      "is_competitor_channel": false,
+      "idea_type": "general",
+      "competitor_match": ""
     },
     {
       "video_id": "WW-549L6L50",
@@ -5991,7 +5955,9 @@
       "creator_idea": "Jack angle: borrow the click signal around coding agents, then show a practical workflow for build & sell $8k-$10k AI websites/systems with coding agents.",
       "competitor_channel": "",
       "competitor_rationale": "",
-      "is_competitor_channel": false
+      "is_competitor_channel": false,
+      "idea_type": "general",
+      "competitor_match": ""
     },
     {
       "video_id": "uZGDO0L-Dr4",
@@ -6013,7 +5979,9 @@
       "creator_idea": "Jack angle: borrow the click signal around claude code, then show a practical workflow for build & sell $8k-$10k AI websites/systems with coding agents.",
       "competitor_channel": "Leon van Zyl",
       "competitor_rationale": "Breakout video from a channel/topic in Jack's AI coding and creator-tools lane.",
-      "is_competitor_channel": true
+      "is_competitor_channel": true,
+      "idea_type": "competitor",
+      "competitor_match": "adjacent"
     },
     {
       "video_id": "g9JIUM0MHgQ",
@@ -6036,7 +6004,9 @@
       "creator_idea": "Jack angle: borrow the click signal around ai agents, then show a practical workflow for build & sell $8k-$10k AI websites/systems with coding agents.",
       "competitor_channel": "",
       "competitor_rationale": "",
-      "is_competitor_channel": false
+      "is_competitor_channel": false,
+      "idea_type": "general",
+      "competitor_match": ""
     },
     {
       "video_id": "JB2P5Gk23VI",
@@ -6058,7 +6028,9 @@
       "creator_idea": "Jack angle: borrow the click signal around rag, then show a practical workflow for build & sell $8k-$10k AI websites/systems with coding agents.",
       "competitor_channel": "",
       "competitor_rationale": "",
-      "is_competitor_channel": false
+      "is_competitor_channel": false,
+      "idea_type": "general",
+      "competitor_match": ""
     },
     {
       "video_id": "pN-LfxNFiTc",
@@ -6081,29 +6053,9 @@
       "creator_idea": "Jack angle: borrow the click signal around model context protocol, then show a practical workflow for build & sell $8k-$10k AI websites/systems with coding agents.",
       "competitor_channel": "",
       "competitor_rationale": "",
-      "is_competitor_channel": false
-    },
-    {
-      "video_id": "LvWobwr0Neg",
-      "title": "Hermes Agent Tutorial for Beginners - Step by Step",
-      "channel_id": "",
-      "channel_name": "Metics Media",
-      "view_count": 6781,
-      "channel_baseline_views": 1281,
-      "outlier_multiple": 5.29,
-      "published_at": "2026-05-28T06:38:35Z",
-      "thumbnail_url": "https://i.ytimg.com/vi/LvWobwr0Neg/maxresdefault.jpg",
-      "key_topics": [
-        "Technology",
-        "hermes agent tutorial",
-        "ai agent for beginners"
-      ],
-      "source_keyword": "agent skill libraries",
-      "creator_relevance_score": 1.0,
-      "creator_idea": "Jack angle: borrow the click signal around hermes agent, then show a practical workflow for build & sell $8k-$10k AI websites/systems with coding agents.",
-      "competitor_channel": "Metics Media",
-      "competitor_rationale": "Breakout video from a channel/topic in Jack's AI coding and creator-tools lane.",
-      "is_competitor_channel": true
+      "is_competitor_channel": false,
+      "idea_type": "general",
+      "competitor_match": ""
     },
     {
       "video_id": "XOddQHz4gtA",
@@ -6126,29 +6078,9 @@
       "creator_idea": "Jack angle: borrow the click signal around claude code, then show a practical workflow for build & sell $8k-$10k AI websites/systems with coding agents.",
       "competitor_channel": "Bitwise AI",
       "competitor_rationale": "Breakout video from a channel/topic in Jack's AI coding and creator-tools lane.",
-      "is_competitor_channel": true
-    },
-    {
-      "video_id": "YBp_PXBbe80",
-      "title": "Hermes Agent NEW Desktop App - The 24/7 Self-Evolving AI Agent!",
-      "channel_id": "",
-      "channel_name": "WorldofAI",
-      "view_count": 113643,
-      "channel_baseline_views": 32656,
-      "outlier_multiple": 3.48,
-      "published_at": "2026-05-10T06:27:40Z",
-      "thumbnail_url": "https://i.ytimg.com/vi/YBp_PXBbe80/maxresdefault.jpg",
-      "key_topics": [
-        "Technology",
-        "hermes agent",
-        "autonomous AI"
-      ],
-      "source_keyword": "agent skill libraries",
-      "creator_relevance_score": 1.0,
-      "creator_idea": "Jack angle: borrow the click signal around hermes agent, then show a practical workflow for build & sell $8k-$10k AI websites/systems with coding agents.",
-      "competitor_channel": "WorldofAI",
-      "competitor_rationale": "Breakout video from a channel/topic in Jack's AI coding and creator-tools lane.",
-      "is_competitor_channel": true
+      "is_competitor_channel": true,
+      "idea_type": "competitor",
+      "competitor_match": "adjacent"
     },
     {
       "video_id": "xXLjeP_AyOg",
@@ -6170,7 +6102,9 @@
       "creator_idea": "Jack angle: borrow the click signal around model context protocol, then show a practical workflow for build & sell $8k-$10k AI websites/systems with coding agents.",
       "competitor_channel": "WorldofAI",
       "competitor_rationale": "Breakout video from a channel/topic in Jack's AI coding and creator-tools lane.",
-      "is_competitor_channel": true
+      "is_competitor_channel": true,
+      "idea_type": "competitor",
+      "competitor_match": "adjacent"
     },
     {
       "video_id": "WIDIV8oDDC8",
@@ -6193,7 +6127,9 @@
       "creator_idea": "Jack angle: borrow the click signal around claude code, then show a practical workflow for build & sell $8k-$10k AI websites/systems with coding agents.",
       "competitor_channel": "Ras Mic",
       "competitor_rationale": "Breakout video from a channel/topic in Jack's AI coding and creator-tools lane.",
-      "is_competitor_channel": true
+      "is_competitor_channel": true,
+      "idea_type": "competitor",
+      "competitor_match": "adjacent"
     },
     {
       "video_id": "oqbKWwUhh4Y",
@@ -6217,7 +6153,9 @@
       "creator_idea": "Jack angle: borrow the click signal around model context protocol, then show a practical workflow for build & sell $8k-$10k AI websites/systems with coding agents.",
       "competitor_channel": "John Savill's Technical Training",
       "competitor_rationale": "Breakout video from a channel/topic in Jack's AI coding and creator-tools lane.",
-      "is_competitor_channel": true
+      "is_competitor_channel": true,
+      "idea_type": "competitor",
+      "competitor_match": "adjacent"
     },
     {
       "video_id": "YNm3JcGi8Co",
@@ -6238,7 +6176,9 @@
       "creator_idea": "Jack angle: borrow the click signal around ai agents, then show a practical workflow for build & sell $8k-$10k AI websites/systems with coding agents.",
       "competitor_channel": "David Alex",
       "competitor_rationale": "Breakout video from a channel/topic in Jack's AI coding and creator-tools lane.",
-      "is_competitor_channel": true
+      "is_competitor_channel": true,
+      "idea_type": "competitor",
+      "competitor_match": "adjacent"
     },
     {
       "video_id": "EYOKSYe7zC0",
@@ -6259,7 +6199,9 @@
       "creator_idea": "Jack angle: borrow the click signal around claude code, then show a practical workflow for build & sell $8k-$10k AI websites/systems with coding agents.",
       "competitor_channel": "Harry Davies",
       "competitor_rationale": "Breakout video from a channel/topic in Jack's AI coding and creator-tools lane.",
-      "is_competitor_channel": true
+      "is_competitor_channel": true,
+      "idea_type": "competitor",
+      "competitor_match": "adjacent"
     },
     {
       "video_id": "YYzpv4VwA2M",
@@ -6282,7 +6224,9 @@
       "creator_idea": "Jack angle: borrow the click signal around ai agents, then show a practical workflow for build & sell $8k-$10k AI websites/systems with coding agents.",
       "competitor_channel": "Durga Software Solutions",
       "competitor_rationale": "Breakout video from a channel/topic in Jack's AI coding and creator-tools lane.",
-      "is_competitor_channel": true
+      "is_competitor_channel": true,
+      "idea_type": "competitor",
+      "competitor_match": "adjacent"
     },
     {
       "video_id": "_R83pFpUWyM",
@@ -6305,7 +6249,9 @@
       "creator_idea": "Jack angle: borrow the click signal around ai agents, then show a practical workflow for build & sell $8k-$10k AI websites/systems with coding agents.",
       "competitor_channel": "",
       "competitor_rationale": "",
-      "is_competitor_channel": false
+      "is_competitor_channel": false,
+      "idea_type": "general",
+      "competitor_match": ""
     },
     {
       "video_id": "-G4H2DmhR28",
@@ -6329,7 +6275,35 @@
       "creator_idea": "Jack angle: borrow the click signal around MCP, then show a practical workflow for build & sell $8k-$10k AI websites/systems with coding agents.",
       "competitor_channel": "",
       "competitor_rationale": "",
-      "is_competitor_channel": false
+      "is_competitor_channel": false,
+      "idea_type": "general",
+      "competitor_match": ""
+    },
+    {
+      "video_id": "UngVdAsQEiU",
+      "title": "The Best Local Agentic Coding Workflow (Complete Guide)",
+      "channel_id": "",
+      "channel_name": "Web Dev Simplified",
+      "view_count": 361629,
+      "channel_baseline_views": 26262,
+      "outlier_multiple": 13.77,
+      "published_at": "2026-05-12T16:00:53Z",
+      "thumbnail_url": "https://i.ytimg.com/vi/UngVdAsQEiU/maxresdefault.jpg",
+      "key_topics": [
+        "Knowledge",
+        "Technology",
+        "webdevsimplified",
+        "local ai",
+        "ai coding"
+      ],
+      "source_keyword": "agentic workflow systems",
+      "creator_relevance_score": 0.99,
+      "creator_idea": "Jack angle: borrow the click signal around agentic coding, then show a practical workflow for build & sell $8k-$10k AI websites/systems with coding agents.",
+      "competitor_channel": "Web Dev Simplified",
+      "competitor_rationale": "Breakout video from a channel/topic in Jack's AI coding and creator-tools lane.",
+      "is_competitor_channel": true,
+      "idea_type": "competitor",
+      "competitor_match": "adjacent"
     },
     {
       "video_id": "DaLXjqHr2M0",
@@ -6353,7 +6327,33 @@
       "creator_idea": "Jack angle: borrow the click signal around ai agents, then show a practical workflow for build & sell $8k-$10k AI websites/systems with coding agents.",
       "competitor_channel": "Times Out",
       "competitor_rationale": "Breakout video from a channel/topic in Jack's AI coding and creator-tools lane.",
-      "is_competitor_channel": true
+      "is_competitor_channel": true,
+      "idea_type": "competitor",
+      "competitor_match": "adjacent"
+    },
+    {
+      "video_id": "YBp_PXBbe80",
+      "title": "Hermes Agent NEW Desktop App - The 24/7 Self-Evolving AI Agent!",
+      "channel_id": "",
+      "channel_name": "WorldofAI",
+      "view_count": 113643,
+      "channel_baseline_views": 32656,
+      "outlier_multiple": 3.48,
+      "published_at": "2026-05-10T06:27:40Z",
+      "thumbnail_url": "https://i.ytimg.com/vi/YBp_PXBbe80/maxresdefault.jpg",
+      "key_topics": [
+        "Technology",
+        "hermes agent",
+        "autonomous AI"
+      ],
+      "source_keyword": "agent skill libraries",
+      "creator_relevance_score": 0.99,
+      "creator_idea": "Jack angle: borrow the click signal around hermes agent, then show a practical workflow for build & sell $8k-$10k AI websites/systems with coding agents.",
+      "competitor_channel": "WorldofAI",
+      "competitor_rationale": "Breakout video from a channel/topic in Jack's AI coding and creator-tools lane.",
+      "is_competitor_channel": true,
+      "idea_type": "competitor",
+      "competitor_match": "adjacent"
     },
     {
       "video_id": "nxYlYQH_WIc",
@@ -6376,31 +6376,9 @@
       "creator_idea": "Jack angle: borrow the click signal around claude code, then show a practical workflow for build & sell $8k-$10k AI websites/systems with coding agents.",
       "competitor_channel": "Matt Penny | Applied AI",
       "competitor_rationale": "Breakout video from a channel/topic in Jack's AI coding and creator-tools lane.",
-      "is_competitor_channel": true
-    },
-    {
-      "video_id": "4ZPr2hkV63k",
-      "title": "NEW Self-Improving Memory For AI (Forget Memory.md)",
-      "channel_id": "",
-      "channel_name": "Discover AI",
-      "view_count": 12352,
-      "channel_baseline_views": 2455,
-      "outlier_multiple": 5.03,
-      "published_at": "2026-05-16T13:15:17Z",
-      "thumbnail_url": "https://i.ytimg.com/vi/4ZPr2hkV63k/maxresdefault.jpg",
-      "key_topics": [
-        "Knowledge",
-        "Technology",
-        "AI",
-        "LLM",
-        "AI Agent"
-      ],
-      "source_keyword": "ai agent memory systems",
-      "creator_relevance_score": 0.98,
-      "creator_idea": "Jack angle: borrow the click signal around llm, then show a practical workflow for build & sell $8k-$10k AI websites/systems with coding agents.",
-      "competitor_channel": "Discover AI",
-      "competitor_rationale": "Breakout video from a channel/topic in Jack's AI coding and creator-tools lane.",
-      "is_competitor_channel": true
+      "is_competitor_channel": true,
+      "idea_type": "competitor",
+      "competitor_match": "adjacent"
     },
     {
       "video_id": "IcRHn7yyzuE",
@@ -6423,7 +6401,9 @@
       "creator_idea": "Jack angle: borrow the click signal around ai agents, then show a practical workflow for build & sell $8k-$10k AI websites/systems with coding agents.",
       "competitor_channel": "Intuitive Professional Coaching, LLC",
       "competitor_rationale": "Breakout video from a channel/topic in Jack's AI coding and creator-tools lane.",
-      "is_competitor_channel": true
+      "is_competitor_channel": true,
+      "idea_type": "competitor",
+      "competitor_match": "adjacent"
     },
     {
       "video_id": "ig-pTsW0eiw",
@@ -6445,7 +6425,33 @@
       "creator_idea": "Jack angle: borrow the click signal around ai agents, then show a practical workflow for build & sell $8k-$10k AI websites/systems with coding agents.",
       "competitor_channel": "Smart Blog AI",
       "competitor_rationale": "Breakout video from a channel/topic in Jack's AI coding and creator-tools lane.",
-      "is_competitor_channel": true
+      "is_competitor_channel": true,
+      "idea_type": "competitor",
+      "competitor_match": "adjacent"
+    },
+    {
+      "video_id": "qOvc9IUKEIc",
+      "title": "How Anthropic Engineers ACTUALLY Prompt Claude Code",
+      "channel_id": "",
+      "channel_name": "Austin Marchese",
+      "view_count": 396690,
+      "channel_baseline_views": 4157,
+      "outlier_multiple": 95.42,
+      "published_at": "2026-05-15T19:45:01Z",
+      "thumbnail_url": "https://i.ytimg.com/vi/qOvc9IUKEIc/maxresdefault.jpg",
+      "key_topics": [
+        "Knowledge",
+        "claude code",
+        "claude skills"
+      ],
+      "source_keyword": "claude ai anthropic",
+      "creator_relevance_score": 0.81,
+      "creator_idea": "Jack angle: borrow the click signal around claude code, then show a practical workflow for build & sell $8k-$10k AI websites/systems with coding agents.",
+      "competitor_channel": "Austin Marchese",
+      "competitor_rationale": "Breakout video from a channel/topic in Jack's AI coding and creator-tools lane.",
+      "is_competitor_channel": true,
+      "idea_type": "competitor",
+      "competitor_match": "adjacent"
     },
     {
       "video_id": "XoitaexiCi0",
@@ -6466,7 +6472,9 @@
       "creator_idea": "Jack angle: borrow the click signal around ai agents, then show a practical workflow for build & sell $8k-$10k AI websites/systems with coding agents.",
       "competitor_channel": "Hal Shin",
       "competitor_rationale": "Breakout video from a channel/topic in Jack's AI coding and creator-tools lane.",
-      "is_competitor_channel": true
+      "is_competitor_channel": true,
+      "idea_type": "competitor",
+      "competitor_match": "adjacent"
     },
     {
       "video_id": "24cuaxwWwvo",
@@ -6489,8 +6497,59 @@
       "creator_idea": "Jack angle: borrow the click signal around ai agents, then show a practical workflow for build & sell $8k-$10k AI websites/systems with coding agents.",
       "competitor_channel": "",
       "competitor_rationale": "",
-      "is_competitor_channel": false
+      "is_competitor_channel": false,
+      "idea_type": "general",
+      "competitor_match": ""
+    },
+    {
+      "video_id": "4TvH-OZhwxI",
+      "title": "AI Agents Explained: How to Create and Use AI Agents in 2026",
+      "channel_id": "",
+      "channel_name": "AI Master",
+      "view_count": 39489,
+      "channel_baseline_views": 5561,
+      "outlier_multiple": 7.1,
+      "published_at": "2026-05-13T18:56:35Z",
+      "thumbnail_url": "https://i.ytimg.com/vi/4TvH-OZhwxI/maxresdefault.jpg",
+      "key_topics": [
+        "Knowledge",
+        "Technology",
+        "ai agents tutorial",
+        "ai automation"
+      ],
+      "source_keyword": "ai agents",
+      "creator_relevance_score": 0.81,
+      "creator_idea": "Jack angle: borrow the click signal around ai agents, then show a practical workflow for build & sell $8k-$10k AI websites/systems with coding agents.",
+      "competitor_channel": "AI Master",
+      "competitor_rationale": "Breakout video from a channel/topic in Jack's AI coding and creator-tools lane.",
+      "is_competitor_channel": true,
+      "idea_type": "competitor",
+      "competitor_match": "adjacent"
+    },
+    {
+      "video_id": "zzo33HUOfxI",
+      "title": "Anthropic Just Dropped Claude for Small Businesses (31 Skills)",
+      "channel_id": "",
+      "channel_name": "Brock Mesarich | AI for Non Techies",
+      "view_count": 135860,
+      "channel_baseline_views": 24174,
+      "outlier_multiple": 5.62,
+      "published_at": "2026-05-21T16:03:56Z",
+      "thumbnail_url": "https://i.ytimg.com/vi/zzo33HUOfxI/maxresdefault.jpg",
+      "key_topics": [
+        "claude cowork",
+        "claude code",
+        "claude opus 4.7"
+      ],
+      "source_keyword": "claude ai anthropic",
+      "creator_relevance_score": 0.81,
+      "creator_idea": "Jack angle: borrow the click signal around claude code, then show a practical workflow for build & sell $8k-$10k AI websites/systems with coding agents.",
+      "competitor_channel": "Brock Mesarich | AI for Non Techies",
+      "competitor_rationale": "Breakout video from a channel/topic in Jack's AI coding and creator-tools lane.",
+      "is_competitor_channel": true,
+      "idea_type": "competitor",
+      "competitor_match": "adjacent"
     }
   ],
-  "youtube_outliers_refreshed_at": "2026-05-30T20:37:38.726460+00:00"
+  "youtube_outliers_refreshed_at": "2026-05-30T20:58:06.691186+00:00"
 }

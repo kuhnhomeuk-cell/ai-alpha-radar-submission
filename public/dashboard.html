@@ -333,6 +333,7 @@ html::after {
 .briefing-panel .close:focus-visible,
 .watchlist-pill:focus-visible,
 .briefing-toggle:focus-visible,
+.outlier-tab:focus-visible,
 .outlier-action:focus-visible,
 .sa-cta:focus-visible,
 .sa-cta--ghost:focus-visible {
@@ -2249,6 +2250,35 @@ html::after {
   margin-bottom: 24px;
 }
 .outliers-meta strong { color: var(--accent); font-weight: 600; }
+.outlier-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0 0 18px;
+}
+.outlier-tab {
+  min-height: 36px;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  background: transparent;
+  color: var(--ink-2);
+  cursor: pointer;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 8px 12px;
+  transition: border-color 160ms ease, color 160ms ease, background 160ms ease;
+}
+.outlier-tab.active {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: rgba(64, 169, 183, 0.10);
+}
+.outlier-tab .count {
+  color: var(--ink-3);
+  margin-left: 6px;
+}
 .outliers-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
@@ -4873,6 +4903,14 @@ footer .quote {
       </div>
     </div>
     <div class="divider"></div>
+    <div class="outlier-tabs" role="tablist" aria-label="Outlier idea view">
+      <button class="outlier-tab active" type="button" data-outlier-view="all" role="tab" aria-selected="true">
+        All Ideas <span class="count" id="outlierAllCount"></span>
+      </button>
+      <button class="outlier-tab" type="button" data-outlier-view="competitor" role="tab" aria-selected="false">
+        Competitor Ideas <span class="count" id="outlierCompetitorCount"></span>
+      </button>
+    </div>
     <div class="outliers-meta" id="outliersMeta"></div>
     <div id="outliersHost"></div>
   </div>
@@ -5081,6 +5119,9 @@ document.addEventListener('DOMContentLoaded', () => {
     chip.addEventListener('click', _syncChips);
   });
   _syncChips();
+  document.querySelectorAll('.outlier-tab[data-outlier-view]').forEach(tab => {
+    tab.addEventListener('click', () => setOutlierView(tab.dataset.outlierView || 'all'));
+  });
 });
 
 /* ==========================================================
@@ -5108,6 +5149,7 @@ let SNAPSHOT_DATE = '';
 let DATA_FRESHNESS_STATUS = 'live';  /* T2.5 — "live" | "stale" | "error" */
 let YOUTUBE_OUTLIERS = [];  /* Wave 5 — populated from snap.youtube_outliers */
 let YOUTUBE_OUTLIERS_REFRESHED_AT = null;
+let OUTLIER_VIEW = 'all';
 
 const WATCHLIST = new Set();
 function loadWatchlist() {
@@ -7431,12 +7473,41 @@ function _formatPublishedAgo(isoString) {
   return Math.round(days / 30) + 'mo ago';
 }
 
+function isCompetitorOutlier(o) {
+  return (o.idea_type || '').toLowerCase() === 'competitor' || !!o.is_competitor_channel || !!o.competitor_channel;
+}
+
+function visibleOutliers() {
+  if (OUTLIER_VIEW === 'competitor') return YOUTUBE_OUTLIERS.filter(isCompetitorOutlier);
+  return YOUTUBE_OUTLIERS;
+}
+
+function syncOutlierTabs() {
+  const allCount = YOUTUBE_OUTLIERS.length;
+  const competitorCount = YOUTUBE_OUTLIERS.filter(isCompetitorOutlier).length;
+  const allBadge = document.getElementById('outlierAllCount');
+  const competitorBadge = document.getElementById('outlierCompetitorCount');
+  if (allBadge) allBadge.textContent = String(allCount);
+  if (competitorBadge) competitorBadge.textContent = String(competitorCount);
+  document.querySelectorAll('.outlier-tab[data-outlier-view]').forEach(tab => {
+    const isActive = tab.dataset.outlierView === OUTLIER_VIEW;
+    tab.classList.toggle('active', isActive);
+    tab.setAttribute('aria-selected', isActive ? 'true' : 'false');
+  });
+}
+
+function setOutlierView(view) {
+  OUTLIER_VIEW = view === 'competitor' ? 'competitor' : 'all';
+  renderOutliers();
+}
+
 function renderOutliers() {
   const host = document.getElementById('outliersHost');
   const meta = document.getElementById('outliersMeta');
   if (!host) return;
   host.replaceChildren();
   meta.replaceChildren();
+  syncOutlierTabs();
 
   if (!YOUTUBE_OUTLIERS.length) {
     const empty = document.createElement('div');
@@ -7446,12 +7517,25 @@ function renderOutliers() {
     return;
   }
 
+  const outliers = visibleOutliers();
+  if (!outliers.length) {
+    const empty = document.createElement('div');
+    empty.className = 'outliers-empty';
+    empty.textContent = 'No competitor ideas in this snapshot. Switch to All Ideas for broader signals.';
+    host.appendChild(empty);
+    return;
+  }
+
   const metaText = document.createElement('span');
   metaText.appendChild(document.createTextNode('Showing '));
   const strongCount = document.createElement('strong');
-  strongCount.textContent = String(YOUTUBE_OUTLIERS.length);
+  strongCount.textContent = String(outliers.length);
   metaText.appendChild(strongCount);
-  metaText.appendChild(document.createTextNode(' outliers · ranked by breakout factor'));
+  if (OUTLIER_VIEW === 'competitor') {
+    metaText.appendChild(document.createTextNode(' competitor ideas · ranked by Jack relevance'));
+  } else {
+    metaText.appendChild(document.createTextNode(' ideas · ranked by Jack relevance'));
+  }
   meta.appendChild(metaText);
 
   const refreshedAt = YOUTUBE_OUTLIERS_REFRESHED_AT;
@@ -7478,11 +7562,12 @@ function renderOutliers() {
 
   const grid = document.createElement('div');
   grid.className = 'outliers-grid';
-  YOUTUBE_OUTLIERS.forEach((o, idx) => {
+  outliers.forEach((o, idx) => {
+    const sourceIndex = YOUTUBE_OUTLIERS.indexOf(o);
     const card = document.createElement('button');
     card.type = 'button';
     card.className = 'outlier-card';
-    card.dataset.index = String(idx);
+    card.dataset.index = String(sourceIndex);
 
     if (o.thumbnail_url) {
       const thumbWrap = document.createElement('div');
@@ -7514,7 +7599,8 @@ function renderOutliers() {
     if (o.competitor_channel) {
       const competitor = document.createElement('div');
       competitor.className = 'outlier-competitor';
-      competitor.textContent = 'Competitor signal · ' + o.competitor_channel;
+      const label = o.competitor_match === 'watchlist' ? 'Watchlist competitor' : 'Competitor signal';
+      competitor.textContent = label + ' · ' + o.competitor_channel;
       body.appendChild(competitor);
     }
     if (o.creator_idea) {
@@ -7550,7 +7636,7 @@ function renderOutliers() {
     body.appendChild(statsRow);
 
     card.appendChild(body);
-    card.addEventListener('click', () => openOutlierModal(idx));
+    card.addEventListener('click', () => openOutlierModal(sourceIndex));
     grid.appendChild(card);
   });
   host.appendChild(grid);
@@ -7587,9 +7673,12 @@ function openOutlierModal(idx) {
   const competitorHost = document.getElementById('outlierCompetitor');
   const ideaHost = document.getElementById('outlierIdea');
   if (competitorHost) {
-    competitorHost.textContent = o.competitor_channel
-      ? 'Competitor signal · ' + o.competitor_channel
-      : '';
+    if (o.competitor_channel) {
+      const label = o.competitor_match === 'watchlist' ? 'Watchlist competitor' : 'Competitor signal';
+      competitorHost.textContent = label + ' · ' + o.competitor_channel;
+    } else {
+      competitorHost.textContent = '';
+    }
   }
   if (ideaHost) {
     ideaHost.textContent = o.creator_idea || '';
