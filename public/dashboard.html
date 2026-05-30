@@ -934,17 +934,6 @@ html::after {
 .src-item .ok    { color: var(--good); }
 .src-item .fail  { color: var(--bad); }
 .src-item .count { color: var(--ink); }
-.src-profile {
-  display: inline-flex;
-  align-items: center;
-  width: fit-content;
-  padding: 2px 7px;
-  border: 1px solid rgba(0, 212, 255, 0.22);
-  border-radius: 999px;
-  color: var(--accent-hover);
-  background: rgba(0, 212, 255, 0.08);
-  white-space: nowrap;
-}
 .src-item .stale-pill {
   font-size: 8px;
   padding: 1px 5px;
@@ -1907,7 +1896,6 @@ html::after {
 .angle .tag.hook { background: rgba(0, 212, 255, 0.12); color: var(--stage-whisper); }
 .angle .tag.cont { background: rgba(255, 138, 61, 0.15); color: var(--stage-hype); }
 .angle .tag.tut  { background: rgba(0, 255, 157, 0.12); color: var(--stage-builder); }
-.angle .tag.video { background: rgba(46, 236, 174, 0.12); color: var(--good); }
 
 .gem-pred {
   border-top: 1px solid var(--line);
@@ -2309,6 +2297,38 @@ html::after {
   text-transform: uppercase;
   color: var(--accent);
 }
+.outlier-competitor {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-2);
+}
+.outlier-idea,
+.outlier-modal-idea {
+  color: var(--ink-2);
+  font-size: 13px;
+  line-height: 1.45;
+}
+.outlier-idea {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.outlier-modal-competitor {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 10px;
+}
+.outlier-modal-idea {
+  border-left: 2px solid var(--accent);
+  padding-left: 12px;
+  margin-bottom: 18px;
+}
 .outlier-stats-row {
   display: flex;
   align-items: center;
@@ -2437,8 +2457,6 @@ html::after {
   color: var(--ink-3);
   margin-bottom: 6px;
 }
-.almanac-row.next-video .tag { color: var(--good); }
-.almanac-row.next-video .title { font-weight: 650; }
 .almanac-row .title {
   font-family: var(--serif);
   font-size: 19px;
@@ -2695,14 +2713,6 @@ html::after {
   color: var(--ink);
   line-height: 1.45;
 }
-.sa-row.next-video {
-  padding: 10px 12px;
-  border: 1px solid rgba(46, 236, 174, 0.22);
-  border-radius: 10px;
-  background: rgba(46, 236, 174, 0.06);
-}
-.sa-row.next-video .eyebrow { color: var(--good); }
-.sa-row.next-video .sa-body { font-weight: 650; }
 .sa-row .sa-meta {
   font-family: var(--mono);
   font-size: 10px;
@@ -4142,34 +4152,6 @@ main {
   text-transform: uppercase;
 }
 
-.creator-fit {
-  flex: 0 0 auto;
-  display: inline-flex;
-  align-items: center;
-  width: fit-content;
-  padding: 2px 6px;
-  border: 1px solid var(--line);
-  border-radius: var(--radius-pill);
-  color: var(--ink-3);
-  background: rgba(255, 255, 255, 0.03);
-  font-family: var(--mono);
-  font-size: 9px;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  white-space: nowrap;
-}
-.creator-fit.medium {
-  color: var(--accent-hover);
-  border-color: rgba(0, 212, 255, 0.28);
-  background: rgba(0, 212, 255, 0.08);
-}
-.creator-fit.strong {
-  color: var(--good);
-  border-color: rgba(46, 236, 174, 0.34);
-  background: rgba(46, 236, 174, 0.10);
-}
-
 .chart-rank-row .metric,
 .chart-rank-row .zone {
   color: var(--ink-2);
@@ -4672,7 +4654,6 @@ footer .quote {
         <span class="chip active" data-filter="sort" data-value="tbts" title="Trend-Before-Trend Score: velocity + hidden_gem + lifecycle + convergence">TBTS ↓</span>
         <span class="chip"        data-filter="sort" data-value="velocity">Velocity ↓</span>
         <span class="chip"        data-filter="sort" data-value="hidden_gem">Hidden Gem ↓</span>
-        <span class="chip"        data-filter="sort" data-value="creator_fit" title="Creator profile fit: how closely this trend matches the active creator lane">Fit ↓</span>
       </div>
     </details>
 
@@ -4910,10 +4891,12 @@ footer .quote {
   <div class="conv-body">
     <div class="conv-eyebrow">⚡ Outlier · breakout factor</div>
     <div class="outlier-stats" id="outlierStats"></div>
+    <div class="outlier-modal-competitor" id="outlierCompetitor"></div>
+    <div class="outlier-modal-idea" id="outlierIdea"></div>
     <div class="outlier-topics-label">Key topics</div>
     <div class="outlier-topics" id="outlierTopics"></div>
     <div class="outlier-actions">
-      <button class="outlier-action" id="outlierCopyBtn" type="button">📋 Use as topic seed</button>
+      <button class="outlier-action" id="outlierCopyBtn" type="button">📋 Copy Jack angle</button>
       <a class="outlier-action" id="outlierWatchLink" target="_blank" rel="noopener noreferrer">▶ Watch on YouTube</a>
     </div>
   </div>
@@ -4977,7 +4960,7 @@ footer .quote {
       <pre>saturation = 0.35·github + 0.30·hn + 0.20·arxiv + 0.15·semantic_scholar
   (each input is the topic's percentile against today's top-N)</pre>
     </div>
-    <div class="meth-foot">Submission repo: <a href="https://github.com/kuhnhomeuk-cell/ai-alpha-radar-submission" target="_blank" rel="noopener">github.com/kuhnhomeuk-cell/ai-alpha-radar-submission</a></div>
+    <div class="meth-foot">All code is open: <a href="https://github.com/kuhnhomeuk-cell/ai-alpha-radar" target="_blank" rel="noopener">github.com/kuhnhomeuk-cell/ai-alpha-radar</a></div>
   </div>
 </div>
 
@@ -5137,31 +5120,6 @@ function persistWatchlist() {
   try { localStorage.setItem('aar_watchlist', JSON.stringify([...WATCHLIST])); } catch (e) {}
 }
 function inWatch(kw) { return WATCHLIST.has(kw); }
-function trendIdentityKey(t) {
-  return (t && (t.canonical_form || t.keyword)) || '';
-}
-function formatTrendFallbackName(s) {
-  return deDash(s)
-    .replace(/[-_]+/g, ' ')
-    .replace(/\s+/g, ' ')
-    .trim();
-}
-function trendDisplayName(t) {
-  const display = t && !isPlaceholder(t.display_label) ? deDash(t.display_label).trim() : '';
-  return display || formatTrendFallbackName((t && (t.keyword || t.canonical_form)) || '');
-}
-function creatorFitValue(t) {
-  if (!t || typeof t.creator_fit !== 'number' || !Number.isFinite(t.creator_fit)) return null;
-  return Math.max(0, Math.min(1, t.creator_fit));
-}
-function creatorFitBadgeHtml(t, compact = false) {
-  const fit = creatorFitValue(t);
-  if (fit === null) return '';
-  const pct = Math.round(fit * 100);
-  const tier = fit >= 0.75 ? ' strong' : (fit >= 0.45 ? ' medium' : '');
-  const label = fit >= 0.75 && !compact ? `make now · ${pct}% fit` : `${pct}% fit`;
-  return `<span class="creator-fit${tier}" title="Creator profile fit">${label}</span>`;
-}
 function toggleWatch(kw) {
   if (!kw) return;
   const wasIn = WATCHLIST.has(kw);
@@ -5209,8 +5167,6 @@ async function loadData() {
     TRENDS = (snap.trends || []).map(t => ({
       keyword: t.keyword,
       canonical_form: t.canonical_form,
-      display_label: t.display_label || '',
-      creator_fit: typeof t.creator_fit === 'number' && Number.isFinite(t.creator_fit) ? t.creator_fit : null,
       cluster_id: t.cluster_id,
       cluster_label: t.cluster_label,
       stage: t.lifecycle_stage,
@@ -5333,10 +5289,6 @@ function sortRadarTrends(trends) {
   return [...trends].sort((a, b) => {
     if (sortKey === 'velocity')   return (b.velocity || 0)   - (a.velocity || 0);
     if (sortKey === 'hidden_gem') return (b.hidden_gem || 0) - (a.hidden_gem || 0);
-    if (sortKey === 'creator_fit') {
-      const fitDelta = (creatorFitValue(b) ?? -1) - (creatorFitValue(a) ?? -1);
-      return fitDelta || (b.tbts || 0) - (a.tbts || 0);
-    }
     return (b.tbts || 0) - (a.tbts || 0);
   });
 }
@@ -5529,7 +5481,6 @@ function runSearch(rawQ) {
   if (!q) { card.classList.remove('visible'); card.innerHTML = ''; return; }
 
   const radarMatches = TRENDS.filter(t =>
-    trendDisplayName(t).toLowerCase().includes(q) ||
     (t.keyword || '').toLowerCase().includes(q) ||
     (t.canonical_form || '').toLowerCase().includes(q)
   );
@@ -5637,10 +5588,6 @@ function renderSourceHealth() {
   if (SNAPSHOT_DATE) {
     parts.push(`<span class="refreshed">refreshed ${escapeHtml(SNAPSHOT_DATE)} · 06:00 UTC</span>`);
   }
-  const profileName = META && META.creator_profile && META.creator_profile.display_name;
-  if (!isPlaceholder(profileName)) {
-    parts.push(`<span class="src-profile">tuned for ${escapeHtml(profileName)}</span>`);
-  }
   srcList.innerHTML = parts.join('');
 
   const cost = META && typeof META.claude_cost_usd === 'number' ? META.claude_cost_usd : null;
@@ -5718,7 +5665,6 @@ const RANKING_SORT_META = {
   tbts: { label: 'TBTS', note: 'trend-before-trend score' },
   velocity: { label: 'Velocity', note: 'growth versus baseline' },
   hidden_gem: { label: 'Hidden Gem', note: 'early signal strength' },
-  creator_fit: { label: 'Fit', note: 'creator profile match' },
 };
 function radarBubbleCandidates() {
   return TRENDS.filter(t => trendVisibleBySource(t) && trendVisibleByWatchlist(t));
@@ -5770,14 +5716,13 @@ function renderChartRankings() {
     </div>
   `;
   const rows = sorted.map((t, i) => {
-    const kw = trendIdentityKey(t);
-    const displayName = trendDisplayName(t);
+    const kw = t.canonical_form || t.keyword;
     const q = radarQuadrantForTrend(t, visible);
     const topFive = i < 5;
     return `
       <button type="button" class="chart-rank-row${topFive ? ' top-five' : ''}" data-kw="${escapeAttr(kw)}" style="--zone-color:${q.color}">
         <span class="rank">${String(i + 1).padStart(2, '0')}</span>
-        <span class="name"><span class="name-text">${escapeHtml(displayName)}</span>${creatorFitBadgeHtml(t, true)}${topFive ? '<span class="top-badge">top 5</span>' : ''}</span>
+        <span class="name"><span class="name-text">${escapeHtml(t.keyword)}</span>${topFive ? '<span class="top-badge">top 5</span>' : ''}</span>
         <span class="zone">${escapeHtml(q.short)}</span>
         <span class="metric">${(t.tbts || 0).toFixed(1)}</span>
         <span class="metric">${(t.velocity || 0).toFixed(1)}x</span>
@@ -5990,8 +5935,7 @@ function renderBubbleFallback(el) {
     return TRENDS
       .filter(t => t.stage === stage && trendVisibleBySource(t) && trendVisibleByWatchlist(t))
       .map(t => {
-        const kw = trendIdentityKey(t);
-        const displayName = trendDisplayName(t);
+        const kw = t.canonical_form || t.keyword;
         const sel = kw === state.selectedKeyword;
         const clusterActive = state.activeCluster === null || t.cluster_id === state.activeCluster;
         const lit = stageActive && clusterActive;
@@ -6059,7 +6003,7 @@ function renderBubbleFallback(el) {
         const _bubbleXFrac = (cx - pad.left) / plotW;
         const labelAnchor = _bubbleXFrac < 0.5 ? 'start' : 'end';
         const labelX = labelAnchor === 'start' ? (cx + r + 6) : (cx - r - 6);
-        const labelText = sel ? displayName : _truncLabel(displayName);
+        const labelText = sel ? t.keyword : _truncLabel(t.keyword);
         return { t, kw, sel, lit, r, weight, color, zone, cx, cy, anchorCx: cx, anchorCy: cy, rank, inTopN, labelX, labelY, labelAnchor, labelText };
       });
   });
@@ -6269,7 +6213,7 @@ function renderBubbleFallback(el) {
     const headline = (g.t.angles && g.t.angles.hook) || g.t.summary || 'Open trend detail';
     const zoneLabel = (QUADRANT_STYLE[g.zone]?.label || g.zone || '').replace(' · whitespace', '');
     return [g.kw, {
-      name: trendDisplayName(g.t),
+      name: g.t.keyword,
       headline,
       kicker: zoneLabel,
       meta: `TBTS ${(g.t.tbts || 0).toFixed(1)} · ${Math.round(g.weight * 100)} signal weight · ${Math.round(g.t.saturation)}% sat`,
@@ -6285,7 +6229,7 @@ function renderBubbleFallback(el) {
     const _tbts01 = Math.max(0, Math.min(1, (g.t.tbts || 0) / 100));
     const stageOp = 0.35 + 0.6 * _tbts01;
     return `
-      <g class="fallback-point${g.sel ? ' selected' : ''}${g.lit ? '' : ' muted'}" data-bubble-kw="${escapeAttr(g.kw)}" tabindex="0" role="button" aria-label="${escapeAttr(trendDisplayName(g.t))}" style="--pt:${g.color};--stage-op:${stageOp}">
+      <g class="fallback-point${g.sel ? ' selected' : ''}${g.lit ? '' : ' muted'}" data-bubble-kw="${escapeAttr(g.kw)}" tabindex="0" role="button" aria-label="${escapeAttr(g.t.keyword)}" style="--pt:${g.color};--stage-op:${stageOp}">
         <circle cx="${g.cx}" cy="${g.cy}" r="${g.r}" class="fallback-bubble" />
         ${showLabel ? `<text x="${g.labelX}" y="${g.labelY}" class="fallback-label" text-anchor="${g.labelAnchor}">${escapeHtml(g.labelText)}</text>` : ''}
       </g>
@@ -6445,8 +6389,7 @@ function renderBubble() {
       data: TRENDS
         .filter(t => t.stage === stage && trendVisibleBySource(t) && trendVisibleByWatchlist(t))
         .map(t => {
-          const kw = trendIdentityKey(t);
-          const displayName = trendDisplayName(t);
+          const kw = t.canonical_form || t.keyword;
           const sel = kw === state.selectedKeyword;
           const clusterActive = state.activeCluster === null || t.cluster_id === state.activeCluster;
           const lit = stageActive && clusterActive;
@@ -6459,8 +6402,8 @@ function renderBubble() {
           const _tbts01 = Math.max(0, Math.min(1, (t.tbts || 0) / 100));
           const _weightOpacity = 0.35 + 0.6 * _tbts01;
           return {
-            name: displayName,
-            value: [t.saturation, t.tbts, t.hidden_gem || 0, displayName, t.cluster_label || '—', t.velocity || 0, kw, hasConvergence(t) ? 1 : 0],
+            name: t.keyword,
+            value: [t.saturation, t.tbts, t.hidden_gem || 0, t.keyword, t.cluster_label || '—', t.velocity || 0, kw, hasConvergence(t) ? 1 : 0],
             itemStyle: {
               color: '#00d4ff',
               opacity: lit ? (sel ? 1 : _weightOpacity) : 0.18,
@@ -6472,7 +6415,7 @@ function renderBubble() {
             label: {
               show: sel || (lit && inTopN),
               position: 'right',
-              formatter: displayName,
+              formatter: t.keyword,
               color: sel ? '#0a0a0a' : '#4a4a4a',
               fontSize: sel ? 12 : 11,
               fontWeight: sel ? 600 : 500,
@@ -6549,8 +6492,8 @@ function renderBubble() {
       extraCssText: 'backdrop-filter: blur(20px) saturate(180%); box-shadow: 0 12px 32px rgba(0,0,0,0.06), 0 32px 64px rgba(0,0,0,0.08), inset 0 1px 0 rgba(255,255,255,0.95);',
       textStyle: { color: '#0a0a0a', fontFamily: 'var(--mono)', fontSize: 11 },
       formatter: p => `
-        <div style="font-family:var(--sans);font-weight:700;font-size:14px;margin-bottom:8px;color:var(--ink);letter-spacing:-0.01em">${escapeHtml(p.value[3])}</div>
-        <div style="color:var(--ink-2)">cluster    <span style="color:var(--ink)">${escapeHtml(p.value[4])}</span></div>
+        <div style="font-family:var(--sans);font-weight:700;font-size:14px;margin-bottom:8px;color:var(--ink);letter-spacing:-0.01em">${p.value[3]}</div>
+        <div style="color:var(--ink-2)">cluster    <span style="color:var(--ink)">${p.value[4]}</span></div>
         <div style="color:var(--ink-2)">saturation <span style="color:var(--ink)">${p.value[0].toFixed(0)}%</span></div>
         <div style="color:var(--ink-2)">TBTS       <span style="color:var(--ink)">${p.value[1]}</span></div>
         <div style="color:var(--ink-2)">hidden_gem <span style="color:var(--ink)">${(p.value[2]||0).toFixed(2)}</span></div>
@@ -6646,7 +6589,7 @@ function renderTopicRail() {
   }
 
   picks.forEach((trend) => {
-    const kw = trendIdentityKey(trend);
+    const kw = trend.canonical_form || trend.keyword;
     const button = document.createElement('button');
     button.type = 'button';
     button.className = 'topic';
@@ -6654,7 +6597,7 @@ function renderTopicRail() {
 
     const name = document.createElement('span');
     name.className = 'topic-name';
-    name.textContent = trendDisplayName(trend);
+    name.textContent = trend.keyword;
     button.appendChild(name);
 
     const delta = document.createElement('span');
@@ -6686,7 +6629,7 @@ function renderTodayPick(top) {
   const sumEl = document.getElementById('tpSummary');
   const ctaEl = document.getElementById('tpCta');
   if (kwEl) {
-    kwEl.textContent = trendDisplayName(top);
+    kwEl.textContent = top.keyword;
     // O6 — lifecycle timing badge next to keyword
     const _existingBadge = kwEl.querySelector('.tp-timing-badge');
     if (_existingBadge) _existingBadge.remove();
@@ -6719,11 +6662,10 @@ function renderLeaderboard() {
   // Denominator matches the chart's "N tracked terms" so the two panels
   // tell the same story (see #9).
   const titleEl = document.getElementById('leaderboardTitle');
-  const sortMeta = RANKING_SORT_META[state.sort] || RANKING_SORT_META.tbts;
   if (titleEl) {
     titleEl.textContent = state.watchlistOnly
       ? `Watchlist · ${visible.length} saved signals`
-      : `Top ${Math.min(20, visible.length)}/${TRENDS.length} · ${sortMeta.label}`;
+      : `Top ${Math.min(20, visible.length)}/${TRENDS.length} · TBTS`;
   }
   const metaEl = document.getElementById('leaderboardMeta');
   if (metaEl) metaEl.textContent = state.watchlistOnly ? 'focused saved signals' : 'refreshed 06:00 UTC';
@@ -6738,8 +6680,7 @@ function renderLeaderboard() {
   }
 
   const html = sorted.map((t, i) => {
-    const kw = trendIdentityKey(t);
-    const displayName = trendDisplayName(t);
+    const kw = t.canonical_form || t.keyword;
     const sel = kw === state.selectedKeyword;
     const conv = hasConvergence(t);
     const stageColor = STAGE_META[t.stage]?.color || '#8b9cb0';
@@ -6757,11 +6698,10 @@ function renderLeaderboard() {
       <div class="lb-row${sel ? ' selected' : ''}${isPlaceholder(t.summary) ? ' trend-placeholder' : ''}" data-kw="${escapeAttr(kw)}">
         <div class="rank">${String(i + 1).padStart(2, '0')}</div>
         <div class="lb-main">
-          <div class="name">${escapeHtml(displayName)}</div>
+          <div class="name">${escapeHtml(t.keyword)}</div>
           <div class="stage-mini" style="color:${stageColor}">
             <span class="stage-label"><span class="stage-dot ${t.stage}"></span>${STAGE_META[t.stage]?.label || t.stage} · sat ${Math.round(t.saturation)}%</span>
             ${conv ? `<span class="conv-badge" data-conv="${escapeAttr(kw)}" title="View convergence timeline">⚡ CONV</span>` : ''}
-            ${creatorFitBadgeHtml(t)}
             <span class="lb-volume" title="Mentions in last 24 hours across arXiv + GitHub + HN">vol ${volume}${deltaPct !== null ? ` <span class="lb-delta ${deltaCls}" title="24-hour growth rate">${deltaPct > 0 ? '+' : ''}${deltaPct}%</span>` : ''}</span>
           </div>
           ${consensus ? `<div class="lb-consensus">${consensus}</div>` : ''}
@@ -7017,7 +6957,7 @@ function openDetailPanel(kw) {
   const t = TRENDS.find(x => (x.canonical_form || x.keyword) === kw);
   if (!t) return;
   try { performance.mark('aar_panel_open_' + kw); } catch(_){}
-  document.getElementById('dpName').textContent    = trendDisplayName(t);
+  document.getElementById('dpName').textContent    = t.keyword;
   document.getElementById('dpCluster').textContent = `cluster · ${t.cluster_label || '—'}`;
   document.getElementById('dpSummary').textContent = t.summary || '—';
   document.getElementById('dpTbts').textContent    = (t.tbts || 0).toFixed(1);
@@ -7212,10 +7152,6 @@ function composeScriptAngle(trend, outliers) {
   const hookText = trend.angles && trend.angles.hook;
   const hook = !isPlaceholder(hookText) ? { text: hookText } : null;
 
-  // NEXT VIDEO (creator-profile slice)
-  const videoTitleText = trend.angles && trend.angles.video_title;
-  const nextVideo = !isPlaceholder(videoTitleText) ? { text: videoTitleText } : null;
-
   // PROBLEM (step 2)
   let problem = null;
   const points = trend.pain_points || [];
@@ -7268,7 +7204,7 @@ function composeScriptAngle(trend, outliers) {
   const eliText = !isPlaceholder(angles.eli_creator) ? angles.eli_creator : null;
   const eli = eliText ? { text: eliText } : null;
 
-  return { timing, nextVideo, hook, problem, format, body, eli };
+  return { timing, hook, problem, format, body, eli };
 }
 
 /* Renderer — createElement + textContent only. */
@@ -7277,7 +7213,7 @@ function renderScriptAngle(t, outliers, host) {
   host.replaceChildren();
 
   const angle = composeScriptAngle(t, outliers);
-  const allSlotsEmpty = !angle.nextVideo && !angle.hook && !angle.problem && !angle.format && !angle.body && !angle.eli;
+  const allSlotsEmpty = !angle.hook && !angle.problem && !angle.format && !angle.body && !angle.eli;
 
   const card = document.createElement('div');
   card.className = 'sa-card';
@@ -7341,13 +7277,6 @@ function renderScriptAngle(t, outliers, host) {
     emptyRow.appendChild(empty);
     rows.appendChild(emptyRow);
   } else {
-    // YOUR NEXT VIDEO
-    if (angle.nextVideo) {
-      const row = makeRow('YOUR NEXT VIDEO', angle.nextVideo.text, null);
-      row.classList.add('next-video');
-      rows.appendChild(row);
-    }
-
     // HOOK
     if (angle.hook) {
       rows.appendChild(makeRow('THE HOOK', angle.hook.text, null));
@@ -7432,9 +7361,8 @@ function renderScriptAngle(t, outliers, host) {
   copyBtn.textContent = '⎘ Copy script brief';
   copyBtn.addEventListener('click', () => {
     const lines = [];
-    lines.push('SCRIPT ANGLE — ' + (trendDisplayName(t) || ''));
+    lines.push('SCRIPT ANGLE — ' + (t.keyword || ''));
     lines.push('TIMING: ' + angle.timing.label);
-    if (angle.nextVideo) lines.push('\nYOUR NEXT VIDEO:\n' + angle.nextVideo.text);
     if (angle.hook)    lines.push('\nHOOK:\n' + angle.hook.text);
     if (angle.problem) {
       lines.push('\nPROBLEM (' + angle.problem.rank_label + '):\n' + angle.problem.text +
@@ -7583,6 +7511,18 @@ function renderOutliers() {
     channel.className = 'outlier-channel';
     channel.textContent = o.channel_name || '';
     body.appendChild(channel);
+    if (o.competitor_channel) {
+      const competitor = document.createElement('div');
+      competitor.className = 'outlier-competitor';
+      competitor.textContent = 'Competitor signal · ' + o.competitor_channel;
+      body.appendChild(competitor);
+    }
+    if (o.creator_idea) {
+      const idea = document.createElement('div');
+      idea.className = 'outlier-idea';
+      idea.textContent = o.creator_idea;
+      body.appendChild(idea);
+    }
 
     const statsRow = document.createElement('div');
     statsRow.className = 'outlier-stats-row';
@@ -7644,6 +7584,18 @@ function openOutlierModal(idx) {
     stats.appendChild(cell);
   });
 
+  const competitorHost = document.getElementById('outlierCompetitor');
+  const ideaHost = document.getElementById('outlierIdea');
+  if (competitorHost) {
+    competitorHost.textContent = o.competitor_channel
+      ? 'Competitor signal · ' + o.competitor_channel
+      : '';
+  }
+  if (ideaHost) {
+    ideaHost.textContent = o.creator_idea || '';
+    ideaHost.style.display = o.creator_idea ? '' : 'none';
+  }
+
   const topicsHost = document.getElementById('outlierTopics');
   topicsHost.replaceChildren();
   const topics = (o.key_topics || []);
@@ -7663,16 +7615,16 @@ function openOutlierModal(idx) {
 
   const copyBtn = document.getElementById('outlierCopyBtn');
   copyBtn.classList.remove('copied');
-  copyBtn.textContent = '📋 Use as topic seed';
+  copyBtn.textContent = '📋 Copy Jack angle';
   copyBtn.onclick = () => {
-    const text = o.title || '';
+    const text = o.creator_idea || o.title || '';
     if (navigator.clipboard && navigator.clipboard.writeText) {
       navigator.clipboard.writeText(text).then(() => {
         copyBtn.classList.add('copied');
         copyBtn.textContent = '✓ Copied';
         setTimeout(() => {
           copyBtn.classList.remove('copied');
-          copyBtn.textContent = '📋 Use as topic seed';
+          copyBtn.textContent = '📋 Copy Jack angle';
         }, 1500);
         const preview = text.length > 60 ? text.slice(0, 58).trim() + '…' : text;
         aarToast('Copied: ', { em: preview });
@@ -7809,7 +7761,7 @@ function renderConvergenceTimeline(host, firstAppearance) {
 function openConvergence(kw) {
   const t = TRENDS.find(x => (x.canonical_form || x.keyword) === kw);
   if (!t || !hasConvergence(t)) return;
-  document.getElementById('convName').textContent    = trendDisplayName(t);
+  document.getElementById('convName').textContent    = t.keyword;
   document.getElementById('convCluster').textContent = `cluster · ${t.cluster_label || '—'}`;
   renderConvergenceTimeline(document.getElementById('convTimeline'), t.convergence.first_appearance);
 
@@ -7967,13 +7919,12 @@ function renderGems() {
       const conv = t.convergence && t.convergence.detected;
       const a = t.angles || {};
       const sparkEmpty = !t.sparkline || !t.sparkline.length;
-      const displayName = trendDisplayName(t);
       return `
         <div class="gem-card ${conv ? 'convergence' : ''}${isPlaceholder(t.summary) ? ' trend-placeholder' : ''}" data-kw="${escapeAttr(t.canonical_form || t.keyword)}">
           <div class="gem-headrow">
             <div style="display:flex; align-items:center; gap:8px; overflow:hidden;">
               <button class="star-btn${inWatch(t.canonical_form || t.keyword) ? ' on' : ''}" data-kw="${escapeAttr(t.canonical_form || t.keyword)}" aria-label="Toggle watchlist" title="Toggle watchlist">★</button>
-              <div class="gem-keyword">${escapeHtml(displayName)}</div>
+              <div class="gem-keyword">${escapeHtml(t.keyword)}</div>
             </div>
             <div class="gem-score">
               ${Math.round((t.hidden_gem || 0) * 100)}
@@ -7984,7 +7935,6 @@ function renderGems() {
             <span class="badge"><span class="stage-dot ${t.stage}"></span> ${STAGE_META[t.stage]?.label || t.stage}</span>
             <span class="badge">SAT ${Math.round(t.saturation)}%</span>
             <span class="badge">TBTS ${(t.tbts || 0).toFixed(1)}</span>
-            ${creatorFitBadgeHtml(t)}
             <span class="badge">${sourceBadge(t.sources || {})}</span>
           </div>
           ${channelMixBar(t.sources, 200) ? `<div class="gem-mix">${channelMixBar(t.sources, 200)}<div class="gem-mix-legend">${channelMixLegend(t.sources)}</div></div>` : ''}
@@ -7994,7 +7944,6 @@ function renderGems() {
             : `<div class="gem-sparkline" data-spark='${JSON.stringify(t.sparkline)}' data-color="${STAGE_META[t.stage]?.color || '#8b9cb0'}"></div>`}
           <div class="gem-angles">
             <div class="label">CONTENT ANGLES · tailored to your niche</div>
-            ${!isPlaceholder(a.video_title) ? `<div class="angle"><span class="tag video">YOUR NEXT VIDEO</span><span>${escapeHtml(deDash(a.video_title))}</span></div>` : ''}
             <div class="angle"><span class="tag hook">HOOK</span><span>${escapeHtml(isPlaceholder(a.hook) ? '—' : deDash(a.hook))}</span></div>
             <div class="angle"><span class="tag cont">CONTRARIAN</span><span>${escapeHtml(isPlaceholder(a.contrarian) ? '—' : deDash(a.contrarian))}</span></div>
             <div class="angle"><span class="tag tut">TUTORIAL</span><span>${escapeHtml(isPlaceholder(a.tutorial) ? '—' : deDash(a.tutorial))}</span></div>
@@ -8103,20 +8052,12 @@ function renderAlmanac() {
     .slice(0, 9);
   const html = picks.map(t => {
     const a = t.angles || {};
-    const displayName = trendDisplayName(t);
     return `
       <div class="almanac-card">
         <div class="topic">
-          ${escapeHtml(displayName)} <span class="stage">· ${STAGE_META[t.stage]?.label || ''}</span>
-          ${creatorFitBadgeHtml(t, true)}
+          ${escapeHtml(t.keyword)} <span class="stage">· ${STAGE_META[t.stage]?.label || ''}</span>
           <button class="star-btn${inWatch(t.canonical_form || t.keyword) ? ' on' : ''}" data-kw="${escapeAttr(t.canonical_form || t.keyword)}" aria-label="Toggle watchlist" title="Toggle watchlist" style="margin-left:auto;">★</button>
         </div>
-        ${!isPlaceholder(a.video_title) ? `
-        <div class="almanac-row next-video">
-          <div class="tag">Your Next Video</div>
-          <div class="title">${escapeHtml(deDash(a.video_title))}</div>
-        </div>
-        ` : ''}
         <div class="almanac-row">
           <div class="tag">Hook</div>
           <div class="title">${escapeHtml(isPlaceholder(a.hook) ? '—' : deDash(a.hook))}</div>

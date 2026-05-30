@@ -18,6 +18,9 @@ showing the final product exactly as judges will use it.
 - Snapshot date: `2026-05-30`
 - Generated at: `2026-05-30T20:10:27Z`
 - Trend cards: `21`
+- YouTube outliers refreshed at: `2026-05-30T20:37:38Z`
+- YouTube outliers: `30`, including Jack-specific content angles and
+  competitor-channel labels
 - Creator profile: `Jack Roberts`
 
 ## What Is Not Included
