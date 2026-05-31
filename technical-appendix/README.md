@@ -15,9 +15,9 @@ showing the final product exactly as judges will use it.
 
 ## Latest Snapshot
 
-- Snapshot date: `2026-05-30`
-- Generated at: `2026-05-30T20:10:27Z`
-- Trend cards: `21`
+- Snapshot date: `2026-05-31`
+- Generated at: `2026-05-31T08:51:47Z`
+- Trend cards: `24`
 - YouTube outliers refreshed at: `2026-05-30T20:58:06Z`
 - YouTube outliers: `30` total ideas, including `22` adjacent ideas and `8`
   general ideas

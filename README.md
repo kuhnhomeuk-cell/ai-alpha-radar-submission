@@ -15,7 +15,7 @@ Judge-facing static submission for the AI Alpha Radar landing page and dashboard
 ## Snapshot
 
 The dashboard is powered by a generated static snapshot at `public/data.json`.
-The latest included snapshot was generated on `2026-05-30T20:10:27Z` for the
+The latest included snapshot was generated on `2026-05-31T08:51:47Z` for the
 Jack Roberts creator profile.
 The YouTube outliers feed in that snapshot was refreshed on
 `2026-05-30T20:58:06Z` and includes Jack-specific content angles, an All Ideas
