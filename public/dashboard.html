@@ -349,6 +349,7 @@ html::after {
 .topbar {
   display: grid;
   grid-template-columns: minmax(180px, auto) 1fr minmax(180px, auto);
+  grid-template-areas: "brand nav tools";
   align-items: center;
   gap: var(--sp-4);
   padding: var(--sp-3) var(--sp-5);
@@ -361,6 +362,7 @@ html::after {
 /* Brand wordmark — cloned directly from landing page `.brand` for cross-page
    parity. Sans, bold, tight tracking + the pulse-wave SVG icon. */
 .brand {
+  grid-area: brand;
   font-family: var(--sans);
   font-weight: 700;
   font-size: 20px;
@@ -444,6 +446,7 @@ html::after {
   margin-left: var(--sp-1);
 }
 .nav {
+  grid-area: nav;
   display: flex;
   justify-content: center;
   gap: 2px;
@@ -501,6 +504,7 @@ html::after {
   box-shadow: 0 0 8px var(--accent);
 }
 .topbar .right {
+  grid-area: tools;
   display: flex;
   align-items: center;
   gap: 10px;
@@ -4593,9 +4597,28 @@ footer .quote {
   .nav button .nav-count { display: none; }
 }
 
+@media (max-width: 1780px) {
+  .topbar {
+    grid-template-columns: minmax(180px, auto) minmax(0, 1fr);
+    grid-template-areas:
+      "brand tools"
+      "nav nav";
+    row-gap: 12px;
+  }
+
+  .nav {
+    width: 100%;
+    padding: 0;
+  }
+}
+
 @media (max-width: 1180px) {
   .topbar {
     grid-template-columns: 1fr;
+    grid-template-areas:
+      "brand"
+      "nav"
+      "tools";
     align-items: stretch;
   }
 
@@ -4627,6 +4650,10 @@ footer .quote {
     margin: 12px 12px 0;
     padding: 16px;
     border-radius: 22px;
+    grid-template-areas:
+      "brand"
+      "tools"
+      "nav";
   }
 
   .brand { font-size: 18px; }
