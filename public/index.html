@@ -299,15 +299,6 @@
     .dot-1 { background: #e2e8f0; }
     .dot-2 { background: #cbd5e1; }
     .dot-3 { background: #94a3b8; }
-    .device-url {
-      flex: 1;
-      font-family: var(--font-mono);
-      font-size: 12px;
-      color: var(--muted);
-      margin-left: 12px;
-      text-align: center;
-    }
-    
     .device-body {
       padding: 40px;
       display: flex;
@@ -345,14 +336,14 @@
       border-radius: 4px 4px 0 0;
       opacity: 0.8;
       transform-origin: bottom;
-      animation: bar-grow 4s cubic-bezier(0.25, 1, 0.5, 1) infinite alternate;
+      animation: bar-grow 3s cubic-bezier(0.25, 1, 0.5, 1) infinite alternate;
     }
-    .chart-bar:nth-child(2) { animation-delay: 0.1s; background: #33ebff; }
-    .chart-bar:nth-child(3) { animation-delay: 0.2s; background: #66f0ff; }
-    .chart-bar:nth-child(4) { animation-delay: 0.3s; background: var(--accent); }
-    .chart-bar:nth-child(5) { animation-delay: 0.4s; background: #00b8e6; }
-    .chart-bar:nth-child(6) { animation-delay: 0.5s; background: #33ebff; }
-    .chart-bar:nth-child(7) { animation-delay: 0.6s; background: var(--accent); }
+    .chart-bar:nth-child(2) { animation-delay: 0.04s; background: #33ebff; }
+    .chart-bar:nth-child(3) { animation-delay: 0.08s; background: #66f0ff; }
+    .chart-bar:nth-child(4) { animation-delay: 0.12s; background: var(--accent); }
+    .chart-bar:nth-child(5) { animation-delay: 0.16s; background: #00b8e6; }
+    .chart-bar:nth-child(6) { animation-delay: 0.20s; background: #33ebff; }
+    .chart-bar:nth-child(7) { animation-delay: 0.24s; background: var(--accent); }
     
     @keyframes bar-grow {
       0% { transform: scaleY(0.4); }
@@ -412,8 +403,10 @@
     }
 
     .soundtrack-toggle {
-      position: relative;
-      z-index: 1;
+      position: fixed;
+      right: 28px;
+      bottom: 24px;
+      z-index: 3;
       display: inline-flex;
       align-items: center;
       gap: 10px;
@@ -474,8 +467,15 @@
     }
     @media (max-width: 760px) {
       .soundtrack-toggle {
-        padding: 9px 12px;
+        top: auto;
+        right: 16px;
+        bottom: 16px;
+        width: 48px;
+        height: 48px;
+        padding: 0;
+        justify-content: center;
       }
+      .soundtrack-toggle .soundtrack-copy { display: none; }
     }
     @media (prefers-reduced-motion: reduce) {
       .topnav,
@@ -497,6 +497,13 @@
 
   <video class="video-bg" src="bg-pingpong.mp4" autoplay loop muted playsinline aria-hidden="true"></video>
   <audio id="soundtrack" src="cloud-light.mp3" loop preload="auto"></audio>
+  <button class="soundtrack-toggle needs-gesture" id="soundtrackToggle" type="button" aria-label="Toggle Cloud Light soundtrack" aria-pressed="false">
+    <span class="soundtrack-dot" aria-hidden="true"></span>
+    <span class="soundtrack-copy">
+      <span class="soundtrack-title">Cloud Light</span>
+      <span class="soundtrack-state" id="soundtrackState">Soundtrack</span>
+    </span>
+  </button>
 
   <div class="content-wrapper">
     <header class="topnav">
@@ -512,7 +519,7 @@
       </nav>
       <div class="nav-actions">
         <a href="dashboard.html" class="btn btn-outline" style="padding: 8px 16px; font-size: 14px;">Sign in</a>
-        <a href="dashboard.html" class="btn btn-primary" style="padding: 8px 16px; font-size: 14px;">Get Access</a>
+        <a href="dashboard.html" class="btn btn-primary" style="padding: 8px 16px; font-size: 14px;">Start Tracking</a>
       </div>
     </header>
 
@@ -528,18 +535,11 @@
         </h1>
         
         <p class="lead">
-          AI Alpha Radar is the trend dashboard for operators who can't afford to be second. We surface the signal weeks before the headline — across papers, repos, podcasts, search, and discourse.
+          The early-warning dashboard for operators who can't afford to be second. We surface what's accelerating across papers, repos, and podcasts — weeks before the headline.
         </p>
         
         <div class="hero-cta">
           <a href="dashboard.html" class="btn btn-primary">Start tracking — free for 14 days ↗</a>
-          <button class="soundtrack-toggle needs-gesture" id="soundtrackToggle" type="button" aria-label="Toggle Cloud Light soundtrack" aria-pressed="false">
-            <span class="soundtrack-dot" aria-hidden="true"></span>
-            <span class="soundtrack-copy">
-              <span class="soundtrack-title">Cloud Light</span>
-              <span class="soundtrack-state" id="soundtrackState">Soundtrack</span>
-            </span>
-          </button>
         </div>
         
         <div class="hero-meta">
@@ -557,7 +557,6 @@
           <span class="device-dot dot-1" aria-hidden="true"></span>
           <span class="device-dot dot-2" aria-hidden="true"></span>
           <span class="device-dot dot-3" aria-hidden="true"></span>
-          <span class="device-url">alpha.radar / observatory</span>
         </div>
         
         <div class="device-body">
