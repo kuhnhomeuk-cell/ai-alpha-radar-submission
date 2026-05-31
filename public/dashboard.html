@@ -5103,7 +5103,7 @@ html[data-theme="dark"] body #detailPanel.detail-panel.visible {
           <span class="conv-badge" data-conv="" id="dpConvBadge">⚡ CONVERGENCE · timeline</span>
         </div>
       </div>
-      <button class="close" type="button" aria-label="Close detail panel" onclick="window.clearSelection()">CLOSE ✕</button>
+      <button class="close" type="button" aria-label="Close detail panel" onclick="window.clearSelection(event)">CLOSE ✕</button>
     </div>
     <div class="body">
       <div class="summary" id="dpSummary">—</div>
@@ -5771,15 +5771,51 @@ function renderThemes() {
   requestAnimationFrame(syncChartRankingPanelHeight);
 }
 
-function selectTrend(kw) {
-  state.selectedKeyword = kw;
-  applyState();
-  openDetailPanel(kw);
+function normalizedTrendKey(value) {
+  return String(value || '')
+    .trim()
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '');
 }
-function clearSelection() {
+
+function trendPrimaryKey(t) {
+  return t ? (t.canonical_form || t.keyword || '') : '';
+}
+
+function sameTrendKey(a, b) {
+  const left = normalizedTrendKey(a);
+  const right = normalizedTrendKey(b);
+  return Boolean(left && right && left === right);
+}
+
+function resolveTrendByKey(kw) {
+  const wanted = normalizedTrendKey(kw);
+  if (!wanted) return null;
+  return TRENDS.find(t => [
+    t.canonical_form,
+    t.keyword,
+    t.display_keyword,
+  ].some(v => normalizedTrendKey(v) === wanted)) || null;
+}
+
+function selectTrend(kw) {
+  const trend = resolveTrendByKey(kw);
+  const nextKw = trendPrimaryKey(trend) || kw;
+  const panel = document.getElementById('detailPanel');
+  if (sameTrendKey(state.selectedKeyword, nextKw) && panel && panel.classList.contains('visible')) {
+    clearSelection();
+    return;
+  }
+  state.selectedKeyword = nextKw;
+  applyState();
+  openDetailPanel(nextKw);
+}
+function clearSelection(event) {
+  if (event && typeof event.stopPropagation === 'function') event.stopPropagation();
+  closeDetailPanel();
   state.selectedKeyword = null;
   applyState();
-  closeDetailPanel();
 }
 window.clearSelection = clearSelection;
 
@@ -6008,7 +6044,7 @@ document.addEventListener('keydown', (e) => {
   const searchCard = document.getElementById('searchResults');
   if (searchCard && searchCard.classList.contains('visible')) { clearSearch(); return; }
   const detailPanel = document.getElementById('detailPanel');
-  if (detailPanel && detailPanel.classList.contains('visible')) { closeDetailPanel(); return; }
+  if (detailPanel && detailPanel.classList.contains('visible')) { clearSelection(e); return; }
   const convModal = document.getElementById('convModal');
   if (convModal && convModal.classList.contains('visible')) { closeConvergence(); return; }
   if (state.selectedKeyword) { clearSelection(); return; }
@@ -6306,7 +6342,7 @@ function renderBubbleFallback(el) {
       .filter(t => t.stage === stage && trendVisibleBySource(t) && trendVisibleByWatchlist(t))
       .map(t => {
         const kw = t.canonical_form || t.keyword;
-        const sel = kw === state.selectedKeyword;
+        const sel = sameTrendKey(kw, state.selectedKeyword);
         const clusterActive = state.activeCluster === null || t.cluster_id === state.activeCluster;
         const lit = stageActive && clusterActive;
         const weight = _signalWeight(t);
@@ -6753,7 +6789,7 @@ function renderBubble() {
         .filter(t => t.stage === stage && trendVisibleBySource(t) && trendVisibleByWatchlist(t))
         .map(t => {
           const kw = t.canonical_form || t.keyword;
-          const sel = kw === state.selectedKeyword;
+          const sel = sameTrendKey(kw, state.selectedKeyword);
           const clusterActive = state.activeCluster === null || t.cluster_id === state.activeCluster;
           const lit = stageActive && clusterActive;
           const inTopN = _labeledKws.has(kw);
@@ -7052,7 +7088,7 @@ function renderLeaderboard() {
 
   const html = sorted.map((t, i) => {
     const kw = t.canonical_form || t.keyword;
-    const sel = kw === state.selectedKeyword;
+    const sel = sameTrendKey(kw, state.selectedKeyword);
     const conv = hasConvergence(t);
     const stageColor = STAGE_META[t.stage]?.color || '#8b9cb0';
     const headroom = Math.max(0, Math.round(100 - (t.saturation || 0)));
@@ -7321,9 +7357,10 @@ const VERDICT_LABEL = {
 };
 
 function openDetailPanel(kw) {
-  const t = TRENDS.find(x => (x.canonical_form || x.keyword) === kw);
+  const t = resolveTrendByKey(kw);
   if (!t) return;
-  try { performance.mark('aar_panel_open_' + kw); } catch(_){}
+  const panelKw = trendPrimaryKey(t);
+  try { performance.mark('aar_panel_open_' + panelKw); } catch(_){}
   document.getElementById('dpName').textContent    = displayTopic(t);
   document.getElementById('dpCluster').textContent = `cluster · ${t.cluster_label || '—'}`;
   document.getElementById('dpSummary').textContent = t.summary || '—';
@@ -8153,6 +8190,7 @@ function forecastSVG(history, projection, brier, color) {
 
 function closeDetailPanel() {
   const panel = document.getElementById('detailPanel');
+  if (!panel) return;
   panel.classList.remove('visible');
   panel.setAttribute('aria-hidden', 'true');
   releaseFocus(panel);
