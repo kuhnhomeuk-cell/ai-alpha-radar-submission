@@ -3876,7 +3876,24 @@
     },
     "creator_profile": {
       "id": "jack_roberts",
-      "display_name": "Jack Roberts"
+      "display_name": "Jack Roberts",
+      "competitors": [
+        "Nate Herk · AI Automation",
+        "Nick Saraev",
+        "Jordan Platten",
+        "The Metaverse Guy",
+        "Lex AI",
+        "SyntaxGTM",
+        "Creator Magic",
+        "AI LABS",
+        "Simon Scrapes",
+        "Luke Byrne · AI Coding",
+        "TOMMY YIPXYZ",
+        "Michele Torti",
+        "Kyle Balmer · AI with Kyle",
+        "Samuel Gregory",
+        "Zane Cole"
+      ]
     }
   },
   "data_freshness_status": "live",

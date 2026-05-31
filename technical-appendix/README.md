@@ -19,8 +19,9 @@ showing the final product exactly as judges will use it.
 - Generated at: `2026-05-30T20:10:27Z`
 - Trend cards: `21`
 - YouTube outliers refreshed at: `2026-05-30T20:58:06Z`
-- YouTube outliers: `30` total ideas, including `22` competitor ideas and `8`
+- YouTube outliers: `30` total ideas, including `22` adjacent ideas and `8`
   general ideas
+- Competitor watchlist: `15` channels, with `0` exact hits in this snapshot
 - Creator profile: `Jack Roberts`
 
 ## What Is Not Included

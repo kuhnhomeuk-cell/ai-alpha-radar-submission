@@ -2279,6 +2279,43 @@ html::after {
   color: var(--ink-3);
   margin-left: 6px;
 }
+.outlier-watchlist {
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  padding: 14px 16px;
+  margin: 0 0 20px;
+  background: rgba(255, 255, 255, 0.03);
+}
+.outlier-watchlist-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+.outlier-watchlist-title,
+.outlier-watchlist-hits {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.outlier-watchlist-title { color: var(--accent); }
+.outlier-watchlist-hits { color: var(--ink-3); }
+.outlier-watchlist-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.outlier-watchlist-chip {
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  color: var(--ink-2);
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.04em;
+  padding: 6px 10px;
+}
 .outliers-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
@@ -4907,9 +4944,16 @@ footer .quote {
       <button class="outlier-tab active" type="button" data-outlier-view="all" role="tab" aria-selected="true">
         All Ideas <span class="count" id="outlierAllCount"></span>
       </button>
-      <button class="outlier-tab" type="button" data-outlier-view="competitor" role="tab" aria-selected="false">
-        Competitor Ideas <span class="count" id="outlierCompetitorCount"></span>
+      <button class="outlier-tab" type="button" data-outlier-view="adjacent" role="tab" aria-selected="false">
+        Adjacent Ideas <span class="count" id="outlierAdjacentCount"></span>
       </button>
+    </div>
+    <div class="outlier-watchlist" id="outlierWatchlist">
+      <div class="outlier-watchlist-head">
+        <div class="outlier-watchlist-title">Competitor Watchlist</div>
+        <div class="outlier-watchlist-hits" id="outlierWatchlistHits"></div>
+      </div>
+      <div class="outlier-watchlist-list" id="outlierWatchlistList"></div>
     </div>
     <div class="outliers-meta" id="outliersMeta"></div>
     <div id="outliersHost"></div>
@@ -7478,17 +7522,39 @@ function isCompetitorOutlier(o) {
 }
 
 function visibleOutliers() {
-  if (OUTLIER_VIEW === 'competitor') return YOUTUBE_OUTLIERS.filter(isCompetitorOutlier);
+  if (OUTLIER_VIEW === 'adjacent') return YOUTUBE_OUTLIERS.filter(isCompetitorOutlier);
   return YOUTUBE_OUTLIERS;
+}
+
+function competitorWatchlist() {
+  return (((META || {}).creator_profile || {}).competitors || []).filter(Boolean);
+}
+
+function renderOutlierWatchlist() {
+  const wrap = document.getElementById('outlierWatchlist');
+  const list = document.getElementById('outlierWatchlistList');
+  const hits = document.getElementById('outlierWatchlistHits');
+  if (!wrap || !list || !hits) return;
+  const competitors = competitorWatchlist();
+  list.replaceChildren();
+  wrap.hidden = !competitors.length;
+  const exactHits = YOUTUBE_OUTLIERS.filter(o => (o.competitor_match || '') === 'watchlist').length;
+  hits.textContent = exactHits + ' exact ' + (exactHits === 1 ? 'hit' : 'hits') + ' today';
+  competitors.forEach(name => {
+    const chip = document.createElement('span');
+    chip.className = 'outlier-watchlist-chip';
+    chip.textContent = name;
+    list.appendChild(chip);
+  });
 }
 
 function syncOutlierTabs() {
   const allCount = YOUTUBE_OUTLIERS.length;
-  const competitorCount = YOUTUBE_OUTLIERS.filter(isCompetitorOutlier).length;
+  const adjacentCount = YOUTUBE_OUTLIERS.filter(isCompetitorOutlier).length;
   const allBadge = document.getElementById('outlierAllCount');
-  const competitorBadge = document.getElementById('outlierCompetitorCount');
+  const adjacentBadge = document.getElementById('outlierAdjacentCount');
   if (allBadge) allBadge.textContent = String(allCount);
-  if (competitorBadge) competitorBadge.textContent = String(competitorCount);
+  if (adjacentBadge) adjacentBadge.textContent = String(adjacentCount);
   document.querySelectorAll('.outlier-tab[data-outlier-view]').forEach(tab => {
     const isActive = tab.dataset.outlierView === OUTLIER_VIEW;
     tab.classList.toggle('active', isActive);
@@ -7497,7 +7563,7 @@ function syncOutlierTabs() {
 }
 
 function setOutlierView(view) {
-  OUTLIER_VIEW = view === 'competitor' ? 'competitor' : 'all';
+  OUTLIER_VIEW = view === 'adjacent' ? 'adjacent' : 'all';
   renderOutliers();
 }
 
@@ -7508,6 +7574,7 @@ function renderOutliers() {
   host.replaceChildren();
   meta.replaceChildren();
   syncOutlierTabs();
+  renderOutlierWatchlist();
 
   if (!YOUTUBE_OUTLIERS.length) {
     const empty = document.createElement('div');
@@ -7521,7 +7588,7 @@ function renderOutliers() {
   if (!outliers.length) {
     const empty = document.createElement('div');
     empty.className = 'outliers-empty';
-    empty.textContent = 'No competitor ideas in this snapshot. Switch to All Ideas for broader signals.';
+    empty.textContent = 'No adjacent ideas in this snapshot. Switch to All Ideas for broader signals.';
     host.appendChild(empty);
     return;
   }
@@ -7531,8 +7598,8 @@ function renderOutliers() {
   const strongCount = document.createElement('strong');
   strongCount.textContent = String(outliers.length);
   metaText.appendChild(strongCount);
-  if (OUTLIER_VIEW === 'competitor') {
-    metaText.appendChild(document.createTextNode(' competitor ideas · ranked by Jack relevance'));
+  if (OUTLIER_VIEW === 'adjacent') {
+    metaText.appendChild(document.createTextNode(' adjacent ideas · ranked by Jack relevance'));
   } else {
     metaText.appendChild(document.createTextNode(' ideas · ranked by Jack relevance'));
   }
@@ -7599,7 +7666,7 @@ function renderOutliers() {
     if (o.competitor_channel) {
       const competitor = document.createElement('div');
       competitor.className = 'outlier-competitor';
-      const label = o.competitor_match === 'watchlist' ? 'Watchlist competitor' : 'Competitor signal';
+      const label = o.competitor_match === 'watchlist' ? 'Watchlist hit' : 'Adjacent signal';
       competitor.textContent = label + ' · ' + o.competitor_channel;
       body.appendChild(competitor);
     }
@@ -7674,7 +7741,7 @@ function openOutlierModal(idx) {
   const ideaHost = document.getElementById('outlierIdea');
   if (competitorHost) {
     if (o.competitor_channel) {
-      const label = o.competitor_match === 'watchlist' ? 'Watchlist competitor' : 'Competitor signal';
+      const label = o.competitor_match === 'watchlist' ? 'Watchlist hit' : 'Adjacent signal';
       competitorHost.textContent = label + ' · ' + o.competitor_channel;
     } else {
       competitorHost.textContent = '';
