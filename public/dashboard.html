@@ -31,7 +31,15 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:opsz,wght@8..144,400..700&family=Geist+Mono:wght@400..600&display=swap" rel="stylesheet">
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
-<script src="https://cdn.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js" defer></script>
+<!-- Subresource Integrity: pin the exact bytes so a jsDelivr/echarts compromise
+     can't inject arbitrary JS. Generate the hash on a networked machine and paste
+     it into integrity="" below:
+       curl -s https://cdn.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js \
+         | openssl dgst -sha384 -binary | openssl base64 -A
+     (left unset here because outbound network egress is blocked in this build env;
+      an empty integrity attr is ignored by browsers, so the page still works until
+      the hash is filled in.) -->
+<script src="https://cdn.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js" integrity="" crossorigin="anonymous" defer></script>
 <link rel="stylesheet" href="tokens.css" />
 <style>
 /* ========================================================
@@ -7353,7 +7361,7 @@ function renderPainPoints(t) {
       sources.className = 'sources';
       const chip = document.createElement('a');
       chip.className = 'source-chip';
-      chip.href = p.source_url;
+      chip.href = safeHref(p.source_url);
       chip.target = '_blank';
       chip.rel = 'noopener noreferrer';
       chip.textContent = p.source_title || p.source_url;
@@ -7591,7 +7599,7 @@ function renderScriptAngle(t, outliers, host) {
           meta.className = 'sa-meta';
           meta.textContent = 'src: ';
           const link = document.createElement('a');
-          link.href = angle.problem.source_url;
+          link.href = safeHref(angle.problem.source_url);
           link.target = '_blank';
           link.rel = 'noopener noreferrer';
           link.textContent = angle.problem.source_title || angle.problem.source_url;
@@ -8551,6 +8559,18 @@ function escapeHtml(s) {
   }[c]));
 }
 function escapeAttr(s) { return escapeHtml(s); }
+// Gate any URL that comes from data.json before it reaches an <a href>.
+// source_url values are scraped from external public sources, so a hostile
+// `javascript:`/`data:` URI could otherwise execute on click. Allow only
+// http(s); anything else collapses to an inert '#'.
+function safeHref(u) {
+  try {
+    const parsed = new URL(String(u ?? ''), location.href);
+    return (parsed.protocol === 'https:' || parsed.protocol === 'http:') ? parsed.href : '#';
+  } catch (e) {
+    return '#';
+  }
+}
 const TITLE_CASE_KEEP = new Map([
   ['ai', 'AI'], ['api', 'API'], ['apis', 'APIs'], ['mcp', 'MCP'], ['rag', 'RAG'],
   ['llm', 'LLM'], ['llms', 'LLMs'], ['ui', 'UI'], ['ux', 'UX'], ['github', 'GitHub'],
