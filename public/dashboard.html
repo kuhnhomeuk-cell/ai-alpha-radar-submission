@@ -497,7 +497,7 @@ html::after {
 }
 /* Visual divider between utility groups — search vs personal-state vs theme.
    1px hairline at 18px gap (no extra spacing required). */
-.topbar .right > * + .watchlist-pill,
+.topbar .right > * + .briefing-toggle,
 .topbar .right > * + .theme-toggle,
 .topbar .right > * + .niche-wrap { position: relative; }
 .topbar .right > * + .theme-toggle::before {
@@ -693,7 +693,8 @@ html::after {
 }
 .nav button:active            { transform: scale(0.97); }
 .chip:active                  { transform: scale(0.96); }
-.watchlist-pill:active        { transform: scale(0.97); filter: brightness(1.15); }
+.watchlist-pill:active,
+.briefing-toggle:active       { transform: scale(0.97); filter: brightness(1.08); }
 .star-btn:active              { transform: scale(0.9) rotate(-8deg); }
 .gem-card:active              { transform: scale(0.994); border-color: var(--accent); }
 .demand-card:active           { transform: scale(0.994); border-color: var(--accent); }
@@ -774,29 +775,27 @@ html::after {
   line-height: 1.5;
   color: var(--ink-3);
 }
-/* Today's Pick CTA — clone of landing `.btn-primary` (dark glass pill). */
 .today-pick .tp-cta {
   align-self: flex-start;
   margin-top: 4px;
   padding: 10px 20px;
-  background: rgba(0, 0, 0, 0.7);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(0, 212, 255, 0.08);
+  border: 1px solid rgba(0, 212, 255, 0.22);
   border-radius: var(--radius-pill);
-  color: #ffffff;
+  color: var(--ink);
   font-family: var(--sans);
   font-size: 13px;
   font-weight: 600;
   letter-spacing: 0;
   text-transform: none;
   cursor: pointer;
-  transition: color 0.18s, background 0.18s, border-color 0.18s, transform 0.2s;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(30px) saturate(150%);
-  -webkit-backdrop-filter: blur(30px) saturate(150%);
+  transition: border-color 0.18s, transform 0.2s;
+  box-shadow: none;
 }
 .today-pick .tp-cta:hover {
-  background: rgba(0, 0, 0, 0.85);
-  transform: translateY(-2px);
+  background: rgba(0, 212, 255, 0.14);
+  border-color: rgba(0, 212, 255, 0.34);
+  transform: translateY(-1px);
 }
 .today-pick .tp-cta:focus-visible {
   outline: 2px solid var(--accent);
@@ -902,7 +901,7 @@ html::after {
   border: 1px solid rgba(255, 255, 255, 0.04);
   border-radius: 6px;
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
   flex-wrap: wrap;
   gap: 4px 12px;
   font-family: var(--mono);
@@ -914,6 +913,7 @@ html::after {
   backdrop-filter: none;
   -webkit-backdrop-filter: none;
 }
+.source-health .src-list { display: none !important; }
 .source-health:hover { opacity: 1; }
 :root[data-theme="light"] .source-health {
   background: rgba(0, 0, 0, 0.025);
@@ -954,15 +954,25 @@ html::after {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  padding: 3px 9px;
+  padding: 8px 15px;
   border: 1px solid var(--line);
   border-radius: 100px;
   color: var(--ink-2);
+  background: transparent;
+  cursor: pointer;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
 }
 .src-claude.pending { color: var(--ink-3); font-style: italic; }
 .src-claude.live {
   color: var(--accent);
   border-color: rgba(0, 212, 255, 0.3);
+}
+.src-claude:hover {
+  background: rgba(0, 212, 255, 0.08);
+  border-color: rgba(0, 212, 255, 0.48);
 }
 
 .gem-card.flash { animation: gem-flash 1.4s var(--ease-out-quart); }
@@ -1505,36 +1515,24 @@ html::after {
 .leaderboard::-webkit-scrollbar-thumb { background: var(--line-hi); border-radius: 3px; }
 .lb-row {
   display: grid;
-  grid-template-columns: 26px minmax(0, 1fr) 48px 44px 36px 22px;
-  padding: 14px 18px;
+  grid-template-columns: 28px minmax(0, 1fr) 72px;
+  padding: 15px 18px;
   border-bottom: 1px solid var(--line);
   align-items: center;
   cursor: pointer;
-  gap: 12px;
-  min-height: 76px;
+  gap: 14px;
+  min-height: 84px;
   transition: background var(--dur-fast) var(--ease-out-strong),
               transform var(--dur-fast) var(--ease-out-strong);
 }
 .lb-main { min-width: 0; display: flex; flex-direction: column; gap: 4px; }
-.lb-consensus {
-  margin-top: 2px;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 4px;
-  align-items: center;
-}
+.lb-consensus { display: none; }
 .lb-spark { display: inline-flex; opacity: 0.72; width: 48px; height: 14px; justify-content: center; }
 .lb-spark svg { display: block; }
-.lb-volume {
-  margin-left: 10px;
-  padding-left: 10px;
-  border-left: 1px solid var(--line);
-  color: var(--ink-3);
-  font-size: 9px;
-}
+.lb-volume { display: none; }
 .lb-delta.up   { color: var(--good); }
 .lb-delta.down { color: var(--bad); }
-.lb-mix { margin-top: 4px; opacity: 0.85; }
+.lb-mix { display: none; }
 .lb-mix svg { display: block; border-radius: 2px; }
 .lb-meta-header {
   font-family: var(--mono);
@@ -1631,6 +1629,13 @@ html::after {
   flex-wrap: wrap;
   row-gap: 3px;
 }
+.lb-row .lb-explain {
+  color: var(--ink-3);
+  font-family: var(--sans);
+  font-size: 12px;
+  line-height: 1.35;
+  max-width: 230px;
+}
 .lb-row .stage-mini .stage-dot { box-shadow: none; flex-shrink: 0; }
 .lb-row .stage-mini .stage-label {
   display: inline-flex;
@@ -1647,12 +1652,24 @@ html::after {
 }
 .lb-row .tbts {
   font-family: var(--sans);
-  font-size: 18px;
+  font-size: 19px;
   font-weight: 600;
   color: var(--ink);
   text-align: right;
   letter-spacing: -0.01em;
   font-variant-numeric: tabular-nums;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  align-items: flex-end;
+}
+.lb-row .tbts .score-label {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  font-weight: 500;
 }
 .lb-row .vel {
   font-family: var(--mono);
@@ -3069,7 +3086,7 @@ html::after {
   margin: 6px 0 8px;
   font-size: 12.5px;
   line-height: 1.55;
-  color: var(--ink-dim, #b8c5d6);
+  color: var(--ink-2);
 }
 .meth-section pre {
   margin: 8px 0;
@@ -3113,6 +3130,28 @@ html::after {
   cursor: pointer;
 }
 .meth-link:hover { color: var(--accent); border-bottom-color: var(--accent); }
+#methModal {
+  background: rgba(255, 255, 255, 0.96);
+  color: #111827;
+  border-color: rgba(15, 23, 42, 0.18);
+}
+#methModal .conv-cluster,
+#methModal .meth-section p {
+  color: #475569;
+}
+#methModal .meth-section h4,
+#methModal .conv-eyebrow {
+  color: #007f9a;
+}
+:root[data-theme="dark"] #methModal {
+  background: rgba(13, 18, 27, 0.97);
+  color: var(--ink);
+  border-color: rgba(255, 255, 255, 0.16);
+}
+:root[data-theme="dark"] #methModal .conv-cluster,
+:root[data-theme="dark"] #methModal .meth-section p {
+  color: rgba(226, 232, 240, 0.76);
+}
 .conv-scrim {
   position: fixed; inset: 0;
   background: rgba(7, 9, 12, 0.7);
@@ -3785,12 +3824,33 @@ main {
   display: flex;
   gap: 8px;
   align-items: center;
-  overflow-x: auto;
+  overflow: hidden;
   scrollbar-width: none;
   border-radius: var(--radius-shell);
 }
 
 .topic-rail::-webkit-scrollbar { display: none; }
+.topic-ticker {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  mask-image: linear-gradient(90deg, transparent 0, #000 24px, #000 calc(100% - 24px), transparent 100%);
+}
+.topic-ticker-track {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-width: max-content;
+  animation: topic-ticker-scroll 72s linear infinite;
+}
+.topic-ticker:hover .topic-ticker-track { animation-play-state: paused; }
+@keyframes topic-ticker-scroll {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .topic-ticker-track { animation: none; }
+}
 
 .topic-label,
 .filter-label {
@@ -3841,7 +3901,7 @@ main {
 }
 
 .filters {
-  margin: 16px 24px 0;
+  margin: 10px 24px 0;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -3854,6 +3914,19 @@ main {
   align-items: center;
   gap: 10px;
   min-width: 0;
+}
+
+.radar-chart-panel .panel-head {
+  gap: 16px;
+  align-items: center;
+}
+.radar-chart-panel .panel-head .title {
+  flex: 0 0 auto;
+}
+.radar-stage-controls {
+  margin-left: auto;
+  justify-content: flex-end;
+  flex-wrap: wrap;
 }
 
 .filters .chips {
@@ -3938,13 +4011,15 @@ main {
 .briefing-toggle {
   margin-left: auto !important;
   min-height: 36px;
-  background: var(--ink-button);
-  border-color: transparent;
-  color: #fff;
-  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.12);
+  background: rgba(255, 255, 255, 0.72);
+  background-color: rgba(255, 255, 255, 0.72);
+  border-color: rgba(15, 23, 42, 0.10);
+  color: var(--ink);
+  box-shadow: 0 8px 22px rgba(15, 23, 42, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.72);
+  transition: border-color 0.2s, transform 0.2s, filter 0.2s;
 }
 
-.briefing-toggle .bt-icon { color: #fff; }
+.briefing-toggle .bt-icon { color: var(--accent-hover); }
 
 .radar-grid {
   grid-template-columns: minmax(0, 1fr) minmax(340px, 380px);
@@ -4251,11 +4326,21 @@ main {
   overflow-wrap: anywhere;
 }
 
-.tp-cta { background: var(--ink-button); }
+.today-pick .tp-cta {
+  background: rgba(0, 212, 255, 0.08);
+  border-color: rgba(0, 212, 255, 0.22);
+  color: var(--ink);
+}
+
+:root[data-theme="dark"] .today-pick .tp-cta {
+  background: rgba(44, 230, 255, 0.12);
+  border-color: rgba(44, 230, 255, 0.38);
+  color: #dffcff;
+}
 
 .leaderboard { max-height: 520px; }
 
-.lb-row { grid-template-columns: 28px minmax(0, 1fr) 54px 54px 34px; }
+.lb-row { grid-template-columns: 28px minmax(0, 1fr) 72px; }
 
 .lb-spark { display: none; }
 
@@ -4316,10 +4401,25 @@ footer .quote {
 :root[data-theme="dark"] .topic,
 :root[data-theme="dark"] .chip,
 :root[data-theme="dark"] .filter-menu summary,
-:root[data-theme="dark"] .theme-toggle {
+:root[data-theme="dark"] .theme-toggle,
+:root[data-theme="dark"] .search-input,
+:root[data-theme="dark"] .briefing-toggle,
+:root[data-theme="dark"] .src-claude {
   background: rgba(15, 23, 42, 0.70);
   border-color: rgba(255, 255, 255, 0.14);
   color: var(--ink);
+}
+
+:root[data-theme="dark"] .briefing-toggle,
+:root[data-theme="dark"] .src-claude {
+  color: var(--accent) !important;
+  border-color: rgba(44, 230, 255, 0.34) !important;
+  background: rgba(15, 23, 42, 0.70) !important;
+  background-color: rgba(15, 23, 42, 0.70) !important;
+}
+
+:root[data-theme="dark"] .chip:not(.active) {
+  color: rgba(247, 250, 252, 0.72);
 }
 
 :root[data-theme="dark"] .nav button:hover {
@@ -4514,7 +4614,7 @@ footer .quote {
 
   .leaderboard { max-height: none; }
 
-  .lb-row { grid-template-columns: 26px minmax(0, 1fr) 52px 34px; }
+  .lb-row { grid-template-columns: 26px minmax(0, 1fr) 64px; }
 
   .lb-row .vel { display: none; }
 
@@ -4596,6 +4696,13 @@ footer .quote {
     min-height: 330px;
   }
 }
+
+html[data-theme="dark"] body .topbar #briefingToggle.briefing-toggle {
+  background: rgba(15, 23, 42, 0.70) !important;
+  background-color: rgba(15, 23, 42, 0.70) !important;
+  border-color: rgba(44, 230, 255, 0.34) !important;
+  color: var(--accent) !important;
+}
 </style></head>
 <body>
 
@@ -4653,9 +4760,11 @@ footer .quote {
       <input class="search-input" id="searchInput" type="search" placeholder="Search signals" autocomplete="off">
       <div class="search-results" id="searchResults"></div>
     </div>
-    <button class="watchlist-pill empty" id="watchlistPill" type="button"
-            title="Save the current top 5 Radar signals as a starter watchlist"
-            aria-pressed="false"><span class="wl-star" aria-hidden="true">★</span><span class="wl-label">Save Top 5</span></button>
+    <button type="button" class="briefing-toggle" id="briefingToggle"
+            aria-label="Open Daily Movers briefing"
+            onclick="window.toggleBriefing && window.toggleBriefing()">
+      <span class="bt-icon" aria-hidden="true">⚡</span><span class="bt-label">Daily Briefing</span>
+    </button>
     <button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle light/dark theme" title="Toggle light/dark theme">
       <svg class="theme-icon icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
       <svg class="theme-icon icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
@@ -4693,17 +4802,6 @@ footer .quote {
   <div class="briefing-text" id="briefingText" hidden>—</div>
 
   <div class="filters">
-    <div class="filter-group filter-group-stage">
-      <span class="filter-label">Stage</span>
-      <div class="chips">
-        <span class="chip active" data-filter="stage" data-value="whisper"><span class="stage-dot whisper"></span>Whisper</span>
-        <span class="chip active" data-filter="stage" data-value="builder"><span class="stage-dot builder"></span>Builder</span>
-        <span class="chip active" data-filter="stage" data-value="creator"><span class="stage-dot creator"></span>Creator</span>
-        <span class="chip"        data-filter="stage" data-value="hype"><span class="stage-dot hype"></span>Hype</span>
-        <span class="chip"        data-filter="stage" data-value="commodity"><span class="stage-dot commodity"></span>Commodity</span>
-      </div>
-    </div>
-
     <details class="filter-menu filter-group-source">
       <summary>Sources</summary>
       <div class="chips">
@@ -4718,8 +4816,8 @@ footer .quote {
     <details class="filter-menu filter-group-sort">
       <summary>Sort</summary>
       <div class="chips">
-        <span class="chip active" data-filter="sort" data-value="tbts" title="Trend-Before-Trend Score: velocity + hidden_gem + lifecycle + convergence">TBTS ↓</span>
-        <span class="chip"        data-filter="sort" data-value="velocity">Velocity ↓</span>
+        <span class="chip active" data-filter="sort" data-value="tbts" title="Overall signal score">Score ↓</span>
+        <span class="chip"        data-filter="sort" data-value="velocity">Momentum ↓</span>
         <span class="chip"        data-filter="sort" data-value="hidden_gem">Hidden Gem ↓</span>
       </div>
     </details>
@@ -4732,14 +4830,6 @@ footer .quote {
       </div>
     </details>
     
-    <div style="flex: 1;"></div>
-
-    <button type="button" class="briefing-toggle" id="briefingToggle"
-            aria-label="Open Daily Movers briefing"
-            onclick="window.toggleBriefing && window.toggleBriefing()"
-            style="margin: 0;">
-      <span class="bt-icon" aria-hidden="true">⚡</span><span class="bt-label">Daily Briefing</span>
-    </button>
   </div>
 
 
@@ -4749,14 +4839,18 @@ footer .quote {
       <div class="panel radar-chart-panel" id="radarChartPanel">
         <div class="panel-head">
           <div class="title">Headroom × Velocity Map</div>
+          <div class="filter-group filter-group-stage radar-stage-controls" aria-label="Stage filters">
+            <div class="chips">
+              <span class="chip active" data-filter="stage" data-value="whisper"><span class="stage-dot whisper"></span>Whisper</span>
+              <span class="chip active" data-filter="stage" data-value="builder"><span class="stage-dot builder"></span>Builder</span>
+              <span class="chip active" data-filter="stage" data-value="creator"><span class="stage-dot creator"></span>Creator</span>
+              <span class="chip"        data-filter="stage" data-value="hype"><span class="stage-dot hype"></span>Hype</span>
+              <span class="chip"        data-filter="stage" data-value="commodity"><span class="stage-dot commodity"></span>Commodity</span>
+            </div>
+          </div>
           <div class="meta" id="trackedMeta">— tracked terms</div>
         </div>
         <div class="chart-host" id="bubbleChart"></div>
-        <div class="chart-caption">
-          <span class="caption-axis">opacity · signal weight</span>
-          <span class="caption-axis">size · hidden gem score</span>
-          <span class="stage-legend" id="stageLegend"></span>
-        </div>
       </div>
 
       <div class="panel chart-ranking-panel" id="chartRankingsPanel">
@@ -4783,7 +4877,7 @@ footer .quote {
       </div>
       <div class="panel">
         <div class="panel-head">
-          <div class="title" id="leaderboardTitle">Top 20 · TBTS Leaderboard</div>
+          <div class="title" id="leaderboardTitle">Top 20 Signals</div>
           <div class="meta" id="leaderboardMeta">refreshed 06:00 UTC</div>
         </div>
         <div class="leaderboard" id="leaderboard"></div>
@@ -4813,7 +4907,7 @@ footer .quote {
       <div class="summary" id="dpSummary">—</div>
       <div id="dpScriptAngle" class="script-angle-section"></div>
       <div class="stats">
-        <div class="stat"><div class="l">TBTS</div><div class="v gold" id="dpTbts">—</div></div>
+        <div class="stat"><div class="l">Score</div><div class="v gold" id="dpTbts">—</div></div>
         <div class="stat"><div class="l">Saturation</div><div class="v" id="dpSat">—</div></div>
         <div class="stat" title="Opportunity score 0-100. Higher = low saturation + high velocity. Above 60 is a strong pick."><div class="l">Hidden Gem</div><div class="v" id="dpGem">—</div></div>
         <div class="stat"><div class="l">Stage</div><div class="v" id="dpStage">—</div></div>
@@ -4987,7 +5081,7 @@ footer .quote {
 <!-- ========== SOURCE-HEALTH STRIP (global, all pages) ========== -->
 <div class="source-health glass" id="sourceHealth">
   <div class="src-list" id="srcList">—</div>
-  <div class="src-claude" id="srcClaude">—</div>
+  <button class="src-claude live" id="srcClaude" type="button" onclick="window.openMethodology && window.openMethodology()">Methodology</button>
 </div>
 
 </main>
@@ -5015,43 +5109,32 @@ footer .quote {
   <div class="conv-head">
     <div>
       <div class="conv-name" id="methTitle">How signals are scored</div>
-      <div class="conv-cluster">Open methodology · v0.2.0</div>
+      <div class="conv-cluster">Plain-English scoring guide</div>
     </div>
     <button class="close" type="button" aria-label="Close methodology modal" onclick="window.closeMethodology()">CLOSE ✕</button>
   </div>
   <div class="conv-body">
-    <div class="conv-eyebrow">⌖ The scoring formula on this page</div>
+    <div class="conv-eyebrow">What the dashboard is looking for</div>
     <div class="meth-section">
-      <h4>Cross-source consensus</h4>
-      <p>Each topic is attributed to the sources that contributed at least one document — <code>arXiv</code>, <code>GitHub</code>, <code>Hacker News</code>, <code>Reddit</code>, <code>HuggingFace</code>, <code>Product Hunt</code>, <code>Replicate</code>, <code>Bluesky</code>, <code>Semantic Scholar</code>. The <strong>consensus ratio</strong> is the fraction of sources that fetched successfully on this snapshot and confirmed the topic.</p>
-      <pre>consensus_ratio = |sources_confirming| / |active_sources|</pre>
-      <p>A topic seen on 4 of 5 active sources renders as the <span class="cons-badge strong">4/5 ✓</span> badge. AlphaSignal and TLDR can't do this because they're per-source emails.</p>
+      <h4>Cross-source confidence</h4>
+      <p>A signal gets stronger when it appears in more than one place. For example, a topic that shows up in research papers, repositories, and community discussions is more trustworthy than a topic that only appears in one feed.</p>
     </div>
     <div class="meth-section">
-      <h4>Hidden-gem score</h4>
-      <pre>hidden_gem = 0.40·velocity + 0.35·(1 − saturation/100) + 0.25·builder_signal
-+ 0.20·avg(venue_boost)   # capped at 1.0</pre>
-      <p><em>venue_boost</em> fires (0.5) when an attributed arXiv paper's <code>arxiv:comment</code> mentions a top-tier venue (ICML / NeurIPS / ICLR / CVPR / EMNLP / ACL / NAACL / AAAI / SIGKDD / ICDM / ECML / COLM) with a 2025–2039 year.</p>
+      <h4>Hidden gems</h4>
+      <p>Hidden gems are topics with strong movement but low crowding. The dashboard looks for subjects that are accelerating, still niche enough to own, and showing real builder interest before they become obvious.</p>
     </div>
     <div class="meth-section">
-      <h4>Trend-Before-Trend Score (TBTS)</h4>
-      <pre>tbts = 100 · (0.35·velocity + 0.30·hidden_gem + 0.20·lifecycle + 0.15·convergence)</pre>
+      <h4>Signal score</h4>
+      <p>The main score combines momentum, hidden-gem potential, lifecycle stage, and cross-source confirmation. Higher scores mean the topic is moving now and still has room for a creator to explain it clearly.</p>
     </div>
     <div class="meth-section">
       <h4>Saturation</h4>
-      <pre>saturation = 0.35·github + 0.30·hn + 0.20·arxiv + 0.15·semantic_scholar
-  (each input is the topic's percentile against today's top-N)</pre>
+      <p>Saturation estimates how crowded the topic already is. A lower saturation number usually means more room for a useful video, guide, or product angle. A higher number means the market may already be noisy.</p>
     </div>
-    <div class="meth-foot">All code is open: <a href="https://github.com/kuhnhomeuk-cell/ai-alpha-radar" target="_blank" rel="noopener">github.com/kuhnhomeuk-cell/ai-alpha-radar</a></div>
   </div>
 </div>
 
-<footer>
-  <span>// AI Alpha Radar · v0.2 · trend intelligence</span>
-  <span class="quote">Signals before the headline.</span>
-  <span><a href="#" class="meth-link" onclick="event.preventDefault(); window.openMethodology();">methodology</a></span>
-  <span id="footerStamp">—</span>
-</footer>
+<footer hidden></footer>
 
 <script>
 /* ==========================================================
@@ -5147,11 +5230,11 @@ document.addEventListener('DOMContentLoaded', () => {
   if (btn) btn.addEventListener('click', toggleTheme);
   // Stagger index for filter chips — one continuous sequence across all chip
   // rows on the Radar page (Stage, Source, Sort, …). Static markup, so set once.
-  document.querySelectorAll('.filters .chip').forEach((node, i) => node.style.setProperty('--i', i));
+  document.querySelectorAll('.filters .chip, .radar-stage-controls .chip').forEach((node, i) => node.style.setProperty('--i', i));
   // A11y: filter chips are <span> with click-only listeners. Make them
   // keyboard-operable — button role + tab stop, Enter/Space activate, and keep
   // aria-pressed in sync with the .active class across the whole filter row.
-  const _chips = document.querySelectorAll('.filters .chip');
+  const _chips = document.querySelectorAll('.filters .chip, .radar-stage-controls .chip');
   const _syncChips = () => _chips.forEach(c =>
     c.setAttribute('aria-pressed', c.classList.contains('active') ? 'true' : 'false'));
   _chips.forEach(chip => {
@@ -5231,7 +5314,7 @@ function updateWatchlistUI() {
     if (n === 0 && typeof state !== 'undefined') state.watchlistOnly = false;
     const isFiltering = n > 0 && typeof state !== 'undefined' && state.watchlistOnly;
     const lbl = pill.querySelector('.wl-label');
-    const label = n === 0 ? 'Save Top 5' : (isFiltering ? `Watching (${n})` : `Watchlist (${n})`);
+    const label = n === 0 ? 'Watchlist' : (isFiltering ? `Watching (${n})` : `Watchlist (${n})`);
     if (lbl) lbl.textContent = label;
     else pill.textContent = `★ ${label}`;
     pill.classList.toggle('empty', n === 0);
@@ -5252,6 +5335,7 @@ async function loadData() {
     const snap = await res.json();
     TRENDS = (snap.trends || []).map(t => ({
       keyword: t.keyword,
+      display_keyword: titleCaseTopic(t.keyword),
       canonical_form: t.canonical_form,
       cluster_id: t.cluster_id,
       cluster_label: t.cluster_label,
@@ -5469,7 +5553,7 @@ function renderThemes() {
         <div class="theme-code">${escapeHtml(th.code)}</div>
         <div class="label">${escapeHtml(th.label)}${th.unclustered ? ' <span style="color:var(--ink-3)">·</span>' : ''}</div>
         <div class="count">${th.count} trends</div>
-        <div class="avg${th.unclustered ? ' dim' : ''}">avg ${th.avg} TBTS</div>
+        <div class="avg${th.unclustered ? ' dim' : ''}">avg score ${th.avg}</div>
       </div>
     `;
   }).join('');
@@ -5504,11 +5588,14 @@ function syncOverlayChips() {
 }
 
 /* Stage chips: fade outside-set bubbles + hide rows */
-document.querySelectorAll('.filters .chip[data-filter="stage"]').forEach(c => {
+document.querySelectorAll('.chip[data-filter="stage"]').forEach(c => {
   c.addEventListener('click', () => {
     const v = c.dataset.value;
     if (state.stages.has(v)) state.stages.delete(v); else state.stages.add(v);
-    c.classList.toggle('active');
+    document.querySelectorAll(`.chip[data-filter="stage"][data-value="${v}"]`).forEach(chip => {
+      chip.classList.toggle('active', state.stages.has(v));
+      chip.setAttribute('aria-pressed', state.stages.has(v) ? 'true' : 'false');
+    });
     applyState();
   });
 });
@@ -5533,23 +5620,26 @@ document.querySelectorAll('.filters .chip[data-filter="sort"]').forEach(c => {
 
 /* Watchlist pill (topbar): when empty, it creates a starter list from the
    current Radar; once populated, it becomes the saved-signals focus toggle. */
-document.getElementById('watchlistPill').addEventListener('click', () => {
-  document.querySelector('.nav button[data-page="radar"]').click();
-  if (WATCHLIST.size === 0) {
-    const added = seedWatchlistFromRadar(5);
-    if (!added) {
-      announce('No visible Radar signals to save yet.');
-      updateWatchlistUI();
+const watchlistPill = document.getElementById('watchlistPill');
+if (watchlistPill) {
+  watchlistPill.addEventListener('click', () => {
+    document.querySelector('.nav button[data-page="radar"]').click();
+    if (WATCHLIST.size === 0) {
+      const added = seedWatchlistFromRadar(5);
+      if (!added) {
+        announce('No visible Radar signals to save yet.');
+        updateWatchlistUI();
+        return;
+      }
+      state.watchlistOnly = true;
+      syncWatchlistViews();
+      announce(`Starter watchlist saved: ${added} top Radar signals.`);
       return;
     }
-    state.watchlistOnly = true;
-    syncWatchlistViews();
-    announce(`Starter watchlist saved: ${added} top Radar signals.`);
-    return;
-  }
-  state.watchlistOnly = !state.watchlistOnly;
-  applyState();
-});
+    state.watchlistOnly = !state.watchlistOnly;
+    applyState();
+  });
+}
 /* Global star click delegation — stopPropagation so leaderboard row click doesn't fire */
 document.addEventListener('click', (e) => {
   const star = e.target.closest('.star-btn');
@@ -5568,6 +5658,7 @@ function runSearch(rawQ) {
 
   const radarMatches = TRENDS.filter(t =>
     (t.keyword || '').toLowerCase().includes(q) ||
+    (t.display_keyword || '').toLowerCase().includes(q) ||
     (t.canonical_form || '').toLowerCase().includes(q)
   );
   const gemsMatches = radarMatches.filter(t => t.stage === 'whisper' || t.stage === 'builder');
@@ -5649,47 +5740,11 @@ function renderSourceHealth() {
   const srcList = document.getElementById('srcList');
   const srcClaude = document.getElementById('srcClaude');
   if (!srcList || !srcClaude) return;
-
-  const labels = {
-    arxiv: 'arXiv', github: 'GitHub', hackernews: 'HN',
-    reddit: 'Reddit', huggingface: 'HF', semantic_scholar: 'SemScholar',
-    producthunt: 'PH', replicate: 'Replicate',
-    bluesky: 'Bluesky', newsletters: 'NL',
-    digg: 'Digg',
-  };
-  const sources = (META && META.sources) || {};
-  const parts = Object.entries(labels).map(([key, label]) => {
-    const s = sources[key] || { fetched: 0 };
-    // Infer health when `ok` is missing: a source is healthy iff it
-    // returned a non-zero fetched count. Bluesky also exposes
-    // `topic_attributed` — fall back to that when present.
-    const isOk = (typeof s.ok === 'boolean')
-      ? s.ok
-      : ((s.topic_attributed || s.fetched || 0) > 0);
-    if (isOk) {
-      return `<span class="src-item"><span class="name">${label}</span><span class="ok">✓</span><span class="count">${s.fetched || 0}</span></span>`;
-    }
-    return `<span class="src-item"><span class="name">${label}</span><span class="fail">✗</span><span class="stale-pill">stale</span></span>`;
-  });
-  if (SNAPSHOT_DATE) {
-    parts.push(`<span class="refreshed">refreshed ${escapeHtml(SNAPSHOT_DATE)} · 06:00 UTC</span>`);
-  }
-  srcList.innerHTML = parts.join('');
-
-  const cost = META && typeof META.claude_cost_usd === 'number' ? META.claude_cost_usd : null;
-  const hit  = META && typeof META.claude_cache_hit_rate === 'number' ? META.claude_cache_hit_rate : null;
-  if (cost !== null || hit !== null) {
-    const costStr = cost !== null ? `$${cost.toFixed(2)}` : '—';
-    const hitStr  = hit  !== null ? `${(hit * 100).toFixed(0)}%` : '—';
-    srcClaude.textContent = `Claude · ${costStr} · cache ${hitStr}`;
-    srcClaude.className = 'src-claude live';
-  } else if (META && META.use_claude) {
-    srcClaude.textContent = 'Claude · live';
-    srcClaude.className = 'src-claude live';
-  } else {
-    srcClaude.textContent = 'Claude · pending tuning pass';
-    srcClaude.className = 'src-claude pending';
-  }
+  srcList.innerHTML = '';
+  srcList.hidden = true;
+  srcClaude.textContent = 'Methodology';
+  srcClaude.className = 'src-claude live';
+  srcClaude.onclick = () => openMethodology();
 }
 
 /* Overlay chips: clusters are the drill-down layer; names are optional to
@@ -5748,8 +5803,8 @@ const RADAR_QUADRANT_META = {
   bl: { label: 'Saturated', short: 'SATURATED', color: 'var(--bubble-saturated)' },
 };
 const RANKING_SORT_META = {
-  tbts: { label: 'TBTS', note: 'trend-before-trend score' },
-  velocity: { label: 'Velocity', note: 'growth versus baseline' },
+  tbts: { label: 'Score', note: 'overall signal strength' },
+  velocity: { label: 'Momentum', note: 'growth versus baseline' },
   hidden_gem: { label: 'Hidden Gem', note: 'early signal strength' },
 };
 function radarBubbleCandidates() {
@@ -5786,10 +5841,9 @@ function renderChartRankings() {
   if (!host) return;
   const visible = radarBubbleCandidates();
   const sorted = sortRadarTrends(visible);
-  const sortMeta = RANKING_SORT_META[state.sort] || RANKING_SORT_META.tbts;
   const titleEl = document.getElementById('chartRankingsTitle');
   const metaEl = document.getElementById('chartRankingsMeta');
-  if (titleEl) titleEl.textContent = `${sorted.length} Bubble Rankings ranked by ${sortMeta.label}`;
+  if (titleEl) titleEl.textContent = `${sorted.length} Signal Rankings`;
   if (metaEl) metaEl.textContent = '';
   if (!sorted.length) {
     host.innerHTML = '<div class="leaderboard-empty">No ranked bubbles match the active filters.</div>';
@@ -5798,17 +5852,16 @@ function renderChartRankings() {
   }
   const header = `
     <div class="chart-rank-head" aria-hidden="true">
-      <span>Rank</span><span>Bubble</span><span>Quadrant</span><span>TBTS</span><span>Velocity</span><span>Headroom</span>
+      <span>Rank</span><span>Signal</span><span>Zone</span><span>Score</span><span>Momentum</span><span>Headroom</span>
     </div>
   `;
   const rows = sorted.map((t, i) => {
     const kw = t.canonical_form || t.keyword;
     const q = radarQuadrantForTrend(t, visible);
-    const topFive = i < 5;
     return `
-      <button type="button" class="chart-rank-row${topFive ? ' top-five' : ''}" data-kw="${escapeAttr(kw)}" style="--zone-color:${q.color}">
+      <button type="button" class="chart-rank-row" data-kw="${escapeAttr(kw)}" style="--zone-color:${q.color}">
         <span class="rank">${String(i + 1).padStart(2, '0')}</span>
-        <span class="name"><span class="name-text">${escapeHtml(t.keyword)}</span>${topFive ? '<span class="top-badge">top 5</span>' : ''}</span>
+        <span class="name"><span class="name-text">${escapeHtml(displayTopic(t))}</span></span>
         <span class="zone">${escapeHtml(q.short)}</span>
         <span class="metric">${(t.tbts || 0).toFixed(1)}</span>
         <span class="metric">${(t.velocity || 0).toFixed(1)}x</span>
@@ -5944,7 +5997,9 @@ function renderBubbleFallback(el) {
   // side (sat<25 cluster). Edge ticks use start/end anchors so they sit
   // cleanly inside the plot (no clipping past the right edge).
   const xTicks = [0, 10, 25, 50, 100].map(satTick => {
-    const px = x(satTick);
+    let px = x(satTick);
+    if (satTick === 0) px -= 8;
+    if (satTick === 100) px += 8;
     const label = satTick === 0 ? 'NICHE' : satTick === 100 ? 'MAINSTREAM' : (100 - satTick) + '%';
     const anchor = satTick === 0 ? 'end' : satTick === 100 ? 'start' : 'middle';
     return `
@@ -6089,7 +6144,7 @@ function renderBubbleFallback(el) {
         const _bubbleXFrac = (cx - pad.left) / plotW;
         const labelAnchor = _bubbleXFrac < 0.5 ? 'start' : 'end';
         const labelX = labelAnchor === 'start' ? (cx + r + 6) : (cx - r - 6);
-        const labelText = sel ? t.keyword : _truncLabel(t.keyword);
+        const labelText = sel ? displayTopic(t) : _truncLabel(displayTopic(t));
         return { t, kw, sel, lit, r, weight, color, zone, cx, cy, anchorCx: cx, anchorCy: cy, rank, inTopN, labelX, labelY, labelAnchor, labelText };
       });
   });
@@ -6288,21 +6343,16 @@ function renderBubbleFallback(el) {
     br: { cx: (xDivider + pad.left + plotW) / 2, cy: (yDivider + pad.top + plotH) / 2 },
     bl: { cx: (pad.left + xDivider) / 2,         cy: (yDivider + pad.top + plotH) / 2 },
   };
-  const emptyQuadrantMarkup = Object.keys(_quadCounts).map(id => {
-    if (_quadCounts[id] > 0) return '';
-    const c = QUAD_CENTERS[id];
-    return `<text x="${c.cx}" y="${c.cy}" text-anchor="middle" class="quad-empty-text">No trends here yet — check back in a week</text>`;
-  }).join('');
-
-  const quadrantLabels = _renderQuadrantLabels();
+  const emptyQuadrantMarkup = '';
+  const quadrantLabels = '';
   const tooltipByKw = new Map(trendGeometry.map(g => {
     const headline = (g.t.angles && g.t.angles.hook) || g.t.summary || 'Open trend detail';
     const zoneLabel = (QUADRANT_STYLE[g.zone]?.label || g.zone || '').replace(' · whitespace', '');
     return [g.kw, {
-      name: g.t.keyword,
+      name: displayTopic(g.t),
       headline,
       kicker: zoneLabel,
-      meta: `TBTS ${(g.t.tbts || 0).toFixed(1)} · ${Math.round(g.weight * 100)} signal weight · ${Math.round(g.t.saturation)}% sat`,
+      meta: `Score ${(g.t.tbts || 0).toFixed(1)} · ${Math.round(g.weight * 100)} signal strength · ${Math.round(g.t.saturation)}% crowded`,
     }];
   }));
 
@@ -6315,7 +6365,7 @@ function renderBubbleFallback(el) {
     const _tbts01 = Math.max(0, Math.min(1, (g.t.tbts || 0) / 100));
     const stageOp = 0.35 + 0.6 * _tbts01;
     return `
-      <g class="fallback-point${g.sel ? ' selected' : ''}${g.lit ? '' : ' muted'}" data-bubble-kw="${escapeAttr(g.kw)}" tabindex="0" role="button" aria-label="${escapeAttr(g.t.keyword)}" style="--pt:${g.color};--stage-op:${stageOp}">
+      <g class="fallback-point${g.sel ? ' selected' : ''}${g.lit ? '' : ' muted'}" data-bubble-kw="${escapeAttr(g.kw)}" tabindex="0" role="button" aria-label="${escapeAttr(displayTopic(g.t))}" style="--pt:${g.color};--stage-op:${stageOp}">
         <circle cx="${g.cx}" cy="${g.cy}" r="${g.r}" class="fallback-bubble" />
         ${showLabel ? `<text x="${g.labelX}" y="${g.labelY}" class="fallback-label" text-anchor="${g.labelAnchor}">${escapeHtml(g.labelText)}</text>` : ''}
       </g>
@@ -6363,8 +6413,6 @@ function renderBubbleFallback(el) {
       ${emptyQuadrantMarkup}
       ${points}
       ${quadrantLabels}
-      <text x="12" y="${pad.top + plotH / 2}" class="fallback-axis rotate">VELOCITY</text>
-      <text x="${pad.left + plotW / 2}" y="${height - 12}" class="fallback-x-title" text-anchor="middle">HEADROOM · NICHE →</text>
     </svg>
     <div class="bubble-tooltip" id="bubbleTooltip" aria-hidden="true"></div>
   `;
@@ -6488,7 +6536,7 @@ function renderBubble() {
           const _tbts01 = Math.max(0, Math.min(1, (t.tbts || 0) / 100));
           const _weightOpacity = 0.35 + 0.6 * _tbts01;
           return {
-            name: t.keyword,
+            name: displayTopic(t),
             value: [t.saturation, t.tbts, t.hidden_gem || 0, t.keyword, t.cluster_label || '—', t.velocity || 0, kw, hasConvergence(t) ? 1 : 0],
             itemStyle: {
               color: '#00d4ff',
@@ -6501,7 +6549,7 @@ function renderBubble() {
             label: {
               show: sel || (lit && inTopN),
               position: 'right',
-              formatter: t.keyword,
+              formatter: displayTopic(t),
               color: sel ? '#0a0a0a' : '#4a4a4a',
               fontSize: sel ? 12 : 11,
               fontWeight: sel ? 600 : 500,
@@ -6581,9 +6629,9 @@ function renderBubble() {
         <div style="font-family:var(--sans);font-weight:700;font-size:14px;margin-bottom:8px;color:var(--ink);letter-spacing:-0.01em">${p.value[3]}</div>
         <div style="color:var(--ink-2)">cluster    <span style="color:var(--ink)">${p.value[4]}</span></div>
         <div style="color:var(--ink-2)">saturation <span style="color:var(--ink)">${p.value[0].toFixed(0)}%</span></div>
-        <div style="color:var(--ink-2)">TBTS       <span style="color:var(--ink)">${p.value[1]}</span></div>
-        <div style="color:var(--ink-2)">hidden_gem <span style="color:var(--ink)">${(p.value[2]||0).toFixed(2)}</span></div>
-        <div style="color:var(--ink-2)">velocity   <span style="color:var(--ink)">${(p.value[5]||0).toFixed(2)}x</span></div>
+        <div style="color:var(--ink-2)">score      <span style="color:var(--ink)">${p.value[1]}</span></div>
+        <div style="color:var(--ink-2)">hidden gem <span style="color:var(--ink)">${(p.value[2]||0).toFixed(2)}</span></div>
+        <div style="color:var(--ink-2)">momentum   <span style="color:var(--ink)">${(p.value[5]||0).toFixed(2)}x</span></div>
         ${p.value[7] ? '<div style="color:var(--accent);margin-top:6px;font-weight:600">⚡ Convergence detected · click leaderboard ⚡CONV for timeline</div>' : ''}
       `
     },
@@ -6598,7 +6646,7 @@ function renderBubble() {
     },
     yAxis: {
       type: 'value', min: 0, max: 100,
-      name: 'TBTS  ↑  COMPOSITE',
+      name: 'SCORE  ↑  COMPOSITE',
       nameLocation: 'middle', nameGap: 40, nameRotate: 90,
       nameTextStyle: { color: 'var(--ink-2)', fontFamily: 'var(--mono)', fontSize: 10 },
       axisLine: { lineStyle: { color: 'var(--line-hi)' } },
@@ -6674,7 +6722,14 @@ function renderTopicRail() {
     return;
   }
 
-  picks.forEach((trend) => {
+  const ticker = document.createElement('div');
+  ticker.className = 'topic-ticker';
+  const track = document.createElement('div');
+  track.className = 'topic-ticker-track';
+  ticker.appendChild(track);
+  rail.appendChild(ticker);
+
+  const renderTopicButton = (trend) => {
     const kw = trend.canonical_form || trend.keyword;
     const button = document.createElement('button');
     button.type = 'button';
@@ -6683,7 +6738,7 @@ function renderTopicRail() {
 
     const name = document.createElement('span');
     name.className = 'topic-name';
-    name.textContent = trend.keyword;
+    name.textContent = displayTopic(trend);
     button.appendChild(name);
 
     const delta = document.createElement('span');
@@ -6697,8 +6752,9 @@ function renderTopicRail() {
       document.querySelector('.nav button[data-page="radar"]')?.click();
       selectTrend(kw);
     });
-    rail.appendChild(button);
-  });
+    track.appendChild(button);
+  };
+  [...picks, ...picks].forEach(renderTopicButton);
 }
 
 function renderTodayPick(top) {
@@ -6715,7 +6771,7 @@ function renderTodayPick(top) {
   const sumEl = document.getElementById('tpSummary');
   const ctaEl = document.getElementById('tpCta');
   if (kwEl) {
-    kwEl.textContent = top.keyword;
+    kwEl.textContent = displayTopic(top);
     // O6 — lifecycle timing badge next to keyword
     const _existingBadge = kwEl.querySelector('.tp-timing-badge');
     if (_existingBadge) _existingBadge.remove();
@@ -6732,7 +6788,7 @@ function renderTodayPick(top) {
   const rawHook = top.angles && top.angles.hook;
   const hook = !isPlaceholder(rawHook) ? rawHook : (!isPlaceholder(top.summary) ? top.summary : '');
   if (hookEl) {
-    hookEl.textContent = hook || 'Pick of the day from the TBTS leaderboard.';
+    hookEl.textContent = hook || 'Pick of the day from the signal leaderboard.';
     hookEl.classList.toggle('tp-hook-empty', !hook);
   }
   const sumText = isPlaceholder(top.summary) ? 'Enrichment running — refresh after 06:00 UTC.' : (top.summary || '');
@@ -6750,11 +6806,11 @@ function renderLeaderboard() {
   const titleEl = document.getElementById('leaderboardTitle');
   if (titleEl) {
     titleEl.textContent = state.watchlistOnly
-      ? `Watchlist · ${visible.length} saved signals`
-      : `Top ${Math.min(20, visible.length)}/${TRENDS.length} · TBTS`;
+      ? `Watchlist · ${visible.length} Saved Signals`
+      : `Top ${Math.min(20, visible.length)}/${TRENDS.length} Signals`;
   }
   const metaEl = document.getElementById('leaderboardMeta');
-  if (metaEl) metaEl.textContent = state.watchlistOnly ? 'focused saved signals' : 'refreshed 06:00 UTC';
+  if (metaEl) metaEl.textContent = state.watchlistOnly ? 'saved view' : '';
   renderTodayPick(sorted[0]);
 
   const host = document.getElementById('leaderboard');
@@ -6772,31 +6828,22 @@ function renderLeaderboard() {
     const stageColor = STAGE_META[t.stage]?.color || '#8b9cb0';
     // Always emit the spark slot (empty placeholder if no sparkline data) so
     // every row has the same 6 grid children and the right-rail columns line up.
-    const spark = (t.sparkline || []).length
-      ? `<span class="lb-spark">${sparklineSVG(t.sparkline, 48, 14, stageColor)}</span>`
-      : `<span class="lb-spark" aria-hidden="true"></span>`;
-    const volume = totalMentions7d(t);
-    const deltaPct = weekDeltaPct(t.sparkline);
-    const deltaCls = deltaPct > 0 ? 'up' : (deltaPct < 0 ? 'down' : '');
-    const mixBar = channelMixBar(t.sources, 80);
-    const consensus = renderConsensusBadge(t);
+    const headroom = Math.max(0, Math.round(100 - (t.saturation || 0)));
+    const velocity = (t.velocity || 0).toFixed(1);
+    const stageLabel = STAGE_META[t.stage]?.label || t.stage || 'Signal';
+    const explain = `${stageLabel} stage · ${velocity}x momentum · ${headroom}% niche headroom`;
     return `
       <div class="lb-row${sel ? ' selected' : ''}${isPlaceholder(t.summary) ? ' trend-placeholder' : ''}" data-kw="${escapeAttr(kw)}">
         <div class="rank">${String(i + 1).padStart(2, '0')}</div>
         <div class="lb-main">
-          <div class="name">${escapeHtml(t.keyword)}</div>
+          <div class="name">${escapeHtml(displayTopic(t))}</div>
           <div class="stage-mini" style="color:${stageColor}">
-            <span class="stage-label"><span class="stage-dot ${t.stage}"></span>${STAGE_META[t.stage]?.label || t.stage} · sat ${Math.round(t.saturation)}%</span>
+            <span class="stage-label"><span class="stage-dot ${t.stage}"></span>${stageLabel}</span>
             ${conv ? `<span class="conv-badge" data-conv="${escapeAttr(kw)}" title="View convergence timeline">⚡ CONV</span>` : ''}
-            <span class="lb-volume" title="Mentions in last 24 hours across arXiv + GitHub + HN">vol ${volume}${deltaPct !== null ? ` <span class="lb-delta ${deltaCls}" title="24-hour growth rate">${deltaPct > 0 ? '+' : ''}${deltaPct}%</span>` : ''}</span>
           </div>
-          ${consensus ? `<div class="lb-consensus">${consensus}</div>` : ''}
-          ${mixBar ? `<div class="lb-mix">${mixBar}</div>` : ''}
+          <div class="lb-explain">${escapeHtml(explain)}</div>
         </div>
-        ${spark}
-        <div class="tbts" title="Trend-Before-Trend Score">${(t.tbts || 0).toFixed(1)}</div>
-        <div class="vel ${t.velocity > 1 ? 'up' : (t.velocity > 0 && t.velocity < 1) ? 'down' : ''}" title="Velocity (× growth vs baseline)">${velArrow(t.velocity)}</div>
-        <button class="star-btn${inWatch(kw) ? ' on' : ''}" data-kw="${escapeAttr(kw)}" aria-label="Toggle watchlist" title="Toggle watchlist">★</button>
+        <div class="tbts" title="Signal score"><span>${(t.tbts || 0).toFixed(1)}</span><span class="score-label">Score</span></div>
       </div>
     `;
   }).join('');
@@ -7043,7 +7090,7 @@ function openDetailPanel(kw) {
   const t = TRENDS.find(x => (x.canonical_form || x.keyword) === kw);
   if (!t) return;
   try { performance.mark('aar_panel_open_' + kw); } catch(_){}
-  document.getElementById('dpName').textContent    = t.keyword;
+  document.getElementById('dpName').textContent    = displayTopic(t);
   document.getElementById('dpCluster').textContent = `cluster · ${t.cluster_label || '—'}`;
   document.getElementById('dpSummary').textContent = t.summary || '—';
   document.getElementById('dpTbts').textContent    = (t.tbts || 0).toFixed(1);
@@ -7917,7 +7964,7 @@ function renderConvergenceTimeline(host, firstAppearance) {
 function openConvergence(kw) {
   const t = TRENDS.find(x => (x.canonical_form || x.keyword) === kw);
   if (!t || !hasConvergence(t)) return;
-  document.getElementById('convName').textContent    = t.keyword;
+  document.getElementById('convName').textContent    = displayTopic(t);
   document.getElementById('convCluster').textContent = `cluster · ${t.cluster_label || '—'}`;
   renderConvergenceTimeline(document.getElementById('convTimeline'), t.convergence.first_appearance);
 
@@ -8080,7 +8127,7 @@ function renderGems() {
           <div class="gem-headrow">
             <div style="display:flex; align-items:center; gap:8px; overflow:hidden;">
               <button class="star-btn${inWatch(t.canonical_form || t.keyword) ? ' on' : ''}" data-kw="${escapeAttr(t.canonical_form || t.keyword)}" aria-label="Toggle watchlist" title="Toggle watchlist">★</button>
-              <div class="gem-keyword">${escapeHtml(t.keyword)}</div>
+              <div class="gem-keyword">${escapeHtml(displayTopic(t))}</div>
             </div>
             <div class="gem-score">
               ${Math.round((t.hidden_gem || 0) * 100)}
@@ -8090,7 +8137,7 @@ function renderGems() {
           <div class="gem-meta">
             <span class="badge"><span class="stage-dot ${t.stage}"></span> ${STAGE_META[t.stage]?.label || t.stage}</span>
             <span class="badge">SAT ${Math.round(t.saturation)}%</span>
-            <span class="badge">TBTS ${(t.tbts || 0).toFixed(1)}</span>
+            <span class="badge">Score ${(t.tbts || 0).toFixed(1)}</span>
             <span class="badge">${sourceBadge(t.sources || {})}</span>
           </div>
           ${channelMixBar(t.sources, 200) ? `<div class="gem-mix">${channelMixBar(t.sources, 200)}<div class="gem-mix-legend">${channelMixLegend(t.sources)}</div></div>` : ''}
@@ -8211,7 +8258,7 @@ function renderAlmanac() {
     return `
       <div class="almanac-card">
         <div class="topic">
-          ${escapeHtml(t.keyword)} <span class="stage">· ${STAGE_META[t.stage]?.label || ''}</span>
+          ${escapeHtml(displayTopic(t))} <span class="stage">· ${STAGE_META[t.stage]?.label || ''}</span>
           <button class="star-btn${inWatch(t.canonical_form || t.keyword) ? ' on' : ''}" data-kw="${escapeAttr(t.canonical_form || t.keyword)}" aria-label="Toggle watchlist" title="Toggle watchlist" style="margin-left:auto;">★</button>
         </div>
         <div class="almanac-row">
@@ -8251,9 +8298,10 @@ document.getElementById('nicheInput').addEventListener('input', renderAlmanac);
    FOOTER STAMP
    ========================================================== */
 function tickFooter() {
+  const stamp = document.getElementById('footerStamp');
+  if (!stamp) return;
   const d = new Date();
-  document.getElementById('footerStamp').textContent =
-    `local time · ${d.toLocaleTimeString('en-GB')}`;
+  stamp.textContent = `local time · ${d.toLocaleTimeString('en-GB')}`;
 }
 setInterval(tickFooter, 1000);
 window.addEventListener('resize', () => {
@@ -8325,6 +8373,26 @@ function escapeHtml(s) {
   }[c]));
 }
 function escapeAttr(s) { return escapeHtml(s); }
+const TITLE_CASE_KEEP = new Map([
+  ['ai', 'AI'], ['api', 'API'], ['apis', 'APIs'], ['mcp', 'MCP'], ['rag', 'RAG'],
+  ['llm', 'LLM'], ['llms', 'LLMs'], ['ui', 'UI'], ['ux', 'UX'], ['github', 'GitHub'],
+  ['arxiv', 'arXiv'], ['n8n', 'n8n'], ['tbts', 'TBTS'], ['hn', 'HN'],
+]);
+function titleCaseTopic(value) {
+  return String(value || '')
+    .split(/\s+/)
+    .filter(Boolean)
+    .map(word => word.split('-').map(part => {
+      const lower = part.toLowerCase();
+      if (TITLE_CASE_KEEP.has(lower)) return TITLE_CASE_KEEP.get(lower);
+      return lower.charAt(0).toUpperCase() + lower.slice(1);
+    }).join('-'))
+    .join(' ');
+}
+function displayTopic(t) {
+  if (!t) return '';
+  return t.display_keyword || titleCaseTopic(t.keyword || t.canonical_form || '');
+}
 /* Brand law: no em/en dashes in visible copy. Claude-authored angle titles in
    data.json often contain them, so scrub at render time (the lone '—' empty
    placeholder is passed separately and never reaches this). */
