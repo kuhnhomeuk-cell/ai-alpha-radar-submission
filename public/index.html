@@ -4,6 +4,17 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>AI Alpha Radar · Trend Intelligence</title>
+  <meta name="description" content="The early-warning dashboard for AI operators who can't afford to be second. Surface accelerating signals across papers, repos, and podcasts before the headline.">
+  <meta property="og:title" content="AI Alpha Radar · Trend Intelligence">
+  <meta property="og:description" content="The early-warning dashboard for AI operators who can't afford to be second.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://ai-alpha-radar-submission.vercel.app/">
+  <meta property="og:image" content="https://ai-alpha-radar-submission.vercel.app/og-image.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="AI Alpha Radar · Trend Intelligence">
+  <meta name="twitter:description" content="The early-warning dashboard for AI operators who can't afford to be second.">
+  <meta name="twitter:image" content="https://ai-alpha-radar-submission.vercel.app/og-image.png">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%23050709'/><circle cx='16' cy='16' r='10' fill='none' stroke='%232ce6ff' stroke-width='1.5' opacity='0.9'/><circle cx='16' cy='16' r='5' fill='none' stroke='%232eecae' stroke-width='1' opacity='0.7'/><circle cx='16' cy='16' r='1.5' fill='%232ce6ff'/></svg>">
   
   <link rel="stylesheet" href="tokens.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -67,18 +78,6 @@
       gap: 8px;
       view-transition-name: brand-logo;
     }
-    .nav-links {
-      display: flex;
-      gap: 32px;
-    }
-    .nav-links a {
-      color: var(--fg-2);
-      text-decoration: none;
-      font-size: 15px;
-      font-weight: 500;
-      transition: color var(--motion-fast) var(--ease-standard);
-    }
-    .nav-links a:hover { color: var(--fg); }
     .nav-actions {
       display: flex;
       gap: 16px;
@@ -101,7 +100,7 @@
       border: 1px solid transparent;
     }
     .btn-primary {
-      background: linear-gradient(135deg, rgba(0, 212, 255, 0.22), rgba(46, 236, 174, 0.12));
+      background: linear-gradient(135deg, rgba(0, 212, 255, 0.22), rgba(0, 184, 230, 0.12));
       backdrop-filter: blur(30px) saturate(150%);
       -webkit-backdrop-filter: blur(30px) saturate(150%);
       color: #06242d;
@@ -111,7 +110,7 @@
         inset 0 1px 0 rgba(255, 255, 255, 0.72);
     }
     .btn-primary:hover {
-      background: linear-gradient(135deg, rgba(0, 212, 255, 0.32), rgba(46, 236, 174, 0.18));
+      background: linear-gradient(135deg, rgba(0, 212, 255, 0.32), rgba(0, 184, 230, 0.18));
       border-color: rgba(0, 184, 230, 0.62);
       transform: translateY(-2px);
       box-shadow:
@@ -160,9 +159,6 @@
         font-size: 18px;
         white-space: nowrap;
       }
-      .nav-links {
-        display: none;
-      }
       .nav-actions {
         gap: 8px;
         margin-left: auto;
@@ -210,6 +206,7 @@
       margin: 0 0 24px 0;
       font-weight: 600;
       animation: landing-rise 0.62s var(--ease-standard) 0.07s both;
+      text-wrap: balance;
     }
     h1 em {
       font-style: italic;
@@ -511,12 +508,6 @@
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
         AI Alpha Radar
       </div>
-      <nav class="nav-links">
-        <a href="#product">Product</a>
-        <a href="#signals">Signals</a>
-        <a href="#pricing">Pricing</a>
-        <a href="#docs">Docs</a>
-      </nav>
       <div class="nav-actions">
         <a href="dashboard.html" class="btn btn-outline" style="padding: 8px 16px; font-size: 14px;">Sign in</a>
         <a href="dashboard.html" class="btn btn-primary" style="padding: 8px 16px; font-size: 14px;">Start Tracking</a>
@@ -539,7 +530,7 @@
         </p>
         
         <div class="hero-cta">
-          <a href="dashboard.html" class="btn btn-primary">Start tracking — free for 14 days ↗</a>
+          <a href="dashboard.html" class="btn btn-primary">Start Tracking - Free For 14 Days ↗</a>
         </div>
         
         <div class="hero-meta">

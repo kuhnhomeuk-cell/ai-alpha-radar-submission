@@ -7,9 +7,12 @@
 <meta property="og:title" content="AI Alpha Radar · Trend Intelligence">
 <meta property="og:description" content="Real-time AI trend intelligence. Track emerging signals and surface first-mover opportunities before the crowd arrives.">
 <meta property="og:type" content="website">
+<meta property="og:url" content="https://ai-alpha-radar-submission.vercel.app/dashboard">
+<meta property="og:image" content="https://ai-alpha-radar-submission.vercel.app/og-image.png">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="AI Alpha Radar · Trend Intelligence">
 <meta name="twitter:description" content="Real-time AI trend intelligence. Track emerging signals and surface first-mover opportunities before the crowd arrives.">
+<meta name="twitter:image" content="https://ai-alpha-radar-submission.vercel.app/og-image.png">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%23050709'/><circle cx='16' cy='16' r='10' fill='none' stroke='%232ce6ff' stroke-width='1.5' opacity='0.9'/><circle cx='16' cy='16' r='5' fill='none' stroke='%232eecae' stroke-width='1' opacity='0.7'/><circle cx='16' cy='16' r='1.5' fill='%232ce6ff'/></svg>">
 <title>AI Alpha Radar · Trend Intelligence</title>
 <script>
@@ -57,7 +60,7 @@
   --panel-solid: var(--surface);
   --ink:       var(--fg);
   --ink-2:     var(--fg-2);
-  --muted:     #5f6b78;  /* darkened from tokens.css #808080 → ~4.6:1 on white (WCAG AA); dark theme keeps its own --muted */
+  --muted:     #5f6b78;  /* matches tokens.css for AA contrast on white; dark theme keeps its own --muted */
   --ink-3:     var(--muted);
   --line:      var(--border);
   --line-hi:   var(--border-soft);
@@ -331,7 +334,6 @@ html::after {
 .conv-modal .close:focus-visible,
 .detail-panel .close:focus-visible,
 .briefing-panel .close:focus-visible,
-.watchlist-pill:focus-visible,
 .briefing-toggle:focus-visible,
 .outlier-tab:focus-visible,
 .outlier-action:focus-visible,
@@ -587,62 +589,6 @@ html::after {
 .niche-input:focus { outline: 1px solid var(--accent); outline-offset: 2px; border-bottom-color: var(--accent); }
 .niche-input::placeholder { color: var(--ink-3); }
 
-/* Watchlist pill — cloned from landing `.btn-outline`. White-glass pill,
-   semi-translucent white border, bright inset highlight, soft drop shadow. */
-.watchlist-pill {
-  background: rgba(255, 255, 255, 0.45);
-  border: 1px solid rgba(255, 255, 255, 0.8);
-  color: var(--ink);
-  font-family: var(--sans);
-  font-size: 13px;
-  font-weight: 600;
-  letter-spacing: 0;
-  padding: 8px 16px;
-  border-radius: var(--radius-pill);
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  transition: color 0.2s, border-color 0.2s, background 0.2s, transform 0.2s;
-  white-space: nowrap;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05), inset 0 1px 0 rgba(255, 255, 255, 1);
-  backdrop-filter: blur(30px) saturate(150%);
-  -webkit-backdrop-filter: blur(30px) saturate(150%);
-}
-.watchlist-pill:hover {
-  background: rgba(255, 255, 255, 0.65);
-  transform: translateY(-1px);
-}
-.watchlist-pill:disabled,
-.watchlist-pill[disabled] {
-  opacity: 0.45;
-  cursor: default;
-}
-.watchlist-pill .wl-star {
-  font-family: var(--sans);
-  font-size: 13px;
-  color: var(--accent);
-  line-height: 1;
-}
-.watchlist-pill.has-items {
-  color: var(--accent);
-  border-color: var(--accent);
-  background: rgba(0, 212, 255, 0.06);
-}
-.watchlist-pill.has-items:hover {
-  background: rgba(0, 212, 255, 0.12);
-}
-.watchlist-pill:disabled .wl-star { color: var(--ink-3); }
-.watchlist-pill.empty {
-  color: var(--ink);
-}
-.watchlist-pill.empty .wl-star { color: var(--accent); }
-.watchlist-pill.active {
-  color: var(--accent);
-  border-color: var(--accent);
-  background: rgba(0, 212, 255, 0.10);
-}
-
 .star-btn {
   background: transparent;
   border: none;
@@ -691,7 +637,6 @@ html::after {
    ======================================================== */
 .nav button,
 .chip,
-.watchlist-pill,
 .star-btn,
 .gem-card,
 .demand-card,
@@ -709,7 +654,6 @@ html::after {
 }
 .nav button:active            { transform: scale(0.97); }
 .chip:active                  { transform: scale(0.96); }
-.watchlist-pill:active,
 .briefing-toggle:active       { transform: scale(0.97); filter: brightness(1.08); }
 .star-btn:active              { transform: scale(0.9) rotate(-8deg); }
 .gem-card:active              { transform: scale(0.994); border-color: var(--accent); }
@@ -827,7 +771,7 @@ html::after {
   margin: 12px;
   padding: 18px;
   border: 1px solid var(--line);
-  border-radius: var(--radius-ui);
+  border-radius: var(--radius-md);
   color: var(--ink-3);
   font-family: var(--mono);
   font-size: 10px;
@@ -1321,7 +1265,6 @@ html::after {
   }
   .niche-input,
   .search-input { width: 100%; min-width: 0; flex: 1 1 200px; }
-  .watchlist-pill { min-height: 44px; padding: 10px 14px; }
   .brand { font-size: 18px; }
   .brand .subtitle { display: none; }
 }
@@ -1356,7 +1299,6 @@ html::after {
   .star-btn { min-width: 44px; min-height: 44px; }
   .chip { min-height: 36px; }
   .nav button { min-height: 44px; }
-  .watchlist-pill { min-height: 40px; }
 }
 
 /* Reduced motion */
@@ -2121,6 +2063,7 @@ html::after {
   line-height: 1.1;
   margin-bottom: 12px;
   letter-spacing: -0.01em;
+  text-wrap: balance;
 }
 .page-title h1 em,
 .page-title h2 em { color: var(--accent); font-style: italic; }
@@ -2941,9 +2884,9 @@ html[data-theme="light"] .detail-panel {
 }
 .sa-cta:hover { background: rgba(0, 212, 255, 0.16); }
 .sa-cta.copied {
-  color: var(--good);
-  background: rgba(46, 236, 174, 0.10);
-  border-color: rgba(46, 236, 174, 0.40);
+  color: var(--accent-hover);
+  background: rgba(0, 212, 255, 0.12);
+  border-color: rgba(0, 212, 255, 0.45);
 }
 .sa-cta--ghost {
   font-family: var(--mono);
@@ -3880,17 +3823,10 @@ main {
   color: var(--ink);
 }
 
-.watchlist-pill,
 .theme-toggle,
 .briefing-toggle,
 .tp-cta {
   border-radius: var(--radius-pill);
-}
-
-.watchlist-pill {
-  min-height: 36px;
-  background: rgba(255, 255, 255, 0.72);
-  border-color: rgba(0, 0, 0, 0.08);
 }
 
 .theme-toggle {
@@ -4419,6 +4355,10 @@ main {
   font-size: 11px;
 }
 
+.chart-rank-row .metric {
+  font-variant-numeric: tabular-nums;
+}
+
 .chart-rank-row .angle {
   min-width: 0;
   color: var(--ink-3);
@@ -4681,8 +4621,6 @@ footer .quote {
   .topbar .search-input {
     width: 100%;
   }
-
-  .watchlist-pill { flex: 1 1 auto; }
 
   .freshness-banner,
   .topic-rail,
@@ -5507,30 +5445,9 @@ function toggleWatch(kw) {
   aarToast(verb + ' · ', { accent: String(WATCHLIST.size) + '/5' });
 }
 function syncWatchlistViews() {
-  updateWatchlistUI();
   applyState();
   renderGems();
   renderAlmanac();
-}
-function updateWatchlistUI() {
-  const n = WATCHLIST.size;
-  const pill = document.getElementById('watchlistPill');
-  if (pill) {
-    if (n === 0 && typeof state !== 'undefined') state.watchlistOnly = false;
-    const isFiltering = n > 0 && typeof state !== 'undefined' && state.watchlistOnly;
-    const lbl = pill.querySelector('.wl-label');
-    const label = n === 0 ? 'Watchlist' : (isFiltering ? `Watching (${n})` : `Watchlist (${n})`);
-    if (lbl) lbl.textContent = label;
-    else pill.textContent = `★ ${label}`;
-    pill.classList.toggle('empty', n === 0);
-    pill.classList.toggle('has-items', n > 0);
-    pill.classList.toggle('active', isFiltering);
-    pill.disabled = false;
-    pill.setAttribute('aria-pressed', String(isFiltering));
-    pill.setAttribute('title', n === 0
-      ? 'Save the current top 5 Radar signals as a starter watchlist'
-      : 'Toggle Radar to only your starred trends');
-  }
 }
 
 async function loadData() {
@@ -5668,19 +5585,10 @@ function sortRadarTrends(trends) {
   });
 }
 
-function seedWatchlistFromRadar(limit = 5) {
-  let picks = sortRadarTrends(radarTrendCandidates({ ignoreWatchlist: true })).slice(0, limit);
-  if (!picks.length) picks = sortRadarTrends(radarTrendCandidates({ ignoreWatchlist: true, ignoreFilters: true })).slice(0, limit);
-  picks.forEach(t => WATCHLIST.add(t.canonical_form || t.keyword));
-  persistWatchlist();
-  return picks.length;
-}
-
 function applyState() {
   renderBubble();
   renderLeaderboard();
   renderThemes();
-  updateWatchlistUI();
 }
 
 /* Cluster region geometry — used by the overlay AND the panel/click handler.
@@ -5861,28 +5769,6 @@ document.querySelectorAll('.filters .chip[data-filter="sort"]').forEach(c => {
   });
 });
 
-/* Watchlist pill (topbar): when empty, it creates a starter list from the
-   current Radar; once populated, it becomes the saved-signals focus toggle. */
-const watchlistPill = document.getElementById('watchlistPill');
-if (watchlistPill) {
-  watchlistPill.addEventListener('click', () => {
-    document.querySelector('.nav button[data-page="radar"]').click();
-    if (WATCHLIST.size === 0) {
-      const added = seedWatchlistFromRadar(5);
-      if (!added) {
-        announce('No visible Radar signals to save yet.');
-        updateWatchlistUI();
-        return;
-      }
-      state.watchlistOnly = true;
-      syncWatchlistViews();
-      announce(`Starter watchlist saved: ${added} top Radar signals.`);
-      return;
-    }
-    state.watchlistOnly = !state.watchlistOnly;
-    applyState();
-  });
-}
 /* Global star click delegation — stopPropagation so leaderboard row click doesn't fire */
 document.addEventListener('click', (e) => {
   const star = e.target.closest('.star-btn');
@@ -8616,7 +8502,7 @@ const LIQUID_GLINT_SELECTOR = [
   '.glass', '.panel', '.briefing', '.source-health',
   '.gem-card', '.demand-card', '.hit-rate', '.prediction',
   '.almanac-card', '.outlier-card', '.detail-panel', '.conv-modal',
-  '.chip', '.nav button', '.theme-toggle', '.watchlist-pill',
+  '.chip', '.nav button', '.theme-toggle',
   '.outlier-action', '.conv-modal .close', '.detail-panel .close',
   '.lb-row'
 ].join(',');
@@ -8749,7 +8635,6 @@ window.addEventListener('load', async () => {
     stampEl.textContent = `snapshot · ${SNAPSHOT_DATE || '—'}`;
   }
   renderFreshnessBanner();
-  updateWatchlistUI();
   renderBubble();
   renderLeaderboard();
   renderThemes();

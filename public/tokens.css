@@ -7,7 +7,7 @@
   --surface-elevated: #ffffff;
   --fg: #000000;          /* Deep Black */
   --fg-2: #4a4a4a;        /* Subdued Gray */
-  --muted: #808080;       /* Quiet Meta */
+  --muted: #5f6b78;       /* Quiet Meta, AA on white */
   --border: rgba(0, 0, 0, 0.1);
   --border-soft: rgba(0, 0, 0, 0.05);
   
