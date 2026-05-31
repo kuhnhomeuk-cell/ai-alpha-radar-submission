@@ -899,9 +899,10 @@ html::after {
   padding: 5px 12px;
   background: rgba(255, 255, 255, 0.02);
   border: 1px solid rgba(255, 255, 255, 0.04);
-  border-radius: 6px;
+  border-radius: 100px;
   display: flex;
-  justify-content: flex-end;
+  align-items: center;
+  justify-content: space-between;
   flex-wrap: wrap;
   gap: 4px 12px;
   font-family: var(--mono);
@@ -913,16 +914,15 @@ html::after {
   backdrop-filter: none;
   -webkit-backdrop-filter: none;
 }
-.source-health .src-list { display: none !important; }
 .source-health:hover { opacity: 1; }
 :root[data-theme="light"] .source-health {
   background: rgba(0, 0, 0, 0.025);
   border-color: rgba(0, 0, 0, 0.06);
 }
 .src-list {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-  gap: 4px 16px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px 14px;
   align-items: center;
   flex: 1;
   min-width: 0;
@@ -1510,22 +1510,95 @@ html::after {
     inset 0 1px 0 rgba(255, 255, 255, 0.85),
     0 18px 36px -24px rgba(84, 101, 130, 0.36);
 }
-.leaderboard { max-height: 580px; overflow-y: auto; }
+.leaderboard {
+  max-height: 580px;
+  overflow-y: auto;
+  display: grid;
+  gap: 10px;
+  padding: 12px;
+}
 .leaderboard::-webkit-scrollbar { width: 6px; }
 .leaderboard::-webkit-scrollbar-thumb { background: var(--line-hi); border-radius: 3px; }
 .lb-row {
-  display: grid;
-  grid-template-columns: 28px minmax(0, 1fr) 72px;
-  padding: 15px 18px;
-  border-bottom: 1px solid var(--line);
-  align-items: center;
+  display: block;
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.36);
   cursor: pointer;
-  gap: 14px;
-  min-height: 84px;
+  min-height: 0;
   transition: background var(--dur-fast) var(--ease-out-strong),
               transform var(--dur-fast) var(--ease-out-strong);
 }
-.lb-main { min-width: 0; display: flex; flex-direction: column; gap: 4px; }
+.lb-row.selected {
+  border-color: rgba(0, 212, 255, 0.36);
+  background: rgba(0, 212, 255, 0.08);
+}
+:root[data-theme="dark"] .lb-row {
+  background: rgba(15, 23, 42, 0.42);
+}
+.lb-card-top {
+  display: grid;
+  grid-template-columns: 30px minmax(0, 1fr);
+  gap: 10px;
+  align-items: start;
+}
+.lb-main { min-width: 0; display: flex; flex-direction: column; gap: 5px; }
+.lb-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+.lb-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 7px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-pill);
+  color: var(--ink-2);
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.lb-badge .stage-dot {
+  background: currentColor;
+  box-shadow: none;
+}
+.lb-kpis {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 7px;
+  margin-top: 10px;
+}
+.lb-kpi {
+  min-width: 0;
+  padding: 8px 9px;
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  background: rgba(255, 255, 255, 0.28);
+}
+:root[data-theme="dark"] .lb-kpi {
+  background: rgba(255, 255, 255, 0.035);
+}
+.lb-kpi .k {
+  display: block;
+  color: var(--ink-3);
+  font-family: var(--mono);
+  font-size: 8.5px;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  margin-bottom: 3px;
+}
+.lb-kpi .v {
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 18px;
+  font-weight: 650;
+  letter-spacing: -0.01em;
+  font-variant-numeric: tabular-nums;
+}
 .lb-consensus { display: none; }
 .lb-spark { display: inline-flex; opacity: 0.72; width: 48px; height: 14px; justify-content: center; }
 .lb-spark svg { display: block; }
@@ -1608,7 +1681,7 @@ html::after {
 .lb-row .name {
   font-family: var(--sans);
   font-size: 14px;
-  font-weight: 500;
+  font-weight: 700;
   letter-spacing: -0.005em;
   color: var(--ink);
   overflow: hidden;
@@ -1690,13 +1763,18 @@ html::after {
 }
 .theme-row {
   display: grid;
-  grid-template-columns: 1fr auto auto;
-  padding: 9px 14px;
+  grid-template-columns: 34px minmax(0, 1fr) auto;
+  padding: 10px 14px;
   border-bottom: 1px solid var(--line);
   cursor: pointer;
-  gap: 12px;
+  gap: 10px;
   align-items: center;
   transition: background 0.1s;
+}
+.theme-row .theme-code {
+  color: var(--ink);
+  font-family: var(--mono);
+  font-size: 12px;
 }
 .theme-row:last-child { border-bottom: none; }
 .theme-row:hover { background: rgba(0, 212, 255, 0.04); }
@@ -1712,6 +1790,13 @@ html::after {
   letter-spacing: 0.04em;
   overflow: hidden;
   text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.theme-row .theme-meta {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 3px;
   white-space: nowrap;
 }
 .theme-row .count {
@@ -2561,16 +2646,17 @@ html::after {
    ==================================================== */
 .detail-panel {
   position: fixed;
-  top: 73px; right: 0; bottom: 0;
+  top: 104px; right: 18px; bottom: 18px;
   width: 380px;
-  background: rgba(7, 9, 12, 0.96);
-  border-left: 1px solid var(--line-hi);
+  background: rgba(255, 255, 255, 0.94);
+  border: 1px solid rgba(255, 255, 255, 0.64);
+  border-radius: 20px;
   transform: translateX(100%);
   transition: transform var(--dur-slow) var(--ease-drawer);
-  z-index: 40;
+  z-index: 90;
   overflow-y: auto;
-  box-shadow: -8px 0 32px rgba(0, 0, 0, 0.4);
-  backdrop-filter: blur(12px);
+  box-shadow: var(--shadow-float);
+  backdrop-filter: blur(32px) saturate(150%);
 }
 .detail-panel.visible { transform: translateX(0); }
 /* Asymmetric exit: snap closed faster than it opens */
@@ -2646,13 +2732,26 @@ html::after {
 .detail-panel .stats {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 1px;
-  background: var(--line);
+  gap: 8px;
+  background: transparent;
   margin-bottom: 18px;
 }
 .detail-panel .stats .stat {
   padding: 12px 14px;
-  background: rgba(7, 9, 12, 0.85);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: rgba(0, 212, 255, 0.05);
+}
+:root[data-theme="dark"] .detail-panel {
+  background: rgba(13, 18, 27, 0.96);
+  border-color: rgba(255, 255, 255, 0.16);
+}
+html[data-theme="light"] .detail-panel {
+  background: #ffffff;
+}
+:root[data-theme="dark"] .detail-panel .stats .stat {
+  background: rgba(44, 230, 255, 0.07);
+  border-color: rgba(255, 255, 255, 0.13);
 }
 .detail-panel .stats .stat .l {
   font-family: var(--mono);
@@ -3091,9 +3190,9 @@ html::after {
 .meth-section pre {
   margin: 8px 0;
   padding: 10px 12px;
-  background: rgba(0, 212, 255, 0.04);
-  border: 1px solid rgba(0, 212, 255, 0.18);
-  border-radius: 4px;
+  background: rgba(0, 212, 255, 0.06);
+  border: 1px solid rgba(0, 212, 255, 0.24);
+  border-radius: 8px;
   font-family: var(--mono);
   font-size: 11px;
   line-height: 1.5;
@@ -3917,16 +4016,31 @@ main {
 }
 
 .radar-chart-panel .panel-head {
-  gap: 16px;
+  gap: 14px;
   align-items: center;
+  flex-wrap: wrap;
 }
 .radar-chart-panel .panel-head .title {
   flex: 0 0 auto;
 }
-.radar-stage-controls {
+.radar-head-controls {
   margin-left: auto;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  flex-wrap: wrap;
+  min-width: 0;
+}
+.radar-stage-controls {
   justify-content: flex-end;
   flex-wrap: wrap;
+}
+.radar-chart-filters {
+  margin: 0;
+  padding: 0;
+  gap: 8px;
+  flex: 0 0 auto;
 }
 
 .filters .chips {
@@ -4207,7 +4321,7 @@ main {
 .chart-rank-head,
 .chart-rank-row {
   display: grid;
-  grid-template-columns: 42px minmax(0, 1fr) 132px 70px 76px 82px;
+  grid-template-columns: 42px minmax(180px, 0.9fr) minmax(260px, 1.4fr) 112px 70px 76px 82px;
   gap: 10px;
   align-items: center;
 }
@@ -4295,10 +4409,22 @@ main {
 }
 
 .chart-rank-row .metric,
-.chart-rank-row .zone {
+.chart-rank-row .zone,
+.chart-rank-row .angle {
   color: var(--ink-2);
   font-family: var(--mono);
   font-size: 11px;
+}
+
+.chart-rank-row .angle {
+  min-width: 0;
+  color: var(--ink-3);
+  font-family: var(--sans);
+  font-size: 12px;
+  line-height: 1.3;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .chart-rank-row .zone {
@@ -4340,8 +4466,6 @@ main {
 
 .leaderboard { max-height: 520px; }
 
-.lb-row { grid-template-columns: 28px minmax(0, 1fr) 72px; }
-
 .lb-spark { display: none; }
 
 .source-health {
@@ -4351,7 +4475,7 @@ main {
 
 .source-health.glass {
   position: static;
-  border-radius: var(--radius-shell);
+  border-radius: 100px;
 }
 
 footer {
@@ -4603,8 +4727,8 @@ footer .quote {
 
   .chart-rank-head,
   .chart-rank-row {
-    grid-template-columns: 34px minmax(150px, 1fr) 124px 64px 64px 76px;
-    min-width: 710px;
+    grid-template-columns: 34px minmax(150px, 1fr) minmax(220px, 1.3fr) 112px 64px 64px 76px;
+    min-width: 920px;
   }
 
   .radar-side {
@@ -4702,6 +4826,29 @@ html[data-theme="dark"] body .topbar #briefingToggle.briefing-toggle {
   background-color: rgba(15, 23, 42, 0.70) !important;
   border-color: rgba(44, 230, 255, 0.34) !important;
   color: var(--accent) !important;
+}
+
+html[data-theme="light"] body #detailPanel.detail-panel.visible {
+  background: #ffffff !important;
+  background-color: #ffffff !important;
+  opacity: 1 !important;
+}
+
+html[data-theme="dark"] body #detailPanel.detail-panel.visible {
+  background: rgba(13, 18, 27, 0.98) !important;
+  background-color: rgba(13, 18, 27, 0.98) !important;
+  opacity: 1 !important;
+}
+
+@media (max-width: 700px) {
+  body #detailPanel.detail-panel {
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    width: 100vw !important;
+    max-width: none !important;
+    border-radius: 0 !important;
+  }
 }
 </style></head>
 <body>
@@ -4801,51 +4948,49 @@ html[data-theme="dark"] body .topbar #briefingToggle.briefing-toggle {
        contents into the panel when the panel opens. -->
   <div class="briefing-text" id="briefingText" hidden>—</div>
 
-  <div class="filters">
-    <details class="filter-menu filter-group-source">
-      <summary>Sources</summary>
-      <div class="chips">
-        <span class="chip active" data-filter="source" data-value="arxiv">arXiv</span>
-        <span class="chip active" data-filter="source" data-value="github">GitHub</span>
-        <span class="chip active" data-filter="source" data-value="hackernews">HN</span>
-        <span class="chip active" data-filter="source" data-value="semantic_scholar">SemScholar</span>
-        <span class="chip active" data-filter="source" data-value="digg">Digg</span>
-      </div>
-    </details>
-
-    <details class="filter-menu filter-group-sort">
-      <summary>Sort</summary>
-      <div class="chips">
-        <span class="chip active" data-filter="sort" data-value="tbts" title="Overall signal score">Score ↓</span>
-        <span class="chip"        data-filter="sort" data-value="velocity">Momentum ↓</span>
-        <span class="chip"        data-filter="sort" data-value="hidden_gem">Hidden Gem ↓</span>
-      </div>
-    </details>
-
-    <details class="filter-menu filter-group-view">
-      <summary>View</summary>
-      <div class="chips">
-        <span class="chip" data-filter="themes" aria-pressed="false">Clusters</span>
-        <span class="chip" data-filter="labels" aria-pressed="false">Names</span>
-      </div>
-    </details>
-    
-  </div>
-
-
-
   <div class="radar-grid">
     <div class="radar-main">
       <div class="panel radar-chart-panel" id="radarChartPanel">
         <div class="panel-head">
-          <div class="title">Headroom × Velocity Map</div>
-          <div class="filter-group filter-group-stage radar-stage-controls" aria-label="Stage filters">
-            <div class="chips">
-              <span class="chip active" data-filter="stage" data-value="whisper"><span class="stage-dot whisper"></span>Whisper</span>
-              <span class="chip active" data-filter="stage" data-value="builder"><span class="stage-dot builder"></span>Builder</span>
-              <span class="chip active" data-filter="stage" data-value="creator"><span class="stage-dot creator"></span>Creator</span>
-              <span class="chip"        data-filter="stage" data-value="hype"><span class="stage-dot hype"></span>Hype</span>
-              <span class="chip"        data-filter="stage" data-value="commodity"><span class="stage-dot commodity"></span>Commodity</span>
+          <div class="title">Creator Opportunity Map</div>
+          <div class="radar-head-controls">
+            <div class="filter-group filter-group-stage radar-stage-controls" aria-label="Stage filters">
+              <div class="chips">
+                <span class="chip active" data-filter="stage" data-value="whisper"><span class="stage-dot whisper"></span>Whisper</span>
+                <span class="chip active" data-filter="stage" data-value="builder"><span class="stage-dot builder"></span>Builder</span>
+                <span class="chip active" data-filter="stage" data-value="creator"><span class="stage-dot creator"></span>Creator</span>
+                <span class="chip"        data-filter="stage" data-value="hype"><span class="stage-dot hype"></span>Hype</span>
+                <span class="chip"        data-filter="stage" data-value="commodity"><span class="stage-dot commodity"></span>Commodity</span>
+              </div>
+            </div>
+            <div class="filters radar-chart-filters" aria-label="Map controls">
+              <details class="filter-menu filter-group-source">
+                <summary>Sources</summary>
+                <div class="chips">
+                  <span class="chip active" data-filter="source" data-value="arxiv">arXiv</span>
+                  <span class="chip active" data-filter="source" data-value="github">GitHub</span>
+                  <span class="chip active" data-filter="source" data-value="hackernews">HN</span>
+                  <span class="chip active" data-filter="source" data-value="semantic_scholar">SemScholar</span>
+                  <span class="chip active" data-filter="source" data-value="digg">Digg</span>
+                </div>
+              </details>
+
+              <details class="filter-menu filter-group-sort">
+                <summary>Sort</summary>
+                <div class="chips">
+                  <span class="chip active" data-filter="sort" data-value="tbts" title="Overall signal score">Score ↓</span>
+                  <span class="chip"        data-filter="sort" data-value="velocity">Momentum ↓</span>
+                  <span class="chip"        data-filter="sort" data-value="hidden_gem">Hidden Gem ↓</span>
+                </div>
+              </details>
+
+              <details class="filter-menu filter-group-view">
+                <summary>View</summary>
+                <div class="chips">
+                  <span class="chip" data-filter="themes" aria-pressed="false">Clusters</span>
+                  <span class="chip" data-filter="labels" aria-pressed="false">Names</span>
+                </div>
+              </details>
             </div>
           </div>
           <div class="meta" id="trackedMeta">— tracked terms</div>
@@ -4855,7 +5000,7 @@ html[data-theme="dark"] body .topbar #briefingToggle.briefing-toggle {
 
       <div class="panel chart-ranking-panel" id="chartRankingsPanel">
         <div class="panel-head">
-          <div class="title" id="chartRankingsTitle">Bubble Ranking</div>
+          <div class="title" id="chartRankingsTitle">Map Zone Reader</div>
           <div class="meta" id="chartRankingsMeta"></div>
         </div>
         <div class="chart-rankings" id="chartRankings" aria-label="Ranked chart reader"></div>
@@ -5109,7 +5254,6 @@ html[data-theme="dark"] body .topbar #briefingToggle.briefing-toggle {
   <div class="conv-head">
     <div>
       <div class="conv-name" id="methTitle">How signals are scored</div>
-      <div class="conv-cluster">Plain-English scoring guide</div>
     </div>
     <button class="close" type="button" aria-label="Close methodology modal" onclick="window.closeMethodology()">CLOSE ✕</button>
   </div>
@@ -5118,18 +5262,22 @@ html[data-theme="dark"] body .topbar #briefingToggle.briefing-toggle {
     <div class="meth-section">
       <h4>Cross-source confidence</h4>
       <p>A signal gets stronger when it appears in more than one place. For example, a topic that shows up in research papers, repositories, and community discussions is more trustworthy than a topic that only appears in one feed.</p>
+      <pre>confidence = sources confirming the topic / active sources</pre>
     </div>
     <div class="meth-section">
       <h4>Hidden gems</h4>
       <p>Hidden gems are topics with strong movement but low crowding. The dashboard looks for subjects that are accelerating, still niche enough to own, and showing real builder interest before they become obvious.</p>
+      <pre>hidden gem = 0.40*momentum + 0.35*(1 - saturation) + 0.25*builder signal + 0.20*venue signal</pre>
     </div>
     <div class="meth-section">
       <h4>Signal score</h4>
       <p>The main score combines momentum, hidden-gem potential, lifecycle stage, and cross-source confirmation. Higher scores mean the topic is moving now and still has room for a creator to explain it clearly.</p>
+      <pre>score = 100 * (0.35*momentum + 0.30*hidden gem + 0.20*lifecycle + 0.15*confidence)</pre>
     </div>
     <div class="meth-section">
       <h4>Saturation</h4>
       <p>Saturation estimates how crowded the topic already is. A lower saturation number usually means more room for a useful video, guide, or product angle. A higher number means the market may already be noisy.</p>
+      <pre>saturation = 0.35*GitHub + 0.30*HN + 0.20*arXiv + 0.15*Semantic Scholar</pre>
     </div>
   </div>
 </div>
@@ -5552,8 +5700,10 @@ function renderThemes() {
       <div class="theme-row${active ? ' active' : ''}" data-cluster="${th.id}">
         <div class="theme-code">${escapeHtml(th.code)}</div>
         <div class="label">${escapeHtml(th.label)}${th.unclustered ? ' <span style="color:var(--ink-3)">·</span>' : ''}</div>
-        <div class="count">${th.count} trends</div>
-        <div class="avg${th.unclustered ? ' dim' : ''}">avg score ${th.avg}</div>
+        <div class="theme-meta">
+          <div class="count">${th.count} trends</div>
+          <div class="avg${th.unclustered ? ' dim' : ''}">Avg ${th.avg}</div>
+        </div>
       </div>
     `;
   }).join('');
@@ -5740,8 +5890,26 @@ function renderSourceHealth() {
   const srcList = document.getElementById('srcList');
   const srcClaude = document.getElementById('srcClaude');
   if (!srcList || !srcClaude) return;
-  srcList.innerHTML = '';
-  srcList.hidden = true;
+
+  const labels = {
+    arxiv: 'arXiv', github: 'GitHub', hackernews: 'HN',
+    reddit: 'Reddit', huggingface: 'HF', semantic_scholar: 'SemScholar',
+    producthunt: 'PH', replicate: 'Replicate',
+    bluesky: 'Bluesky', newsletters: 'NL',
+    digg: 'Digg',
+  };
+  const sources = (META && META.sources) || {};
+  const parts = Object.entries(labels).map(([key, label]) => {
+    const s = sources[key] || { fetched: 0 };
+    const fetched = Number(s.topic_attributed || s.fetched || 0);
+    const isOk = (typeof s.ok === 'boolean') ? s.ok : fetched > 0;
+    if (isOk) {
+      return `<span class="src-item"><span class="name">${label}</span><span class="ok">✓</span><span class="count">${fetched}</span></span>`;
+    }
+    return `<span class="src-item"><span class="name">${label}</span><span class="fail">✗</span><span class="stale-pill">stale</span></span>`;
+  });
+  srcList.innerHTML = parts.join('');
+  srcList.hidden = false;
   srcClaude.textContent = 'Methodology';
   srcClaude.className = 'src-claude live';
   srcClaude.onclick = () => openMethodology();
@@ -5843,7 +6011,7 @@ function renderChartRankings() {
   const sorted = sortRadarTrends(visible);
   const titleEl = document.getElementById('chartRankingsTitle');
   const metaEl = document.getElementById('chartRankingsMeta');
-  if (titleEl) titleEl.textContent = `${sorted.length} Signal Rankings`;
+  if (titleEl) titleEl.textContent = `${sorted.length} Map Reader`;
   if (metaEl) metaEl.textContent = '';
   if (!sorted.length) {
     host.innerHTML = '<div class="leaderboard-empty">No ranked bubbles match the active filters.</div>';
@@ -5852,16 +6020,20 @@ function renderChartRankings() {
   }
   const header = `
     <div class="chart-rank-head" aria-hidden="true">
-      <span>Rank</span><span>Signal</span><span>Zone</span><span>Score</span><span>Momentum</span><span>Headroom</span>
+      <span>Rank</span><span>Signal</span><span>Creator Angle</span><span>Map Zone</span><span>Score</span><span>Momentum</span><span>Headroom</span>
     </div>
   `;
   const rows = sorted.map((t, i) => {
     const kw = t.canonical_form || t.keyword;
     const q = radarQuadrantForTrend(t, visible);
+    const angle = (t.angles && !isPlaceholder(t.angles.hook) && t.angles.hook)
+      || (!isPlaceholder(t.summary) && t.summary)
+      || 'Open the detail panel for the creator angle.';
     return `
       <button type="button" class="chart-rank-row" data-kw="${escapeAttr(kw)}" style="--zone-color:${q.color}">
         <span class="rank">${String(i + 1).padStart(2, '0')}</span>
         <span class="name"><span class="name-text">${escapeHtml(displayTopic(t))}</span></span>
+        <span class="angle">${escapeHtml(angle)}</span>
         <span class="zone">${escapeHtml(q.short)}</span>
         <span class="metric">${(t.tbts || 0).toFixed(1)}</span>
         <span class="metric">${(t.velocity || 0).toFixed(1)}x</span>
@@ -6344,7 +6516,7 @@ function renderBubbleFallback(el) {
     bl: { cx: (pad.left + xDivider) / 2,         cy: (yDivider + pad.top + plotH) / 2 },
   };
   const emptyQuadrantMarkup = '';
-  const quadrantLabels = '';
+  const quadrantLabels = _renderQuadrantLabels();
   const tooltipByKw = new Map(trendGeometry.map(g => {
     const headline = (g.t.angles && g.t.angles.hook) || g.t.summary || 'Open trend detail';
     const zoneLabel = (QUADRANT_STYLE[g.zone]?.label || g.zone || '').replace(' · whitespace', '');
@@ -6826,24 +6998,29 @@ function renderLeaderboard() {
     const sel = kw === state.selectedKeyword;
     const conv = hasConvergence(t);
     const stageColor = STAGE_META[t.stage]?.color || '#8b9cb0';
-    // Always emit the spark slot (empty placeholder if no sparkline data) so
-    // every row has the same 6 grid children and the right-rail columns line up.
     const headroom = Math.max(0, Math.round(100 - (t.saturation || 0)));
     const velocity = (t.velocity || 0).toFixed(1);
     const stageLabel = STAGE_META[t.stage]?.label || t.stage || 'Signal';
-    const explain = `${stageLabel} stage · ${velocity}x momentum · ${headroom}% niche headroom`;
+    const mapZone = radarQuadrantForTrend(t, visible);
     return `
       <div class="lb-row${sel ? ' selected' : ''}${isPlaceholder(t.summary) ? ' trend-placeholder' : ''}" data-kw="${escapeAttr(kw)}">
-        <div class="rank">${String(i + 1).padStart(2, '0')}</div>
-        <div class="lb-main">
-          <div class="name">${escapeHtml(displayTopic(t))}</div>
-          <div class="stage-mini" style="color:${stageColor}">
-            <span class="stage-label"><span class="stage-dot ${t.stage}"></span>${stageLabel}</span>
-            ${conv ? `<span class="conv-badge" data-conv="${escapeAttr(kw)}" title="View convergence timeline">⚡ CONV</span>` : ''}
+        <div class="lb-card-top">
+          <div class="rank">${String(i + 1).padStart(2, '0')}</div>
+          <div class="lb-main">
+            <div class="name">${escapeHtml(displayTopic(t))}</div>
+            <div class="lb-badges">
+              <span class="lb-badge" style="color:${stageColor}"><span class="stage-dot ${t.stage}"></span>Stage: ${escapeHtml(stageLabel)}</span>
+              <span class="lb-badge" style="color:${mapZone.color}"><span class="stage-dot"></span>Map Zone: ${escapeHtml(mapZone.label)}</span>
+              ${conv ? `<span class="conv-badge" data-conv="${escapeAttr(kw)}" title="View convergence timeline">⚡ CONV</span>` : ''}
+            </div>
           </div>
-          <div class="lb-explain">${escapeHtml(explain)}</div>
         </div>
-        <div class="tbts" title="Signal score"><span>${(t.tbts || 0).toFixed(1)}</span><span class="score-label">Score</span></div>
+        <div class="lb-kpis" aria-label="Signal KPIs">
+          <div class="lb-kpi"><span class="k">Score</span><span class="v">${(t.tbts || 0).toFixed(1)}</span></div>
+          <div class="lb-kpi"><span class="k">Momentum</span><span class="v">${velocity}x</span></div>
+          <div class="lb-kpi"><span class="k">Headroom</span><span class="v">${headroom}%</span></div>
+          <div class="lb-kpi"><span class="k">Saturation</span><span class="v">${Math.round(t.saturation || 0)}%</span></div>
+        </div>
       </div>
     `;
   }).join('');
@@ -7154,6 +7331,7 @@ function openDetailPanel(kw) {
   renderScriptAngle(t, YOUTUBE_OUTLIERS, document.getElementById('dpScriptAngle'));
 
   const panel = document.getElementById('detailPanel');
+  panel.scrollTop = 0;
   panel.classList.add('visible');
   panel.setAttribute('aria-hidden', 'false');
   trapFocus(panel);
