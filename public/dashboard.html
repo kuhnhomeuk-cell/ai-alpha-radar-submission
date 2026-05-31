@@ -3,13 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="AI Alpha Radar — real-time trend intelligence for AI operators. Track emerging signals, surface hidden gems, and monitor keyword velocity before the crowd arrives.">
+<meta name="description" content="AI Alpha Radar — real-time trend intelligence for AI operators. Track emerging signals, surface first-mover opportunities, and monitor keyword velocity before the crowd arrives.">
 <meta property="og:title" content="AI Alpha Radar · Trend Intelligence">
-<meta property="og:description" content="Real-time AI trend intelligence. Track emerging signals and surface hidden gems before the crowd arrives.">
+<meta property="og:description" content="Real-time AI trend intelligence. Track emerging signals and surface first-mover opportunities before the crowd arrives.">
 <meta property="og:type" content="website">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="AI Alpha Radar · Trend Intelligence">
-<meta name="twitter:description" content="Real-time AI trend intelligence. Track emerging signals and surface hidden gems before the crowd arrives.">
+<meta name="twitter:description" content="Real-time AI trend intelligence. Track emerging signals and surface first-mover opportunities before the crowd arrives.">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%23050709'/><circle cx='16' cy='16' r='10' fill='none' stroke='%232ce6ff' stroke-width='1.5' opacity='0.9'/><circle cx='16' cy='16' r='5' fill='none' stroke='%232eecae' stroke-width='1' opacity='0.7'/><circle cx='16' cy='16' r='1.5' fill='%232ce6ff'/></svg>">
 <title>AI Alpha Radar · Trend Intelligence</title>
 <script>
@@ -364,12 +364,24 @@ html::after {
   font-family: var(--sans);
   font-weight: 700;
   font-size: 20px;
-  letter-spacing: -0.02em;
+  letter-spacing: 0;
   display: flex; align-items: center; gap: 8px;
   white-space: nowrap;
   flex-shrink: 0;
   line-height: 1;
   color: var(--ink);
+}
+.brand-home {
+  color: inherit;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border-radius: 999px;
+}
+.brand-home:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 5px;
 }
 .brand .brand-mark { color: var(--ink); flex-shrink: 0; }
 .brand .subtitle { white-space: nowrap; }
@@ -1005,7 +1017,7 @@ html::after {
 
 .hit-rate .stats > .stat {
   animation: aar-fade-up var(--dur-med) var(--ease-out-quart) backwards;
-  animation-delay: calc(min(var(--i, 0), 3) * 60ms);
+  animation-delay: calc(min(var(--i, 0), 4) * 60ms);
 }
 .hit-rate-helper {
   font-family: var(--mono);
@@ -1816,7 +1828,7 @@ html::after {
 }
 
 /* ====================================================
-   HIDDEN GEMS PAGE (Bloomberg)
+   FIRST-MOVER SIGNALS PAGE (Bloomberg)
    ==================================================== */
 .gems-head {
   display: flex; gap: var(--sp-3); align-items: center;
@@ -1899,7 +1911,7 @@ html::after {
   letter-spacing: 0.08em;
 }
 /* Reserve a top band on convergence cards so the CONVERGENCE pill doesn't
-   collide with the GEM SCORE number that also sits top-right. */
+   collide with the OPPORTUNITY number that also sits top-right. */
 .gem-card.convergence { padding-top: 30px; }
 .gem-headrow {
   display: flex; align-items: baseline; justify-content: space-between;
@@ -1995,9 +2007,14 @@ html::after {
   flex-shrink: 0;
   margin-top: 2px;
   letter-spacing: 0.05em;
+  border: 1px solid transparent;
 }
 .angle .tag.hook { background: rgba(0, 212, 255, 0.12); color: var(--stage-whisper); }
-.angle .tag.cont { background: rgba(255, 138, 61, 0.15); color: var(--stage-hype); }
+.angle .tag.cont {
+  background: rgba(0, 212, 255, 0.08);
+  border-color: rgba(0, 212, 255, 0.24);
+  color: var(--accent-hover);
+}
 .angle .tag.tut  { background: rgba(0, 255, 157, 0.12); color: var(--stage-builder); }
 
 .gem-pred {
@@ -2067,6 +2084,7 @@ html::after {
   position: relative;
   background: var(--surface-1);
   min-height: calc(100vh - 73px);
+  margin-top: 22px;
 }
 .page-workspace::before {
   content: '';
@@ -2206,45 +2224,41 @@ html::after {
 /* ---- Story Log ---- */
 .log-wrap { padding: 56px 64px 80px; }
 .hit-rate {
-  display: flex;
-  gap: 48px;
-  align-items: baseline;
-  margin: 32px 0 48px;
-  padding: 32px 36px;
+  display: grid;
+  grid-template-columns: minmax(170px, auto) 1fr;
+  gap: 28px;
+  align-items: center;
+  margin: 22px 0 32px;
+  padding: 18px 22px;
   background: var(--panel);
   border: 1px solid var(--line);
   position: relative;
 }
-.hit-rate::before {
-  content: '';
-  position: absolute;
-  top: -1px; left: 30%; right: 30%; height: 1px;
-  background: linear-gradient(90deg, transparent, var(--accent), transparent);
-}
 .hit-rate .big {
   font-family: var(--mono);
   font-variant-numeric: tabular-nums;
-  font-size: 88px;
+  font-size: 40px;
   font-weight: 500;
   color: var(--accent);
   line-height: 1;
-  letter-spacing: -0.02em;
+  letter-spacing: 0;
 }
-.hit-rate .big .pct { font-size: 32px; vertical-align: top; opacity: 0.8; }
+.hit-rate .big .pct { font-size: 18px; vertical-align: top; opacity: 0.8; }
 .hit-rate .stats {
   display: grid;
-  grid-template-columns: repeat(4, auto);
-  gap: 40px;
+  grid-template-columns: repeat(5, minmax(72px, 1fr));
+  gap: 18px;
 }
 .hit-rate .stats .stat .v {
   font-family: var(--mono);
   font-variant-numeric: tabular-nums;
-  font-size: 28px;
+  font-size: 24px;
   color: var(--ink);
   font-weight: 400;
 }
 .hit-rate .stats .stat .v.good     { color: var(--good); }
 .hit-rate .stats .stat .v.tracking { color: var(--accent); }
+.hit-rate .stats .stat .v.pending  { color: var(--ink-2); }
 .hit-rate .stats .stat .v.wrong    { color: var(--bad); }
 .hit-rate .stats .stat .l {
   font-family: var(--mono);
@@ -2254,30 +2268,15 @@ html::after {
   color: var(--ink-3);
   margin-top: 2px;
 }
-.hit-rate .caption {
-  font-family: var(--serif);
-  font-style: italic;
-  font-size: 16px;
-  color: var(--ink-2);
-  max-width: 240px;
-  line-height: 1.5;
-  margin-left: auto;
-  border-left: 1px solid var(--line);
-  padding-left: 24px;
-  position: relative;
-}
-.hit-rate .caption::before {
-  content: '"';
-  position: absolute;
-  left: 8px;
-  top: -8px;
-  font-size: 32px;
-  color: var(--accent);
-  font-style: normal;
-  line-height: 1;
-}
 
 .prediction-list { display: flex; flex-direction: column; }
+.prediction-empty {
+  padding: 28px 0;
+  border-top: 1px solid var(--line);
+  font-family: var(--serif);
+  font-size: 18px;
+  color: var(--ink-2);
+}
 .prediction {
   padding: 28px 0;
   border-bottom: 1px solid var(--line);
@@ -3817,7 +3816,7 @@ main {
 
 .brand {
   font-size: 20px;
-  letter-spacing: -0.025em;
+  letter-spacing: 0;
 }
 
 .nav {
@@ -4550,10 +4549,28 @@ footer .quote {
   background: rgba(30, 41, 59, 0.92);
 }
 
+:root[data-theme="dark"] .nav button .nav-count {
+  color: rgba(247, 250, 252, 0.86);
+  background: rgba(255, 255, 255, 0.16);
+  border-color: rgba(255, 255, 255, 0.22);
+}
+
 :root[data-theme="dark"] .nav button.active,
 :root[data-theme="dark"] .chip.active {
   background: rgba(44, 230, 255, 0.16);
   border-color: rgba(44, 230, 255, 0.44);
+}
+
+:root[data-theme="dark"] .nav button.active .nav-count {
+  color: #06121a;
+  background: var(--accent);
+  border-color: var(--accent);
+}
+
+:root[data-theme="dark"] .angle .tag.cont {
+  color: #dffcff;
+  background: rgba(44, 230, 255, 0.12);
+  border-color: rgba(44, 230, 255, 0.32);
 }
 
 :root[data-theme="dark"] .filter-menu > .chips,
@@ -4768,6 +4785,17 @@ footer .quote {
   .almanac-wrap,
   .outliers-wrap { padding: 28px 16px 48px; }
 
+  .page-workspace { margin-top: 16px; }
+
+  .hit-rate {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+
+  .hit-rate .stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
   .gems-grid,
   .demand-grid,
   .almanac-grid,
@@ -4890,12 +4918,14 @@ html[data-theme="dark"] body #detailPanel.detail-panel.visible {
 <!-- ========== TOPBAR ========== -->
 <header class="topbar glass" role="banner">
   <h1 class="brand">
-    <svg class="brand-mark" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
-    AI Alpha Radar
+    <a class="brand-home" href="index.html" aria-label="AI Alpha Radar home">
+      <svg class="brand-mark" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+      <span>AI Alpha Radar</span>
+    </a>
   </h1>
   <nav class="nav" aria-label="Pages">
     <button data-page="radar" class="active" aria-current="page" title="The main trend overview — bubble chart + leaderboard">Radar<span class="nav-count" data-count="radar"></span></button>
-    <button data-page="gems" title="Whisper + builder stage trends — early opportunities">Hidden Gems<span class="nav-count" data-count="gems"></span></button>
+    <button data-page="gems" title="Early, less-crowded signals with creator upside">First-Mover Signals<span class="nav-count" data-count="gems"></span></button>
     <button data-page="demand" title="What audiences are asking that no one has answered yet">Demand Centers<span class="nav-count" data-count="demand"></span></button>
     <button data-page="log" title="Prediction tracker — every AI trend call, verified or wrong">Story Log<span class="nav-count" data-count="log"></span></button>
     <button data-page="almanac" title="Three video title options per trend — copy-ready">Briefings<span class="nav-count" data-count="almanac"></span></button>
@@ -4918,7 +4948,7 @@ html[data-theme="dark"] body #detailPanel.detail-panel.visible {
     </button>
     <span class="meta-text" id="snapshotStamp">snapshot · —</span>
     <label class="sr-only niche-label" for="nicheInput">Your niche</label>
-    <div class="niche-wrap" title="Your niche — used by the briefing + Hidden Gems filters">
+    <div class="niche-wrap" title="Your niche — used by the briefing + First-Mover filters">
       <span class="niche-prefix">NICHE</span>
       <input class="niche-input" id="nicheInput" placeholder="your niche…" value="AI tools for solo creators">
     </div>
@@ -4980,7 +5010,7 @@ html[data-theme="dark"] body #detailPanel.detail-panel.visible {
                 <div class="chips">
                   <span class="chip active" data-filter="sort" data-value="tbts" title="Overall signal score">Score ↓</span>
                   <span class="chip"        data-filter="sort" data-value="velocity">Momentum ↓</span>
-                  <span class="chip"        data-filter="sort" data-value="hidden_gem">Hidden Gem ↓</span>
+                  <span class="chip"        data-filter="sort" data-value="hidden_gem">Opportunity ↓</span>
                 </div>
               </details>
 
@@ -5054,7 +5084,7 @@ html[data-theme="dark"] body #detailPanel.detail-panel.visible {
       <div class="stats">
         <div class="stat"><div class="l">Score</div><div class="v gold" id="dpTbts">—</div></div>
         <div class="stat"><div class="l">Saturation</div><div class="v" id="dpSat">—</div></div>
-        <div class="stat" title="Opportunity score 0-100. Higher = low saturation + high velocity. Above 60 is a strong pick."><div class="l">Hidden Gem</div><div class="v" id="dpGem">—</div></div>
+        <div class="stat" title="Opportunity score 0-100. Higher = low saturation + high velocity. Above 60 is a strong pick."><div class="l">Opportunity</div><div class="v" id="dpGem">—</div></div>
         <div class="stat"><div class="l">Stage</div><div class="v" id="dpStage">—</div></div>
       </div>
       <div class="pred">
@@ -5096,13 +5126,13 @@ html[data-theme="dark"] body #detailPanel.detail-panel.visible {
   </aside>
 </div>
 
-<!-- ========== HIDDEN GEMS ========== -->
+<!-- ========== FIRST-MOVER SIGNALS ========== -->
 <div class="page" data-page="gems">
   <div class="briefing">
-    <div class="label">💎 Hidden Gems · Whisper + Builder · low saturation, high acceleration</div>
-    <div class="briefing-text">Trends in the sweet-spot quadrant: builders are active, mainstream hasn't caught on. Each card has a 2 to 4 week content window before saturation.</div>
+    <div class="label">First-Mover Signals · Whisper + Builder · low crowding, rising fast</div>
+    <div class="briefing-text">Early trends where builders are active but mainstream coverage has not caught up. Each card has a 2 to 4 week content window before saturation.</div>
   </div>
-  <div class="gems-head">Top Picks · <span class="count" id="gemsCount">—</span> matching today's criteria</div>
+  <div class="gems-head">First-Mover Picks · <span class="count" id="gemsCount">—</span> matching today's criteria</div>
   <div id="gemsHost"></div>
 </div>
 
@@ -5126,9 +5156,9 @@ html[data-theme="dark"] body #detailPanel.detail-panel.visible {
   <div class="log-wrap">
     <div class="page-eyebrow">The accountability layer</div>
     <div class="page-title">
-      <h2>Every prediction <em>AI Alpha Radar</em> has filed, verified, tracking, or wrong.</h2>
+      <h2>Every signal gets a dated call, then we track what proves right, early, wrong, or still developing.</h2>
       <div class="lede">
-        Most trend dashboards report data. This one places bets. Every flagged trend carries a dated prediction.
+        A compact audit trail for the radar's calls, so the system is judged by outcomes, not vibes.
       </div>
     </div>
 
@@ -5136,15 +5166,15 @@ html[data-theme="dark"] body #detailPanel.detail-panel.visible {
       <div>
         <div class="big"><span id="hitRateNum">—</span><span class="pct">%</span></div>
         <div class="meta-text" style="margin-top:8px;color:var(--ink-3)">all-time hit rate · 90-day window</div>
-        <div class="hit-rate-helper" id="hitRateHelper">(awaiting first verdict · ~7 days)</div>
+        <div class="hit-rate-helper" id="hitRateHelper">Waiting for the first settled call.</div>
       </div>
       <div class="stats">
         <div class="stat"><div class="v good" id="hitVerified">—</div><div class="l">Verified</div></div>
         <div class="stat"><div class="v tracking" id="hitTracking">—</div><div class="l">Tracking</div></div>
         <div class="stat"><div class="v" id="hitEarly">—</div><div class="l">Verified Early</div></div>
+        <div class="stat"><div class="v pending" id="hitPending">—</div><div class="l">Drafts Hidden</div></div>
         <div class="stat"><div class="v wrong" id="hitWrong">—</div><div class="l">Wrong</div></div>
       </div>
-      <div class="caption">A trend tracker that doesn't predict is just a thermometer pointed backwards.</div>
     </div>
 
     <div class="prediction-list" id="predictionList"></div>
@@ -5156,9 +5186,9 @@ html[data-theme="dark"] body #detailPanel.detail-panel.visible {
   <div class="almanac-wrap">
     <div class="page-eyebrow">For the creator</div>
     <div class="page-title">
-      <h2><em>Briefings</em> for each signal, tuned to your voice.</h2>
+      <h2>Copy-ready briefings for every signal.</h2>
       <div class="lede">
-        Every trend gets three titles, written by Claude with your niche in mind: the most clickable framing, the unpopular truth, and the how-to. Tap any title to copy it to the clipboard.
+        A production workbench for turning the radar into content: one card per signal, with a hook, contrarian angle, and tutorial promise you can copy into your workflow.
       </div>
     </div>
     <div class="almanac-niche">
@@ -5265,14 +5295,14 @@ html[data-theme="dark"] body #detailPanel.detail-panel.visible {
       <pre>confidence = sources confirming the topic / active sources</pre>
     </div>
     <div class="meth-section">
-      <h4>Hidden gems</h4>
-      <p>Hidden gems are topics with strong movement but low crowding. The dashboard looks for subjects that are accelerating, still niche enough to own, and showing real builder interest before they become obvious.</p>
-      <pre>hidden gem = 0.40*momentum + 0.35*(1 - saturation) + 0.25*builder signal + 0.20*venue signal</pre>
+      <h4>Opportunity signals</h4>
+      <p>Opportunity signals are topics with strong movement but low crowding. The dashboard looks for subjects that are accelerating, still niche enough to own, and showing real builder interest before they become obvious.</p>
+      <pre>opportunity = 0.40*momentum + 0.35*(1 - saturation) + 0.25*builder signal + 0.20*venue signal</pre>
     </div>
     <div class="meth-section">
       <h4>Signal score</h4>
-      <p>The main score combines momentum, hidden-gem potential, lifecycle stage, and cross-source confirmation. Higher scores mean the topic is moving now and still has room for a creator to explain it clearly.</p>
-      <pre>score = 100 * (0.35*momentum + 0.30*hidden gem + 0.20*lifecycle + 0.15*confidence)</pre>
+      <p>The main score combines momentum, opportunity potential, lifecycle stage, and cross-source confirmation. Higher scores mean the topic is moving now and still has room for a creator to explain it clearly.</p>
+      <pre>score = 100 * (0.35*momentum + 0.30*opportunity + 0.20*lifecycle + 0.15*confidence)</pre>
     </div>
     <div class="meth-section">
       <h4>Saturation</h4>
@@ -5829,7 +5859,7 @@ function runSearch(rawQ) {
       <div class="label">→ Radar</div><div class="count">${radarMatches.length}</div>
     </div>
     <div class="row${gemsMatches.length ? '' : ' empty'}" data-target="gems"   data-kw="${escapeAttr(firstGem)}">
-      <div class="label">→ Hidden Gems</div><div class="count">${gemsMatches.length}</div>
+      <div class="label">→ First-Mover Signals</div><div class="count">${gemsMatches.length}</div>
     </div>
     <div class="row${demandMatches.length ? '' : ' empty'}" data-target="demand" data-slug="${escapeAttr(firstDemand)}">
       <div class="label">→ Demand Clusters</div><div class="count">${demandMatches.length}</div>
@@ -5973,7 +6003,7 @@ const RADAR_QUADRANT_META = {
 const RANKING_SORT_META = {
   tbts: { label: 'Score', note: 'overall signal strength' },
   velocity: { label: 'Momentum', note: 'growth versus baseline' },
-  hidden_gem: { label: 'Hidden Gem', note: 'early signal strength' },
+  hidden_gem: { label: 'Opportunity', note: 'early signal strength' },
 };
 function radarBubbleCandidates() {
   return TRENDS.filter(t => trendVisibleBySource(t) && trendVisibleByWatchlist(t));
@@ -6651,7 +6681,7 @@ function renderBubbleFallback(el) {
 function renderStageLegend() {
   const host = document.getElementById('stageLegend');
   if (!host) return;
-  // Bubbles are mono-cyan (opacity = signal weight, size = hidden gem). The four
+  // Bubbles are mono-cyan (opacity = signal weight, size = opportunity). The four
   // quadrants are read by POSITION, so this is a neutral positional key — not a
   // colour code that would imply four different bubble hues.
   const zones = ['EXPLODING', 'WHISPER', 'SATURATED', 'PRE-BREAKOUT'];
@@ -6802,7 +6832,7 @@ function renderBubble() {
         <div style="color:var(--ink-2)">cluster    <span style="color:var(--ink)">${p.value[4]}</span></div>
         <div style="color:var(--ink-2)">saturation <span style="color:var(--ink)">${p.value[0].toFixed(0)}%</span></div>
         <div style="color:var(--ink-2)">score      <span style="color:var(--ink)">${p.value[1]}</span></div>
-        <div style="color:var(--ink-2)">hidden gem <span style="color:var(--ink)">${(p.value[2]||0).toFixed(2)}</span></div>
+        <div style="color:var(--ink-2)">opportunity <span style="color:var(--ink)">${(p.value[2]||0).toFixed(2)}</span></div>
         <div style="color:var(--ink-2)">momentum   <span style="color:var(--ink)">${(p.value[5]||0).toFixed(2)}x</span></div>
         ${p.value[7] ? '<div style="color:var(--accent);margin-top:6px;font-weight:600">⚡ Convergence detected · click leaderboard ⚡CONV for timeline</div>' : ''}
       `
@@ -6852,7 +6882,7 @@ function renderNavBadges() {
     radar:    TRENDS.length,
     gems:     TRENDS.filter(t => t.stage === 'whisper' || t.stage === 'builder').length,
     demand:   (typeof DEMAND !== 'undefined' && DEMAND) ? DEMAND.length : 0,
-    log:      (typeof PREDICTIONS !== 'undefined' && PREDICTIONS) ? PREDICTIONS.length : 0,
+    log:      (typeof PREDICTIONS !== 'undefined' && PREDICTIONS) ? PREDICTIONS.filter(p => !isPlaceholder(p.text)).length : 0,
     almanac:  TRENDS.length,
     outliers: (typeof YOUTUBE_OUTLIERS !== 'undefined' && YOUTUBE_OUTLIERS) ? YOUTUBE_OUTLIERS.length : 0,
   };
@@ -6861,7 +6891,7 @@ function renderNavBadges() {
     gems:     'No Whisper or Builder trends in this snapshot.',
     demand:   'Demand clusters populate once Reddit + YouTube comments are mined.',
     log:      'No predictions to verify yet — wait for the next snapshot.',
-    almanac:  'Almanac populates after the first full month of snapshots.',
+    almanac:  'Briefings populate once signal angles are generated.',
     outliers: 'No YouTube outliers in this snapshot.',
   };
   document.querySelectorAll('.nav button[data-page]').forEach(btn => {
@@ -7435,7 +7465,7 @@ function isPlaceholder(s) {
 }
 /* C7 helper — friendly fallback for prediction text */
 function displayPredictionText(text) {
-  return isPlaceholder(text) ? 'Prediction pending — first verdict ~7 days' : text;
+  return isPlaceholder(text) ? '' : text;
 }
 
 /* Step 6 timing badge map */
@@ -8267,22 +8297,21 @@ function renderDemand() {
 }
 
 /* ==========================================================
-   HIDDEN GEMS — sweet-spot card grid
+   FIRST-MOVER SIGNALS — sweet-spot card grid
    ========================================================== */
 function renderGems() {
   const host = document.getElementById('gemsHost');
   if (!host) return;
   const gems = TRENDS
     .filter(t => t.stage === 'whisper' || t.stage === 'builder')
-    .sort((a, b) => (b.hidden_gem || 0) - (a.hidden_gem || 0))
-    .slice(0, 12);
+    .sort((a, b) => (b.hidden_gem || 0) - (a.hidden_gem || 0));
 
   document.getElementById('gemsCount').textContent = gems.length;
 
   if (!gems.length) {
     host.innerHTML = `
       <div class="gems-empty">
-        <div class="ph">Hidden Gems</div>
+        <div class="ph">First-Mover Signals</div>
         <div class="text">No Whisper-stage trends today — check Radar for Builder candidates.</div>
       </div>`;
     return;
@@ -8309,7 +8338,7 @@ function renderGems() {
             </div>
             <div class="gem-score">
               ${Math.round((t.hidden_gem || 0) * 100)}
-              <span class="label">GEM SCORE</span>
+              <span class="label">OPPORTUNITY</span>
             </div>
           </div>
           <div class="gem-meta">
@@ -8329,7 +8358,7 @@ function renderGems() {
             <div class="angle"><span class="tag cont">CONTRARIAN</span><span>${escapeHtml(isPlaceholder(a.contrarian) ? '—' : deDash(a.contrarian))}</span></div>
             <div class="angle"><span class="tag tut">TUTORIAL</span><span>${escapeHtml(isPlaceholder(a.tutorial) ? '—' : deDash(a.tutorial))}</span></div>
           </div>
-          ${t.prediction ? `
+          ${t.prediction && !isPlaceholder(t.prediction.text) ? `
             <div class="gem-pred">
               <span class="eyebrow">We said</span>
               <span class="text">"${escapeHtml(displayPredictionText(t.prediction.text) || '—')}"</span>
@@ -8389,16 +8418,27 @@ function renderLog() {
   const _settled = (HIT_RATE.verified || 0) + (HIT_RATE.wrong || 0);
   const _hitNum = document.getElementById('hitRateNum');
   const _hitPct = _hitNum && _hitNum.parentElement ? _hitNum.parentElement.querySelector('.pct') : null;
-  _hitNum.textContent = _settled > 0 ? Math.round((HIT_RATE.rate || 0) * 100) : '—';
+  const placeholderPredictions = PREDICTIONS.filter(p => isPlaceholder(p.text));
+  const visiblePredictions = PREDICTIONS.filter(p => !isPlaceholder(p.text));
+  _hitNum.textContent = _settled > 0 ? Math.round((HIT_RATE.rate || 0) * 100) : 'TBD';
   if (_hitPct) _hitPct.style.display = _settled > 0 ? '' : 'none';
   document.getElementById('hitVerified').textContent = HIT_RATE.verified || 0;
   document.getElementById('hitTracking').textContent = HIT_RATE.tracking || 0;
   document.getElementById('hitEarly').textContent    = HIT_RATE.verified_early || 0;
+  document.getElementById('hitPending').textContent   = placeholderPredictions.length;
   document.getElementById('hitWrong').textContent    = HIT_RATE.wrong || 0;
-  // Helper line: hide only once a plain-verified or wrong verdict has landed
+  // Helper line: keep the hidden placeholder count visible when pipeline
+  // template rows exist, otherwise hide once a plain-verified/wrong verdict lands.
   const _helper = document.getElementById('hitRateHelper');
-  if (_helper) _helper.hidden = (HIT_RATE.verified || 0) + (HIT_RATE.wrong || 0) > 0;
-  // Stagger index for hit-rate stats (Verified / Tracking / Early / Wrong)
+  if (_helper) {
+    if (placeholderPredictions.length) {
+      _helper.hidden = false;
+      _helper.textContent = `${placeholderPredictions.length} template rows hidden until real prediction copy is filed.`;
+    } else {
+      _helper.hidden = (HIT_RATE.verified || 0) + (HIT_RATE.wrong || 0) > 0;
+    }
+  }
+  // Stagger index for hit-rate stats (Verified / Tracking / Early / Hidden / Wrong)
   document.querySelectorAll('.hit-rate .stats > .stat').forEach((node, i) => node.style.setProperty('--i', i));
 
   const verdictLabel = {
@@ -8408,17 +8448,19 @@ function renderLog() {
     pending: 'Pending',
     wrong: 'Wrong',
   };
-  const html = PREDICTIONS.map(p => {
+  const html = visiblePredictions.map(p => {
     const predText = displayPredictionText(p.text) || '';
     return `
     <div class="prediction">
       <div class="date">${p.filed_at || '—'}</div>
       <div class="pred-text">${escapeHtml(predText)}</div>
       <div class="verdict-text">${escapeHtml(p.verdict_text || '—')}</div>
-      <div class="verdict-badge ${p.verdict}">${verdictLabel[p.verdict] || p.verdict}</div>
+      <div class="verdict-badge ${p.verdict || 'pending'}">${verdictLabel[p.verdict] || p.verdict || 'Pending'}</div>
     </div>
   `;}).join('');
-  document.getElementById('predictionList').innerHTML = html;
+  document.getElementById('predictionList').innerHTML = html || `
+    <div class="prediction-empty">No written prediction notes yet. Template rows are counted above and hidden until they carry real copy.</div>
+  `;
 }
 
 /* ==========================================================
@@ -8428,9 +8470,8 @@ function renderAlmanac() {
   const niche = document.getElementById('nicheInput').value || 'AI tools for solo creators';
   document.getElementById('nichePill').textContent = niche;
   const picks = TRENDS
-    .filter(t => t.stage === 'whisper' || t.stage === 'builder')
-    .sort((a, b) => b.tbts - a.tbts)
-    .slice(0, 9);
+    .slice()
+    .sort((a, b) => b.tbts - a.tbts);
   const html = picks.map(t => {
     const a = t.angles || {};
     return `
