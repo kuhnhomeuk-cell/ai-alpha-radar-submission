@@ -2597,14 +2597,18 @@ html::after {
   background: rgba(255, 255, 255, 0.94);
   border: 1px solid rgba(255, 255, 255, 0.64);
   border-radius: 20px;
-  transform: translateX(100%);
+  transform: translateX(calc(100% + 56px));
   transition: transform var(--dur-slow) var(--ease-drawer);
   z-index: 90;
   overflow-y: auto;
   box-shadow: var(--shadow-float);
   backdrop-filter: blur(32px) saturate(150%);
+  pointer-events: none;
 }
-.detail-panel.visible { transform: translateX(0); }
+.detail-panel.visible {
+  transform: translateX(0);
+  pointer-events: auto;
+}
 /* Asymmetric exit: snap closed faster than it opens */
 .detail-panel:not(.visible) {
   transition: transform var(--dur-slow-exit) var(--ease-in-fast);
@@ -2925,15 +2929,19 @@ html[data-theme="light"] .detail-panel {
   width: 440px;
   background: rgba(7, 9, 12, 0.96);
   border-right: 1px solid var(--line-hi);
-  transform: translateX(-100%);
+  transform: translateX(calc(-100% - 56px));
   transition: transform 0.3s var(--ease-out-quart);
   z-index: 40;
   box-shadow: 8px 0 32px rgba(0, 0, 0, 0.4);
   backdrop-filter: blur(12px);
   border-radius: 0;
   overflow-y: auto;
+  pointer-events: none;
 }
-.briefing-panel.glass.visible { transform: translateX(0); }
+.briefing-panel.glass.visible {
+  transform: translateX(0);
+  pointer-events: auto;
+}
 .briefing-panel .bp-head {
   padding: 18px 20px;
   border-bottom: 1px solid var(--line);
